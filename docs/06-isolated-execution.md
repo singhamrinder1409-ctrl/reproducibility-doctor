@@ -1,6 +1,6 @@
 # Part 6: isolated execution prototype
 
-Status: **implemented as an experimental prototype; acceptance incomplete**. Docker, Podman and Colima are absent in this development environment. The user explicitly chose to leave live validation pending. No runtime was installed, no image pulled and no target repository code executed. Part 7 is not started.
+Status: **implemented as an experimental prototype; acceptance incomplete**. Docker, Podman and Colima are absent in this development environment. The user explicitly chose to leave live validation pending. No runtime was installed, no image pulled and no target repository code executed. The user subsequently authorized offline Parts 7–10 before returning to live validation; diagnosis, reports and public preview publication are now implemented. See [live validation preparation](11-live-validation-start.md).
 
 Local verification: 198 tests pass and the live smoke test is skipped by default. Lint/format checks pass. Simulated daemon tests validate control flow and rejection logic; they do **not** demonstrate kernel/container containment. Host process tests execute only fixed Doctor infrastructure test code to exercise pipe draining and timers, never extracted target instructions.
 
@@ -70,6 +70,6 @@ The live smoke gate requires an explicit `--live-container` pytest option and ma
 - [ ] Test source/wheel mutations around staging and copied-byte verification; exercise malicious target filenames/symlinks inside the disposable environment.
 - [ ] Record repeatability/runtime results and either verify macOS VM support or explicitly limit the release to the validated Linux configuration.
 
-One passing live smoke does not satisfy this checklist. Reserved held-out setup-evaluation scenarios remain unchanged, and no detection-accuracy or containment claim follows from mocked tests. Part 7 waits for these gates or an explicit user-approved change of scope.
+One passing live smoke does not satisfy this checklist. Reserved held-out setup-evaluation scenarios remain unchanged, and no detection-accuracy or containment claim follows from mocked tests. The user approved proceeding with offline milestones while these gates remain pending. Their completion does not close the live gates.
 
 References: [Docker resource controls](https://docs.docker.com/engine/containers/resource_constraints/), [Docker exec environment behavior](https://docs.docker.com/reference/cli/docker/container/exec/), [Docker tmpfs behavior](https://docs.docker.com/engine/storage/tmpfs/).
