@@ -28,3 +28,5 @@ A wheel was built with isolated build dependencies, installed with runtime depen
 The first static evaluation has 10 development and 7 held-out labeled assertions; the one held-out label mapping error remains disclosed. No post-result rule tuning occurred. Runtime dependency license notices were inspected; see [dependency notes](../DEPENDENCIES.md).
 
 The GitHub connection could read the owner profile and repository list, but has no repository-creation tool. No `reproducibility-doctor` remote existed. The browser creation page required sign-in. Publication/remote CI are pending user sign-in or an empty destination repository, rather than being claimed complete locally.
+
+Final local checks: **214 tests passed, 1 live Docker test skipped**; Ruff lint and all 47 Python files' formatting passed. A clean local Git clone installed into a fresh virtual environment and ran the static-only CLI demo successfully. These results are from macOS with Python 3.14.5; the CI matrix is prepared but has not run remotely. Runtime/container acceptance remains pending.
