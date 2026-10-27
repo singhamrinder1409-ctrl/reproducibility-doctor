@@ -1,0 +1,7 @@
+[
+  {"order": 1, "start_line": 6, "end_line": 6, "raw_text": "python -m pip install -r requirements.txt\n", "candidate_text": "python -m pip install -r requirements.txt", "phase": "installation", "ambiguity_reasons": []},
+  {"order": 2, "start_line": 12, "end_line": 12, "raw_text": "cp .env.example .env\n", "candidate_text": "cp .env.example .env", "phase": "configuration", "ambiguity_reasons": []},
+  {"order": 3, "start_line": 13, "end_line": 13, "raw_text": "export TOKEN=YOUR_TOKEN\n", "candidate_text": "export TOKEN=YOUR_TOKEN", "phase": "configuration", "ambiguity_reasons": ["placeholder"]},
+  {"order": 4, "start_line": 19, "end_line": 19, "raw_text": "$ python -m pytest -q\n", "candidate_text": "python -m pytest -q", "phase": "test", "ambiguity_reasons": ["shell_prompt_removed_in_candidate"]},
+  {"order": 5, "start_line": 25, "end_line": 25, "raw_text": "python -m example\n", "candidate_text": "python -m example", "phase": "launch", "ambiguity_reasons": []}
+]

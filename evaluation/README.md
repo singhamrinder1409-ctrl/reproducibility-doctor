@@ -5,3 +5,5 @@
 Develop and tune against `development` only. Do not add held-out cases to regression tests or tune rules against their results before the first frozen evaluation. Materialize held-out repositories and expected labels once, freeze them before opening results, and record the tool revision and all amendments. If a held-out result drives a fix, report it and create fresh held-out cases for a later unbiased evaluation.
 
 The intake unit tests are development/security regressions, not the held-out setup evaluation. No third-party repository contents are included. No accuracy figures should be reported yet.
+
+The reservation was recorded in local baseline commit `745ed5a` before Part 3 extraction tuning. Extraction golden fixtures live under `tests/fixtures/extraction` and are development regressions, separate from the held-out setup scenarios.

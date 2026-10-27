@@ -2,7 +2,7 @@
 
 An open-source developer-tool project for checking whether documented Python setup instructions can be reproduced, with evidence for each finding.
 
-**Current status: milestone 2, repository intake only.** The CLI pins a commit and exports a bounded snapshot without checking out files or executing project code. It does not yet extract README commands, diagnose setup problems, or run containers.
+**Current status: milestone 3, repository intake and README instruction extraction.** The CLI pins a commit, exports a bounded snapshot, and extracts ordered command candidates with source locations and review flags. It does not execute extracted commands, diagnose setup failures, or run containers.
 
 ## Install locally
 
@@ -41,6 +41,34 @@ snapshot/
 
 Intake copies tracked contents, which may include committed secrets. It does not scan or guarantee redaction of those contents. Keep snapshots local and out of Git; public examples will use authored fixtures only.
 
+## Extract README instruction candidates
+
+```sh
+reprodoctor extract /path/to/snapshot --output /path/to/instructions.json
+```
+
+Omit `--output` to print JSON. Output files must be new and outside the snapshot. Extraction first revalidates the complete inventory, file hashes and executable modes; changed or unexpected files stop extraction. This detects changes relative to the manifest, not a forged manifest's provenance.
+
+The extractor reads root `README.md` as UTF-8 and selects fenced `sh`, `bash`, `shell`, and untagged blocks. It preserves document order, exact source text and one-based inclusive line ranges. Each candidate includes its proposed command text, installation/configuration/test/launch phase hint, heading context, and ambiguity reasons. Unknown commands remain review candidates. Other code blocks and recognizable prose instructions appear as review/coverage items rather than being silently interpreted as commands.
+
+```json
+{
+  "order": 1,
+  "path": "README.md",
+  "start_line": 6,
+  "end_line": 6,
+  "raw_text": "python -m pip install -r requirements.txt\n",
+  "candidate_text": "python -m pip install -r requirements.txt",
+  "phase": "installation",
+  "ambiguity_reasons": [],
+  "requires_review": true
+}
+```
+
+This example is an excerpt from the authored [extraction fixture](tests/fixtures/extraction/basic.md). An empty ambiguity list does **not** approve a command. Every candidate requires review and the document explicitly records `execution_permitted: false`. Prompts, alternatives, placeholders, nested Markdown, multiline constructs, shell expansion and unsupported syntax receive review flags. Complex shell blocks are kept together; the extractor does not resolve shell state or choose an installation branch.
+
+Missing root README is reported as missing coverage, not a setup failure. Parsing is limited to 1 MiB, 2,000 candidates and 8 MiB of JSON evidence; exceeding a limit fails without producing a partial candidate document. Phase and ambiguity rules are deliberately conservative and can miss instructions or flag benign quoted text. No static dependency/configuration checks exist yet.
+
 ## Limits and exclusions
 
 - Ordinary local SHA-1 Git repositories only; linked worktrees, bare repositories, shared/alternate object stores, and SHA-256 repositories are unsupported.
@@ -58,6 +86,6 @@ ruff check .
 ruff format --check .
 ```
 
-Tests generate authored Git repositories in temporary directories. They check commit pinning, deterministic export, dirty/index states, hooks/filters/config isolation, invalid paths, symlinks/submodules, bounds, errors, and the GitHub transport contract. Normal tests do not access the network or execute fixture project code.
+Tests generate authored Git repositories in temporary directories. They check commit pinning, deterministic export, dirty/index states, hooks/filters/config isolation, invalid paths, symlinks/submodules, bounds, errors, and the GitHub transport contract. Extraction tests include a hand-authored golden fixture, line-ending/source mapping, ambiguity handling, excluded formats, modified snapshots and output limits. Normal tests do not access the network or execute fixture project code or README commands.
 
-See [scope and architecture](docs/01-scope-and-architecture.md), [milestone 2 evidence](docs/02-repository-intake.md), and the [reserved evaluation scenarios](evaluation/README.md). Next milestone: README instruction extraction. No setup execution is implemented.
+See [scope and architecture](docs/01-scope-and-architecture.md), [milestone 2 evidence](docs/02-repository-intake.md), [milestone 3 evidence](docs/03-readme-extraction.md), and the [reserved evaluation scenarios](evaluation/README.md). Next milestone: static checks. No setup execution is implemented.
