@@ -37,3 +37,7 @@ The script uses only the authored development fixture, creates temporary Git met
 - `live-success-fixture/` and `live-failure-stops-fixture/`: exact authored snapshot source used for these records. These source copies are excluded from Ruff reformatting to preserve their recorded bytes. They are never imported/run by default tests.
 
 The reports are genuine, retain their original `experimental` and `live_validation: pending` fields, and contain only the authored fixture's harmless literals and logs. Approval receipts and private host paths are excluded. They demonstrate those narrow outcomes on one runtime, not universal reproducibility or complete containment.
+
+## Approved network and resource probes
+
+`live-network.json` / `.md` and `live-resources.json` / `.md` are genuine approved development runs with successful cleanup. Their source is in `tests/fixtures/live-controls`; the network sentinel configuration is generated explicitly by the preparation helper and contains only an authored temporary path. No host credentials or approval receipts are included. The [control evaluation](../evaluation/results-live-controls.json) preserves flood-stream metadata and hashes without publishing multi-MiB log prefixes; complete original logs remain private local artifacts.

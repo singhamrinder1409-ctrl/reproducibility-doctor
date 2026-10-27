@@ -62,9 +62,9 @@ The live smoke gate requires an explicit `--live-container` pytest option and ma
 
 - [x] Run the approved zero-dependency success fixture on Linux/cgroup-v2 Docker Desktop ARM64; verify preflight and exact environment evidence. This validates this specific VM runtime, not all Linux/macOS hosts.
 - [x] Verify actual failed-step status and that later steps never start.
-- [ ] Observe network denial and absence of host files/credentials/mounts using approved sentinel fixtures.
-- [ ] Exercise actual CPU, memory/swap, PID, core/nofile and writable-storage limits; include logs of the observed outcomes.
-- [ ] Flood stdout/stderr beyond both per-step and aggregate caps; verify no daemon log growth and correct truncation/timing.
+- [x] Observe IPv4/IPv6 denial and absence of synthetic host file/environment sentinels, host home/socket paths and sharing mounts in the approved fixture.
+- [x] Exercise actual CPU, memory/swap, PID, core/nofile and writable-storage limits; retain observed outcomes and core-collector limitations.
+- [x] Flood stdout/stderr beyond per-step and aggregate caps; verify truncation/timing and no allocated Docker-managed target stdout/stderr log path. Docker operational logs are outside this measurement.
 - [ ] Exercise step and whole-run timeouts, Ctrl-C and SIGTERM; confirm all processes/containers are removed.
 - [ ] Exercise host interruption, retained journal and targeted recovery; verify unrelated containers/images remain intact.
 - [ ] Test source/wheel mutations around staging and copied-byte verification; exercise malicious target filenames/symlinks inside the disposable environment.
@@ -93,3 +93,14 @@ Three NEW development plans are prepared by `scripts/prepare_live_controls.py`, 
 The new probes cover network/host sentinels, bounded CPU/memory/PID/descriptor/core/tmpfs stress, and per-stream/whole-run log overflow. None has run yet. For the future network run, the harness must verify the original host-only file still exists with its recorded hash and set the synthetic `DOCTOR_HOST_SENTINEL` in Doctor's host environment; neither belongs in the target environment or staged file inventory. Remove only that exact authored sentinel after the probe, never broad host files. CPU/memory probes have finite source-side bounds in addition to the approved cgroup limits. Containers still share a kernel and do not make arbitrary code completely safe.
 
 Timeouts (including the full 600-second run budget), Ctrl-C, SIGTERM, host-kill recovery, unrelated-resource preservation, live staging/mutation cases and held-out execution remain subsequent gates. Full live validation remains pending.
+
+## Approved control-probe results — 2026-10-27
+
+All three user-approved control plans completed with exit 0 and confirmed container removal. [Structured evidence](../evaluation/results-live-controls.json) retains source/plan bindings, kernel observations, original report hashes and bounded-stream byte counts/hashes. [Network](../examples/live-network.md) and [resource](../examples/live-resources.md) reports preserve the genuine full records in readable form.
+
+- IPv4 and IPv6 attempts to documentation-only addresses both returned errno 101 (network unreachable). The exact synthetic host-only file was verified present before the run, invisible in the container, then removed only after its path/owner/content/hash were verified. The injected synthetic host environment value was absent. Host home/socket paths and sharing filesystem types were absent. This is sentinel evidence for this runtime, not proof of immunity to host/kernel compromise.
+- Four CPU workers used 4.070784 cgroup CPU seconds over about 4.051506 wall seconds with quota `100000 100000`. The deliberate memory child exited -9 alongside an OOM-kill counter increment of 1; swap.max was 0. PID creation was denied after 125 child sleeps. The descriptor probe reached EMFILE after 253 additional descriptors with nofile 256. The aborting child observed core limit 0 and no core file in checked writable paths; external daemon core collection was not inspected.
+- Filler writes reached ENOSPC on workspace/tmp/wheels/shared-memory tmpfs at or below their approved capacities. Probe files/children were cleaned up, then the whole container was removed.
+- Three commands emitted exactly 18 MiB total (3 MiB per stream per command). Retained raw bytes were exactly 4 MiB: 1 MiB per stream on each of the first two commands, zero retained on the third. All streams were marked truncated, controls were escaped and invalid UTF-8 replaced. A second execution of the same approved flood plan was observed externally: while running, Docker reported log type `none` and empty LogPath throughout all samples. This means no Docker-managed stdout/stderr file was allocated; Docker operational-log growth was not measured.
+
+Four new plans are prepared, still unapproved/unexecuted, for step timeout and repeated interruption/recovery checks, the actual 600-second whole-run deadline, quoted filenames/symlink directory boundaries, and an authored offline wheel installation plus stale-input rejection. The run-budget probe intentionally needs about ten minutes, mostly idle. The helper prepares a wheel from fixed authored bytes without importing/building target code; its complete plaintext contents and hash are displayed before approval.

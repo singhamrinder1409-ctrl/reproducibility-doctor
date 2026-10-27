@@ -1,0 +1,1036 @@
+{
+  "schema_version": 1,
+  "kind": "approved_live_control_evaluation",
+  "scope": "Three manually approved development fixtures on one Docker Desktop Linux ARM64 runtime.",
+  "runs": [
+    {
+      "case": "network",
+      "run_id": "4b93845a15be4de29b3d1c187ef59d89",
+      "plan_digest": "7b5b1388d565f2301ad797f7cb43ff12efb911e72cbd523d68a8ebdaac0d6c0d",
+      "repository": {
+        "commit": "cdc5bf06c8e73a37e7da850b3b06faf247553daf",
+        "content_digest": "787e90d18d34e96856dcec36f93557e661d4bfdcf74ca1588638f49a6f90d5aa"
+      },
+      "execution_status": "completed",
+      "cleanup": {
+        "status": "removed",
+        "container_name": "reprodoctor-4b93845a15be4de29b3d1c187ef59d89"
+      },
+      "seconds": 2.153012,
+      "full_record_sha256": "f282d2af90606155922e17b9dcfd8aa867bf697da82ab384082097fa2629a0fc",
+      "kernel": {
+        "implementation": "cpython",
+        "python": [
+          3,
+          12,
+          16
+        ],
+        "executable": "/usr/local/bin/python",
+        "version": "3.12.16 (main, Oct 26 2026, 22:56:41) [GCC 14.2.0]",
+        "machine": "aarch64",
+        "uid": 65532,
+        "gid": 65532,
+        "rlimits": {
+          "core": [
+            0,
+            0
+          ],
+          "nofile": [
+            256,
+            256
+          ]
+        },
+        "status": {
+          "NoNewPrivs": "1",
+          "Seccomp": "2",
+          "CapEff": "0000000000000000",
+          "CapPrm": "0000000000000000",
+          "CapBnd": "0000000000000000"
+        },
+        "cgroups": {
+          "memory.max": "1073741824",
+          "memory.swap.max": "0",
+          "pids.max": "128",
+          "cpu.max": "100000 100000"
+        },
+        "network_interfaces": [
+          "erspan0",
+          "gre0",
+          "gretap0",
+          "ip6_vti0",
+          "ip6gre0",
+          "ip6tnl0",
+          "ip_vti0",
+          "lo",
+          "sit0",
+          "tunl0"
+        ],
+        "network_details": {
+          "interface_flags": {
+            "erspan0": 4098,
+            "gre0": 128,
+            "gretap0": 4098,
+            "ip6_vti0": 128,
+            "ip6gre0": 128,
+            "ip6tnl0": 128,
+            "ip_vti0": 128,
+            "lo": 73,
+            "sit0": 128,
+            "tunl0": 128
+          },
+          "ipv4_addresses": {
+            "erspan0": null,
+            "gre0": null,
+            "gretap0": null,
+            "ip6_vti0": null,
+            "ip6gre0": null,
+            "ip6tnl0": null,
+            "ip_vti0": null,
+            "lo": "127.0.0.1",
+            "sit0": null,
+            "tunl0": null
+          },
+          "ipv4_routes": [],
+          "ipv6_routes": [
+            [
+              "00000000000000000000000000000000",
+              "00",
+              "00000000000000000000000000000000",
+              "00",
+              "00000000000000000000000000000000",
+              "ffffffff",
+              "00000001",
+              "00000000",
+              "00200200",
+              "lo"
+            ],
+            [
+              "00000000000000000000000000000001",
+              "80",
+              "00000000000000000000000000000000",
+              "00",
+              "00000000000000000000000000000000",
+              "00000000",
+              "00000002",
+              "00000000",
+              "80200001",
+              "lo"
+            ],
+            [
+              "00000000000000000000000000000000",
+              "00",
+              "00000000000000000000000000000000",
+              "00",
+              "00000000000000000000000000000000",
+              "ffffffff",
+              "00000001",
+              "00000000",
+              "00200200",
+              "lo"
+            ]
+          ],
+          "ipv6_addresses": [
+            [
+              "00000000000000000000000000000001",
+              "01",
+              "80",
+              "10",
+              "80",
+              "lo"
+            ]
+          ]
+        },
+        "paths": {
+          "/": {
+            "read_only": true,
+            "bytes": 240120725504,
+            "mount": {
+              "options": [
+                "ro",
+                "relatime"
+              ],
+              "type": "overlay"
+            }
+          },
+          "/sys": {
+            "read_only": true,
+            "bytes": 0,
+            "mount": {
+              "options": [
+                "ro",
+                "nosuid",
+                "nodev",
+                "noexec",
+                "relatime"
+              ],
+              "type": "sysfs"
+            }
+          },
+          "/sys/fs/cgroup": {
+            "read_only": true,
+            "bytes": 0,
+            "mount": {
+              "options": [
+                "ro",
+                "nosuid",
+                "nodev",
+                "noexec",
+                "relatime"
+              ],
+              "type": "cgroup2"
+            }
+          },
+          "/proc/sys": {
+            "read_only": true,
+            "bytes": 0,
+            "mount": {
+              "options": [
+                "ro",
+                "nosuid",
+                "nodev",
+                "noexec",
+                "relatime"
+              ],
+              "type": "proc"
+            }
+          },
+          "/workspace": {
+            "read_only": false,
+            "bytes": 268435456,
+            "mount": {
+              "options": [
+                "rw",
+                "nosuid",
+                "nodev",
+                "noexec",
+                "relatime"
+              ],
+              "type": "tmpfs"
+            }
+          },
+          "/tmp": {
+            "read_only": false,
+            "bytes": 67108864,
+            "mount": {
+              "options": [
+                "rw",
+                "nosuid",
+                "nodev",
+                "noexec",
+                "relatime"
+              ],
+              "type": "tmpfs"
+            }
+          },
+          "/wheels": {
+            "read_only": false,
+            "bytes": 134217728,
+            "mount": {
+              "options": [
+                "rw",
+                "nosuid",
+                "nodev",
+                "noexec",
+                "relatime"
+              ],
+              "type": "tmpfs"
+            }
+          },
+          "/dev/shm": {
+            "read_only": false,
+            "bytes": 16777216,
+            "mount": {
+              "options": [
+                "rw",
+                "nosuid",
+                "nodev",
+                "noexec",
+                "relatime"
+              ],
+              "type": "tmpfs"
+            }
+          }
+        },
+        "managed_files_writable": []
+      },
+      "steps": [
+        {
+          "id": "instruction-0001",
+          "status": "passed",
+          "exit_code": 0,
+          "exit_code_source": "docker_exec_cli",
+          "seconds": 0.169982,
+          "fixture_observations": {
+            "marker": "DOCTOR_NETWORK_HOST_CHECKS",
+            "attempts": [
+              {
+                "family": 2,
+                "errno": 101
+              },
+              {
+                "family": 10,
+                "errno": 101
+              }
+            ],
+            "host_sentinel_absent": true,
+            "host_environment_absent": true
+          },
+          "stdout": {
+            "total_bytes": 177,
+            "captured_bytes": 177,
+            "truncated": false,
+            "sha256_observed_stream": "387fc7c6e78efe3cb38dc3ce24e9a99957f380a954557cbb3209e9b0020e7514"
+          },
+          "stderr": {
+            "total_bytes": 0,
+            "captured_bytes": 0,
+            "truncated": false,
+            "sha256_observed_stream": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        }
+      ]
+    },
+    {
+      "case": "resources",
+      "run_id": "b562fbf3498f4586a6550d965743f3d4",
+      "plan_digest": "f0a925b1838e27cd12455e947675885e02478633dcd6b018419e023d9e129494",
+      "repository": {
+        "commit": "e569fdd6999fae132046ef2868489a16767e6e81",
+        "content_digest": "a9b4700b11e0e9ad96c69f4c59e9a3c482669d1fccd0e47b9a635344221d4dc6"
+      },
+      "execution_status": "completed",
+      "cleanup": {
+        "status": "removed",
+        "container_name": "reprodoctor-b562fbf3498f4586a6550d965743f3d4"
+      },
+      "seconds": 5.318771,
+      "full_record_sha256": "35d6b4b0e89718261e0e6d1220ebf792a033e0c825fa885a4af42e1b33874a58",
+      "kernel": {
+        "implementation": "cpython",
+        "python": [
+          3,
+          12,
+          16
+        ],
+        "executable": "/usr/local/bin/python",
+        "version": "3.12.16 (main, Oct 26 2026, 22:56:41) [GCC 14.2.0]",
+        "machine": "aarch64",
+        "uid": 65532,
+        "gid": 65532,
+        "rlimits": {
+          "core": [
+            0,
+            0
+          ],
+          "nofile": [
+            256,
+            256
+          ]
+        },
+        "status": {
+          "NoNewPrivs": "1",
+          "Seccomp": "2",
+          "CapEff": "0000000000000000",
+          "CapPrm": "0000000000000000",
+          "CapBnd": "0000000000000000"
+        },
+        "cgroups": {
+          "memory.max": "1073741824",
+          "memory.swap.max": "0",
+          "pids.max": "128",
+          "cpu.max": "100000 100000"
+        },
+        "network_interfaces": [
+          "erspan0",
+          "gre0",
+          "gretap0",
+          "ip6_vti0",
+          "ip6gre0",
+          "ip6tnl0",
+          "ip_vti0",
+          "lo",
+          "sit0",
+          "tunl0"
+        ],
+        "network_details": {
+          "interface_flags": {
+            "erspan0": 4098,
+            "gre0": 128,
+            "gretap0": 4098,
+            "ip6_vti0": 128,
+            "ip6gre0": 128,
+            "ip6tnl0": 128,
+            "ip_vti0": 128,
+            "lo": 73,
+            "sit0": 128,
+            "tunl0": 128
+          },
+          "ipv4_addresses": {
+            "erspan0": null,
+            "gre0": null,
+            "gretap0": null,
+            "ip6_vti0": null,
+            "ip6gre0": null,
+            "ip6tnl0": null,
+            "ip_vti0": null,
+            "lo": "127.0.0.1",
+            "sit0": null,
+            "tunl0": null
+          },
+          "ipv4_routes": [],
+          "ipv6_routes": [
+            [
+              "00000000000000000000000000000000",
+              "00",
+              "00000000000000000000000000000000",
+              "00",
+              "00000000000000000000000000000000",
+              "ffffffff",
+              "00000001",
+              "00000000",
+              "00200200",
+              "lo"
+            ],
+            [
+              "00000000000000000000000000000001",
+              "80",
+              "00000000000000000000000000000000",
+              "00",
+              "00000000000000000000000000000000",
+              "00000000",
+              "00000002",
+              "00000000",
+              "80200001",
+              "lo"
+            ],
+            [
+              "00000000000000000000000000000000",
+              "00",
+              "00000000000000000000000000000000",
+              "00",
+              "00000000000000000000000000000000",
+              "ffffffff",
+              "00000001",
+              "00000000",
+              "00200200",
+              "lo"
+            ]
+          ],
+          "ipv6_addresses": [
+            [
+              "00000000000000000000000000000001",
+              "01",
+              "80",
+              "10",
+              "80",
+              "lo"
+            ]
+          ]
+        },
+        "paths": {
+          "/": {
+            "read_only": true,
+            "bytes": 240120725504,
+            "mount": {
+              "options": [
+                "ro",
+                "relatime"
+              ],
+              "type": "overlay"
+            }
+          },
+          "/sys": {
+            "read_only": true,
+            "bytes": 0,
+            "mount": {
+              "options": [
+                "ro",
+                "nosuid",
+                "nodev",
+                "noexec",
+                "relatime"
+              ],
+              "type": "sysfs"
+            }
+          },
+          "/sys/fs/cgroup": {
+            "read_only": true,
+            "bytes": 0,
+            "mount": {
+              "options": [
+                "ro",
+                "nosuid",
+                "nodev",
+                "noexec",
+                "relatime"
+              ],
+              "type": "cgroup2"
+            }
+          },
+          "/proc/sys": {
+            "read_only": true,
+            "bytes": 0,
+            "mount": {
+              "options": [
+                "ro",
+                "nosuid",
+                "nodev",
+                "noexec",
+                "relatime"
+              ],
+              "type": "proc"
+            }
+          },
+          "/workspace": {
+            "read_only": false,
+            "bytes": 268435456,
+            "mount": {
+              "options": [
+                "rw",
+                "nosuid",
+                "nodev",
+                "noexec",
+                "relatime"
+              ],
+              "type": "tmpfs"
+            }
+          },
+          "/tmp": {
+            "read_only": false,
+            "bytes": 67108864,
+            "mount": {
+              "options": [
+                "rw",
+                "nosuid",
+                "nodev",
+                "noexec",
+                "relatime"
+              ],
+              "type": "tmpfs"
+            }
+          },
+          "/wheels": {
+            "read_only": false,
+            "bytes": 134217728,
+            "mount": {
+              "options": [
+                "rw",
+                "nosuid",
+                "nodev",
+                "noexec",
+                "relatime"
+              ],
+              "type": "tmpfs"
+            }
+          },
+          "/dev/shm": {
+            "read_only": false,
+            "bytes": 16777216,
+            "mount": {
+              "options": [
+                "rw",
+                "nosuid",
+                "nodev",
+                "noexec",
+                "relatime"
+              ],
+              "type": "tmpfs"
+            }
+          }
+        },
+        "managed_files_writable": []
+      },
+      "steps": [
+        {
+          "id": "instruction-0001",
+          "status": "passed",
+          "exit_code": 0,
+          "exit_code_source": "docker_exec_cli",
+          "seconds": 4.739516,
+          "fixture_observations": {
+            "marker": "DOCTOR_RESOURCE_CHECKS",
+            "observations": {
+              "cpu": {
+                "elapsed": 4.051505627000001,
+                "cpu_seconds": 4.070784,
+                "quota": "100000 100000"
+              },
+              "memory": {
+                "child_return_code": -9,
+                "oom_kill_delta": 1,
+                "swap_max": "0"
+              },
+              "pids": {
+                "children_started": 125,
+                "creation_denied": true
+              },
+              "nofile": {
+                "opened": 253,
+                "limit": [
+                  256,
+                  256
+                ]
+              },
+              "core": {
+                "limit": [
+                  0,
+                  0
+                ],
+                "aborting_child_code": -6
+              },
+              "storage": [
+                {
+                  "directory": "/workspace",
+                  "bytes_written": 268423168,
+                  "enospc": true
+                },
+                {
+                  "directory": "/tmp",
+                  "bytes_written": 67108864,
+                  "enospc": true
+                },
+                {
+                  "directory": "/wheels",
+                  "bytes_written": 134217728,
+                  "enospc": true
+                },
+                {
+                  "directory": "/dev/shm",
+                  "bytes_written": 16777216,
+                  "enospc": true
+                }
+              ]
+            }
+          },
+          "stdout": {
+            "total_bytes": 674,
+            "captured_bytes": 674,
+            "truncated": false,
+            "sha256_observed_stream": "dce69cdb9024f9f6af3cde1a9ec6b47c37225fd58cdc143c20735d5168b02b23"
+          },
+          "stderr": {
+            "total_bytes": 0,
+            "captured_bytes": 0,
+            "truncated": false,
+            "sha256_observed_stream": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        }
+      ]
+    },
+    {
+      "case": "logs",
+      "run_id": "3e0905fec443415a862726d14823213b",
+      "plan_digest": "691622454802fe4e91b25fd14a74d2dd3d774b2e608c02df050a11a98394b5c0",
+      "repository": {
+        "commit": "4c161bce887d689bba74ff26f87879b4c8da9dce",
+        "content_digest": "1245a4585b4b8e1379ba7e883da0e9364d6a021e4ddd4441be81677252a98151"
+      },
+      "execution_status": "completed",
+      "cleanup": {
+        "status": "removed",
+        "container_name": "reprodoctor-3e0905fec443415a862726d14823213b"
+      },
+      "seconds": 1.200367,
+      "full_record_sha256": "0fb503e4e6f7aa15d01982958ce1ed07a410309fadfa0da957aa5cfa594e06d8",
+      "kernel": {
+        "implementation": "cpython",
+        "python": [
+          3,
+          12,
+          16
+        ],
+        "executable": "/usr/local/bin/python",
+        "version": "3.12.16 (main, Oct 26 2026, 22:56:41) [GCC 14.2.0]",
+        "machine": "aarch64",
+        "uid": 65532,
+        "gid": 65532,
+        "rlimits": {
+          "core": [
+            0,
+            0
+          ],
+          "nofile": [
+            256,
+            256
+          ]
+        },
+        "status": {
+          "NoNewPrivs": "1",
+          "Seccomp": "2",
+          "CapEff": "0000000000000000",
+          "CapPrm": "0000000000000000",
+          "CapBnd": "0000000000000000"
+        },
+        "cgroups": {
+          "memory.max": "1073741824",
+          "memory.swap.max": "0",
+          "pids.max": "128",
+          "cpu.max": "100000 100000"
+        },
+        "network_interfaces": [
+          "erspan0",
+          "gre0",
+          "gretap0",
+          "ip6_vti0",
+          "ip6gre0",
+          "ip6tnl0",
+          "ip_vti0",
+          "lo",
+          "sit0",
+          "tunl0"
+        ],
+        "network_details": {
+          "interface_flags": {
+            "erspan0": 4098,
+            "gre0": 128,
+            "gretap0": 4098,
+            "ip6_vti0": 128,
+            "ip6gre0": 128,
+            "ip6tnl0": 128,
+            "ip_vti0": 128,
+            "lo": 73,
+            "sit0": 128,
+            "tunl0": 128
+          },
+          "ipv4_addresses": {
+            "erspan0": null,
+            "gre0": null,
+            "gretap0": null,
+            "ip6_vti0": null,
+            "ip6gre0": null,
+            "ip6tnl0": null,
+            "ip_vti0": null,
+            "lo": "127.0.0.1",
+            "sit0": null,
+            "tunl0": null
+          },
+          "ipv4_routes": [],
+          "ipv6_routes": [
+            [
+              "00000000000000000000000000000000",
+              "00",
+              "00000000000000000000000000000000",
+              "00",
+              "00000000000000000000000000000000",
+              "ffffffff",
+              "00000001",
+              "00000000",
+              "00200200",
+              "lo"
+            ],
+            [
+              "00000000000000000000000000000001",
+              "80",
+              "00000000000000000000000000000000",
+              "00",
+              "00000000000000000000000000000000",
+              "00000000",
+              "00000002",
+              "00000000",
+              "80200001",
+              "lo"
+            ],
+            [
+              "00000000000000000000000000000000",
+              "00",
+              "00000000000000000000000000000000",
+              "00",
+              "00000000000000000000000000000000",
+              "ffffffff",
+              "00000001",
+              "00000000",
+              "00200200",
+              "lo"
+            ]
+          ],
+          "ipv6_addresses": [
+            [
+              "00000000000000000000000000000001",
+              "01",
+              "80",
+              "10",
+              "80",
+              "lo"
+            ]
+          ]
+        },
+        "paths": {
+          "/": {
+            "read_only": true,
+            "bytes": 240120725504,
+            "mount": {
+              "options": [
+                "ro",
+                "relatime"
+              ],
+              "type": "overlay"
+            }
+          },
+          "/sys": {
+            "read_only": true,
+            "bytes": 0,
+            "mount": {
+              "options": [
+                "ro",
+                "nosuid",
+                "nodev",
+                "noexec",
+                "relatime"
+              ],
+              "type": "sysfs"
+            }
+          },
+          "/sys/fs/cgroup": {
+            "read_only": true,
+            "bytes": 0,
+            "mount": {
+              "options": [
+                "ro",
+                "nosuid",
+                "nodev",
+                "noexec",
+                "relatime"
+              ],
+              "type": "cgroup2"
+            }
+          },
+          "/proc/sys": {
+            "read_only": true,
+            "bytes": 0,
+            "mount": {
+              "options": [
+                "ro",
+                "nosuid",
+                "nodev",
+                "noexec",
+                "relatime"
+              ],
+              "type": "proc"
+            }
+          },
+          "/workspace": {
+            "read_only": false,
+            "bytes": 268435456,
+            "mount": {
+              "options": [
+                "rw",
+                "nosuid",
+                "nodev",
+                "noexec",
+                "relatime"
+              ],
+              "type": "tmpfs"
+            }
+          },
+          "/tmp": {
+            "read_only": false,
+            "bytes": 67108864,
+            "mount": {
+              "options": [
+                "rw",
+                "nosuid",
+                "nodev",
+                "noexec",
+                "relatime"
+              ],
+              "type": "tmpfs"
+            }
+          },
+          "/wheels": {
+            "read_only": false,
+            "bytes": 134217728,
+            "mount": {
+              "options": [
+                "rw",
+                "nosuid",
+                "nodev",
+                "noexec",
+                "relatime"
+              ],
+              "type": "tmpfs"
+            }
+          },
+          "/dev/shm": {
+            "read_only": false,
+            "bytes": 16777216,
+            "mount": {
+              "options": [
+                "rw",
+                "nosuid",
+                "nodev",
+                "noexec",
+                "relatime"
+              ],
+              "type": "tmpfs"
+            }
+          }
+        },
+        "managed_files_writable": []
+      },
+      "steps": [
+        {
+          "id": "instruction-0001",
+          "status": "passed",
+          "exit_code": 0,
+          "exit_code_source": "docker_exec_cli",
+          "seconds": 0.135023,
+          "stdout": {
+            "total_bytes": 3145728,
+            "captured_bytes": 1048576,
+            "truncated": true,
+            "sha256_observed_stream": "056be8c730a79a49db1f04355629bfd0534420f015263b703acc985e75d8b870"
+          },
+          "stderr": {
+            "total_bytes": 3145728,
+            "captured_bytes": 1048576,
+            "truncated": true,
+            "sha256_observed_stream": "056be8c730a79a49db1f04355629bfd0534420f015263b703acc985e75d8b870"
+          }
+        },
+        {
+          "id": "instruction-0002",
+          "status": "passed",
+          "exit_code": 0,
+          "exit_code_source": "docker_exec_cli",
+          "seconds": 0.143629,
+          "stdout": {
+            "total_bytes": 3145728,
+            "captured_bytes": 1048576,
+            "truncated": true,
+            "sha256_observed_stream": "056be8c730a79a49db1f04355629bfd0534420f015263b703acc985e75d8b870"
+          },
+          "stderr": {
+            "total_bytes": 3145728,
+            "captured_bytes": 1048576,
+            "truncated": true,
+            "sha256_observed_stream": "056be8c730a79a49db1f04355629bfd0534420f015263b703acc985e75d8b870"
+          }
+        },
+        {
+          "id": "instruction-0003",
+          "status": "passed",
+          "exit_code": 0,
+          "exit_code_source": "docker_exec_cli",
+          "seconds": 0.140367,
+          "stdout": {
+            "total_bytes": 3145728,
+            "captured_bytes": 0,
+            "truncated": true,
+            "sha256_observed_stream": "056be8c730a79a49db1f04355629bfd0534420f015263b703acc985e75d8b870"
+          },
+          "stderr": {
+            "total_bytes": 3145728,
+            "captured_bytes": 0,
+            "truncated": true,
+            "sha256_observed_stream": "056be8c730a79a49db1f04355629bfd0534420f015263b703acc985e75d8b870"
+          }
+        }
+      ]
+    }
+  ],
+  "log_driver_observations": {
+    "kind": "live_log_observer",
+    "plan_digest": "691622454802fe4e91b25fd14a74d2dd3d774b2e608c02df050a11a98394b5c0",
+    "observations": [
+      {
+        "running": true,
+        "log_type": "none",
+        "log_path": ""
+      },
+      {
+        "running": true,
+        "log_type": "none",
+        "log_path": ""
+      },
+      {
+        "running": true,
+        "log_type": "none",
+        "log_path": ""
+      },
+      {
+        "running": true,
+        "log_type": "none",
+        "log_path": ""
+      },
+      {
+        "running": true,
+        "log_type": "none",
+        "log_path": ""
+      },
+      {
+        "running": true,
+        "log_type": "none",
+        "log_path": ""
+      },
+      {
+        "running": true,
+        "log_type": "none",
+        "log_path": ""
+      },
+      {
+        "running": true,
+        "log_type": "none",
+        "log_path": ""
+      },
+      {
+        "running": true,
+        "log_type": "none",
+        "log_path": ""
+      },
+      {
+        "running": true,
+        "log_type": "none",
+        "log_path": ""
+      },
+      {
+        "running": true,
+        "log_type": "none",
+        "log_path": ""
+      },
+      {
+        "running": true,
+        "log_type": "none",
+        "log_path": ""
+      },
+      {
+        "running": true,
+        "log_type": "none",
+        "log_path": ""
+      },
+      {
+        "running": true,
+        "log_type": "none",
+        "log_path": ""
+      },
+      {
+        "running": true,
+        "log_type": "none",
+        "log_path": ""
+      },
+      {
+        "running": true,
+        "log_type": "none",
+        "log_path": ""
+      },
+      {
+        "running": true,
+        "log_type": "none",
+        "log_path": ""
+      }
+    ],
+    "conclusion": "No Docker-managed stdout/stderr log path allocated during the approved flood run; this does not measure Docker own operational logs."
+  },
+  "host_sentinel": {
+    "existed_before_network_run": true,
+    "content_sha256": "83335994964ec4cf3cc284a7dddbb87b3e64bb41976ac7df74521b2bfe9f2cd3",
+    "removed_after_verified_probe": true
+  },
+  "limitations": [
+    "Controlled fixture assertions and host runtime observations are evidence for these runs only.",
+    "The CPU sample spans four seconds; it is not a global scheduling guarantee.",
+    "Core evidence is a zero RLIMIT_CORE plus an aborting child and no core file in checked writable paths; an external daemon core collector was not inspected.",
+    "Docker log-driver none with an empty LogPath was observed during an additional approved flood run; Docker operational logs are not measured.",
+    "Full retained flood records remain private local artifacts; this summary retains original record hashes and stream counts/hashes, not their multi-MiB text.",
+    "Timeouts, interruption, host-kill recovery, staging/mutation cases and held-out runtime evaluation remain pending."
+  ]
+}

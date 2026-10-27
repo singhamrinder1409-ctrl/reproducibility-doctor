@@ -1,0 +1,1 @@
+raise AssertionError("DOCTOR_SYMLINK_ESCAPE_MUST_NOT_RUN")
