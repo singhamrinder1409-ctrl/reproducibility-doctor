@@ -26,7 +26,7 @@ from . import __version__
 from .container_scripts import EXECUTE, PROBE, RECEIVE
 from .intake import IntakeError, canonical
 from .planning import digest, validate_approval, validate_plan, wheel_inventory
-from .processes import bounded_process
+from .processes import ProcessInterrupted, bounded_process
 from .snapshot import load_snapshot
 
 LABEL = "org.reprodoctor.run"
@@ -488,6 +488,8 @@ def execute_plan(
     }
     docker = None
     touched = False
+    active_step = None
+    step_started = None
 
     def remaining(maximum=30):
         value = min(maximum, deadline - time.monotonic())
@@ -574,6 +576,7 @@ def execute_plan(
             log_left = settings["limits"]["run_log_bytes"]
             report["execution_status"] = "completed"
             for step in plan["payload"]["steps"]:
+                budget = remaining(settings["limits"]["step_seconds"])
                 if step["disposition"] == "excluded_by_reviewer":
                     report["steps"].append(
                         {
@@ -590,14 +593,19 @@ def execute_plan(
                     "source": step["instruction"],
                     "decision": step["decision"],
                     "started_at": _utc(),
+                    "status": "starting",
                 }
+                # Preserve an attempted step even if transport/cancellation prevents a return.
+                step_started = time.monotonic()
+                report["steps"].append(record)
+                active_step = record
                 if effective["kind"] == "set_environment":
                     record.update(status="state_updated", exit_code=None, seconds=0)
                 else:
                     result = docker.command(
                         prefix + [EXECUTE],
                         stdin=io.BytesIO(canonical(effective)),
-                        seconds=remaining(settings["limits"]["step_seconds"]),
+                        seconds=budget,
                         cap=min(settings["limits"]["log_bytes_per_stream_per_step"], log_left // 2),
                         checked=False,
                     )
@@ -614,20 +622,48 @@ def execute_plan(
                         if result["exit_code"] == 0
                         else "failed"
                     )
-                report["steps"].append(record)
+                record["finished_at"] = _utc()
+                active_step = None
                 if record["status"] in {"failed", "timed_out"}:
                     report["execution_status"] = record["status"]
                     break
         except RuntimeBudgetExpired as exc:
             report["execution_status"] = "timed_out"
             report["error"] = str(exc)
-        except (IntakeError, OSError, ValueError, TypeError, KeyError) as exc:
+            if active_step is not None:
+                active_step.update(
+                    status="timed_out",
+                    error=str(exc),
+                    output_capture_status="unavailable_on_budget_expiry",
+                    finished_at=_utc(),
+                    seconds=round(time.monotonic() - step_started, 6),
+                )
+        except Exception as exc:
             report["execution_status"] = "infrastructure_error"
             report["error"] = str(exc)
+            if active_step is not None:
+                active_step.update(
+                    status="infrastructure_error",
+                    error=str(exc),
+                    output_capture_status="unavailable",
+                    finished_at=_utc(),
+                    seconds=round(time.monotonic() - step_started, 6),
+                )
             if isinstance(exc, RuntimeFailure) and exc.evidence is not None:
                 report["infrastructure_evidence"] = exc.evidence
-        except (KeyboardInterrupt, EOFError):
+        except (KeyboardInterrupt, EOFError) as exc:
             report["execution_status"] = "cancelled"
+            if active_step is not None:
+                if isinstance(exc, ProcessInterrupted):
+                    active_step.update(exc.result)
+                    active_step["output_capture_status"] = "partial_on_interrupt"
+                    active_step["exit_code_source"] = "interrupted_host_docker_cli"
+                    active_step["signal"] = None
+                else:
+                    active_step["output_capture_status"] = "unavailable_on_interrupt"
+                active_step["status"] = "cancelled"
+                active_step["finished_at"] = _utc()
+                active_step.setdefault("seconds", round(time.monotonic() - step_started, 6))
         finally:
             if docker is not None and touched:
                 try:
@@ -644,11 +680,15 @@ def execute_plan(
                     report["container_state_before_cleanup"] = {
                         key: state.get(key) for key in ("Running", "ExitCode", "OOMKilled", "Error")
                     }
-                except (IntakeError, OSError, ValueError):
-                    report["container_state_before_cleanup"] = {"status": "unavailable"}
+                except (Exception, KeyboardInterrupt) as exc:
+                    # Diagnostic collection must never prevent the removal attempt.
+                    report["container_state_before_cleanup"] = {
+                        "status": "unavailable",
+                        "error": str(exc),
+                    }
                 try:
                     report["cleanup"] = remove_owned(docker, journal)
-                except (IntakeError, OSError, ValueError, KeyboardInterrupt) as exc:
+                except (Exception, KeyboardInterrupt) as exc:
                     report["cleanup"] = {
                         "status": "failed",
                         "error": str(exc),

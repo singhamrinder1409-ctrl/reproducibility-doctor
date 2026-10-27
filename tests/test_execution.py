@@ -15,6 +15,7 @@ from reprodoctor.execution import (
     LABEL,
     PLAN_LABEL,
     Docker,
+    RuntimeBudgetExpired,
     RuntimeFailure,
     create_arguments,
     execute_plan,
@@ -26,7 +27,7 @@ from reprodoctor.execution import (
 )
 from reprodoctor.intake import IntakeError, intake
 from reprodoctor.planning import approval_record, build_plan, digest
-from reprodoctor.processes import Capture, bounded_process
+from reprodoctor.processes import Capture, ProcessInterrupted, bounded_process
 
 IMAGE = "python:3.12-slim@sha256:" + "1" * 64
 IMAGE_ID = "sha256:" + "2" * 64
@@ -273,6 +274,117 @@ def test_cancelled_target_path_still_removes_container(execution_inputs, tmp_pat
     report, fake = simulated_run(execution_inputs, tmp_path, interrupt=True)
     assert report["execution_status"] == "cancelled"
     assert report["cleanup"]["status"] == "removed" and not fake.created
+    assert report["steps"][0]["status"] == "cancelled"
+    assert report["steps_not_reached"] == []
+
+
+def test_cancellation_keeps_partial_capture_and_attempted_step(execution_inputs, tmp_path):
+    snapshot, plan, approval = execution_inputs
+
+    class Interrupted(FakeDocker):
+        def command(self, args, **kwargs):
+            if args[-1] == container_scripts.EXECUTE:
+                raise ProcessInterrupted(command_result(-9, text=b"partial evidence\n"))
+            return super().command(args, **kwargs)
+
+    fake = Interrupted(plan)
+    report = execute_plan(
+        plan,
+        approval,
+        snapshot,
+        tmp_path / "partial.json",
+        experimental=True,
+        docker_factory=fake.factory,
+    )
+    assert report["execution_status"] == "cancelled"
+    (step,) = report["steps"]
+    assert step["status"] == "cancelled" and step["stdout"]["text"] == "partial evidence\n"
+    assert step["output_capture_status"] == "partial_on_interrupt"
+    assert step["exit_code_source"] == "interrupted_host_docker_cli" and step["signal"] is None
+    assert step["finished_at"] >= step["started_at"]
+    assert report["steps_not_reached"] == []
+    assert report["cleanup"]["status"] == "removed"
+
+
+@pytest.mark.parametrize("fault", [TypeError("bad state document"), KeyboardInterrupt()])
+def test_diagnostic_failure_cannot_skip_container_removal(execution_inputs, tmp_path, fault):
+    snapshot, plan, approval = execution_inputs
+
+    class BadDiagnostic(FakeDocker):
+        def document(self, args, **kwargs):
+            if args[-1] == "{{json .State}}":
+                raise fault
+            return super().document(args, **kwargs)
+
+    fake = BadDiagnostic(plan)
+    report = execute_plan(
+        plan,
+        approval,
+        snapshot,
+        tmp_path / "diagnostic.json",
+        experimental=True,
+        docker_factory=fake.factory,
+    )
+    assert report["container_state_before_cleanup"]["status"] == "unavailable"
+    assert report["cleanup"]["status"] == "removed" and not fake.created
+
+
+@pytest.mark.parametrize(
+    "fault,status",
+    [
+        (RuntimeError("transport failed unexpectedly"), "infrastructure_error"),
+        (RuntimeBudgetExpired("budget expired in transport"), "timed_out"),
+    ],
+)
+def test_transport_failure_or_budget_cannot_produce_completed_report(
+    execution_inputs, tmp_path, fault, status
+):
+    snapshot, plan, approval = execution_inputs
+
+    class BrokenTransport(FakeDocker):
+        def command(self, args, **kwargs):
+            if args[-1] == container_scripts.EXECUTE:
+                raise fault
+            return super().command(args, **kwargs)
+
+    fake = BrokenTransport(plan)
+    report = execute_plan(
+        plan,
+        approval,
+        snapshot,
+        tmp_path / "transport.json",
+        experimental=True,
+        docker_factory=fake.factory,
+    )
+    assert report["execution_status"] == status
+    assert report["steps"][0]["status"] == status
+    assert report["steps"][0]["seconds"] >= 0
+    assert report["steps"][0]["finished_at"] >= report["steps"][0]["started_at"]
+    assert report["steps_not_reached"] == []
+    assert report["cleanup"]["status"] == "removed"
+
+
+def test_host_interruption_preserves_observed_output_after_process_cleanup(tmp_path, monkeypatch):
+    original = Capture.feed
+
+    def interrupt_after_capture(self, data):
+        original(self, data)
+        raise KeyboardInterrupt()
+
+    monkeypatch.setattr(Capture, "feed", interrupt_after_capture)
+    # Fixed trusted Doctor I/O fixture; no extracted target command is used.
+    source = "import time; print('observed-before-cancel', flush=True); time.sleep(10)"
+    with pytest.raises(ProcessInterrupted) as interrupted:
+        bounded_process(
+            [sys.executable, "-I", "-S", "-c", source],
+            environment={"PATH": os.defpath},
+            cwd=str(tmp_path),
+            seconds=5,
+            cap=1024,
+        )
+    result = interrupted.value.result
+    assert result["stdout"]["text"] == "observed-before-cancel\n"
+    assert result["host_process_reaped"] and result["seconds"] < 3
 
 
 def test_cleanup_failure_is_visible_and_journal_supports_recovery(execution_inputs, tmp_path):

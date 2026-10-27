@@ -2,7 +2,7 @@
 
 Status: **implemented as an experimental prototype; acceptance incomplete**. Docker, Podman and Colima are absent in this development environment. The user explicitly chose to leave live validation pending. No runtime was installed, no image pulled and no target repository code executed. Part 7 is not started.
 
-Local verification: 192 tests pass and the live smoke test is skipped by default. Lint/format checks pass. Simulated daemon tests validate control flow and rejection logic; they do **not** demonstrate kernel/container containment. Host process tests execute only fixed Doctor infrastructure test code to exercise pipe draining and timers, never extracted target instructions.
+Local verification: 198 tests pass and the live smoke test is skipped by default. Lint/format checks pass. Simulated daemon tests validate control flow and rejection logic; they do **not** demonstrate kernel/container containment. Host process tests execute only fixed Doctor infrastructure test code to exercise pipe draining and timers, never extracted target instructions.
 
 ## Entry and approval gates
 
@@ -44,6 +44,8 @@ The journal is `<report>.run.json`, containing unique run ID, exact container na
 
 Ctrl-C and SIGTERM attempt cleanup and preserve a cancelled report. A second interruption, SIGKILL, host crash, process failure during audit writes or an unavailable daemon can leave a partial journal or container. No program can promise finally-block cleanup after SIGKILL. Project-created background descendants may remain inside the same constrained container until removal. After host failure, the host wall-clock watchdog is unavailable; do not rely on the container's keepalive as an adversary-proof independent timer. These are reasons the live recovery gates remain required.
 
+The hardening pass now records attempted steps before launching transport, so cancellation and unexpected transport errors cannot mislabel them as never reached or leave the overall result completed. Interrupted host capture preserves its bounded observed output after process cleanup; its exit status is labeled as the interrupted host Docker CLI, not a proven target-program status. Attempts receive finish timestamps and observed timings even when transport fails. Collection of final diagnostic state is best effort: malformed data or an interruption there cannot suppress the container-removal attempt. A final CLI cancellation message directs users to the report/journal rather than falsely asserting nothing ran.
+
 ## Tests completed without Docker
 
 - Simulated success, nonzero exit, timeout, cancellation, partial-create/start failure, failed inspect/kernel controls, transfer mismatch, cleanup failure and explicit recovery.
@@ -52,6 +54,7 @@ Ctrl-C and SIGTERM attempt cleanup and preserve a cancelled report. A second int
 - Byte-verified source/wheel transfer contracts, source provenance, state forwarding, not-reached steps, private artifacts and aggregate log budgets.
 - Real bounded pipe-I/O tests of fixed trusted host helpers, including simultaneous stdout/stderr, stdin and timeout. Bootstrap snippets are syntax-parsed on the host; they are never executed there.
 - Security-verifier rejection still active under `python -O`.
+- Cancellation retains partial bounded output and attempted-step evidence; unexpected transport errors and run-budget expiry cannot produce completed reports. Malformed/interrupted final-state diagnostics still lead to container removal.
 
 The live smoke gate requires an explicit `--live-container` pytest option and manually prepared `--live-plan`, `--live-snapshot`, `--live-approval` inputs (plus wheelhouse/socket when needed). It never fabricates a real execution approval. Default test runs skip it.
 

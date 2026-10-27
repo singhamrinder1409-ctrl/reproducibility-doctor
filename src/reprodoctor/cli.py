@@ -7,6 +7,7 @@ import sys
 from pathlib import Path
 
 from .checks import check_snapshot
+from .diagnosis import diagnose, read_execution
 from .execution import execute_plan, recover
 from .extraction import encode_candidates, extract_snapshot
 from .intake import IntakeError, intake
@@ -17,12 +18,27 @@ from .planning import (
     read_document,
     validate_plan,
 )
+from .reporting import combined_markdown, combined_report, diagnosis_markdown
 from .static_report import markdown_report
 
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="reprodoctor")
     commands = parser.add_subparsers(dest="command", required=True)
+    for name, help_text in (
+        ("diagnose", "Interpret recorded failures without execution"),
+        ("report", "Combine run evidence and diagnosis"),
+    ):
+        reporting = commands.add_parser(name, help=help_text)
+        reporting.add_argument("execution", type=Path)
+        reporting.add_argument("--format", choices=["json", "markdown"], default="markdown")
+        reporting.add_argument(
+            "--output", type=Path, help="New private output file; otherwise stdout"
+        )
+        if name == "report":
+            reporting.add_argument(
+                "--static", type=Path, help="Optional static JSON with the same source binding"
+            )
     snapshot = commands.add_parser(
         "intake", help="Pin and export tracked Git files without checkout"
     )
@@ -97,6 +113,41 @@ def main(argv: list[str] | None = None) -> int:
     cleanup.add_argument("--docker-socket", default="/var/run/docker.sock")
     args = parser.parse_args(argv)
     try:
+        if args.command in {"diagnose", "report"}:
+            execution = read_execution(args.execution)
+            if args.command == "diagnose":
+                result = diagnose(execution)
+                rendered = (
+                    diagnosis_markdown(result)
+                    if args.format == "markdown"
+                    else encode_candidates(result, maximum_bytes=128 * 1024 * 1024)
+                )
+            else:
+                result = combined_report(
+                    execution, read_document(args.static) if args.static else None
+                )
+                rendered = (
+                    combined_markdown(result)
+                    if args.format == "markdown"
+                    else encode_candidates(result, maximum_bytes=128 * 1024 * 1024)
+                )
+            if len(rendered.encode()) > 128 * 1024 * 1024:
+                raise IntakeError("Rendered report exceeds byte budget")
+            if args.output:
+                descriptor = os.open(args.output, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+                with os.fdopen(descriptor, "w", encoding="utf-8") as stream:
+                    stream.write(rendered)
+                print(
+                    json.dumps(
+                        {
+                            "output": str(args.output.absolute()),
+                            "execution": "not_started_by_this_command",
+                        }
+                    )
+                )
+            else:
+                print(rendered, end="")
+            return 0
         if args.command == "cleanup":
             print(json.dumps(recover(args.journal, socket=args.docker_socket)))
             return 0
@@ -227,7 +278,14 @@ def main(argv: list[str] | None = None) -> int:
             committed_only=args.committed_only,
         )
     except (EOFError, KeyboardInterrupt):
-        print(json.dumps({"error": "Operation cancelled; no project commands executed."}))
+        print(
+            json.dumps(
+                {
+                    "error": "Operation cancelled. If execution started, inspect its "
+                    "report and recovery journal."
+                }
+            )
+        )
         return 2
     except (IntakeError, OSError) as exc:
         # JSON escaping prevents control characters in paths/errors affecting terminals.

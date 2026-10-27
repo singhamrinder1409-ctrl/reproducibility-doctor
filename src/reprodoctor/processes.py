@@ -12,6 +12,14 @@ from dataclasses import dataclass, field
 from typing import BinaryIO
 
 
+class ProcessInterrupted(KeyboardInterrupt):
+    """Cancellation with the bounded infrastructure output observed before interruption."""
+
+    def __init__(self, result: dict):
+        super().__init__("Infrastructure process interrupted")
+        self.result = result
+
+
 @dataclass
 class Capture:
     limit: int
@@ -56,6 +64,7 @@ def bounded_process(
     started = time.monotonic()
     stdout, stderr = Capture(cap), Capture(cap)
     timed_out = False
+    interrupted = False
     process = subprocess.Popen(
         argv,
         env=environment,
@@ -108,6 +117,8 @@ def bounded_process(
                 process.wait(timeout=2)
             except subprocess.TimeoutExpired:
                 timed_out = True
+    except KeyboardInterrupt:
+        interrupted = True
     finally:
         # Handles Ctrl-C and broken I/O. Container cleanup is the caller's finally block.
         try:
@@ -121,7 +132,7 @@ def bounded_process(
         for stream in (process.stdin, process.stdout, process.stderr):
             if stream is not None and not stream.closed:
                 stream.close()
-    return {
+    result = {
         "exit_code": process.returncode,
         "timed_out": timed_out,
         "seconds": round(time.monotonic() - started, 6),
@@ -129,3 +140,6 @@ def bounded_process(
         "stdout": stdout.record(),
         "stderr": stderr.record(),
     }
+    if interrupted:
+        raise ProcessInterrupted(result)
+    return result
