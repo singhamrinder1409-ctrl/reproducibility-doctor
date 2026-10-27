@@ -1,0 +1,336 @@
+Static-only CLI demo. Actual CLI output; temporary paths normalized to $DEMO.
+No fixture commands or containers executed. Plans remain unapproved.
+
+$ reprodoctor intake $DEMO/fixture --output $DEMO/snapshot
+{"commit": "3a166f3ceeb46860af4b2e49484ced23f60f7781", "content_digest": "a1a228ec3b160d7bdd391f67cc31e77836aa83ea2c30c87007e28a1c990fbaf4", "files": 2, "output": "$DEMO/snapshot"}
+
+
+$ reprodoctor extract $DEMO/snapshot
+{
+  "schema_version": 1,
+  "tool_version": "0.1.0.dev0",
+  "kind": "instruction_candidates",
+  "readme": {
+    "path": "README.md",
+    "sha256": "3d43754e1f072a3765177b0ce0a56f329dc54767bb24187e84adfdc42e72fdb1",
+    "status": "present"
+  },
+  "instructions": [
+    {
+      "id": "instruction-0001",
+      "order": 1,
+      "block_id": "block-0001",
+      "path": "README.md",
+      "start_line": 3,
+      "end_line": 3,
+      "raw_text": "python -m pip install -r absent.txt\n",
+      "candidate_text": "python -m pip install -r absent.txt",
+      "phase": "installation",
+      "command_phase": "installation",
+      "heading_phase": "installation",
+      "heading_context": [
+        {
+          "level": 1,
+          "text": "Install",
+          "line": 1
+        }
+      ],
+      "classification": "command_candidate",
+      "ambiguity_reasons": [],
+      "requires_review": true
+    }
+  ],
+  "blocks": [
+    {
+      "id": "block-0001",
+      "path": "README.md",
+      "start_line": 2,
+      "end_line": 4,
+      "language": "sh",
+      "included": true,
+      "raw_text": "```sh\npython -m pip install -r absent.txt\n```\n",
+      "omission_reason": null
+    }
+  ],
+  "review_items": [],
+  "execution_permitted": false,
+  "limitations": [
+    "Only root README.md sh/bash/shell and untagged fenced blocks are candidates.",
+    "Command and phase detection are heuristics, not shell parsing or safety judgments.",
+    "All candidates require human review, including those with no ambiguity flags.",
+    "Prose, inline code, HTML, other languages and indented blocks are not commands.",
+    "Alternatives, placeholders, transcripts and shell state are not resolved."
+  ],
+  "repository": {
+    "commit": "3a166f3ceeb46860af4b2e49484ced23f60f7781",
+    "content_digest": "a1a228ec3b160d7bdd391f67cc31e77836aa83ea2c30c87007e28a1c990fbaf4"
+  }
+}
+
+
+$ reprodoctor check $DEMO/snapshot --format markdown
+# Reproducibility Doctor — static inspection
+
+Execution: **not run**. This report contains static observations, not a setup verdict.
+
+Commit: 3a166f3ceeb46860af4b2e49484ced23f60f7781
+Snapshot digest: a1a228ec3b160d7bdd391f67cc31e77836aa83ea2c30c87007e28a1c990fbaf4
+Static target Python: 3.12.0
+Checker environment: {&#x27;python&#x27;: &#x27;3.14.5&#x27;, &#x27;dependencies&#x27;: {&#x27;packaging&#x27;: &#x27;26.3&#x27;, &#x27;markdown-it-py&#x27;: &#x27;4.2.0&#x27;, &#x27;mdurl&#x27;: &#x27;0.1.2&#x27;}}
+
+Status counts: finding=1, pass=3, unknown=3
+
+## static-0001: dependencies — pass
+
+Observed: Recognized manifest files are present.
+
+Suggested next action: Review the dependency workflow; manifest presence is not an installation result.
+
+Limit: Manifest checks do not prove dependency completeness or availability.
+
+Evidence: pyproject.toml; SHA-256: ed6a2b294394ca5324bca85096864e4c843c2faf9353e5f0f5550efb7d3bdc19
+
+## static-0002: dependencies — pass
+
+Observed: Explicit project dependency strings parse successfully.
+
+Suggested next action: Verify completeness and installation in an approved environment.
+
+Limit: Manifest checks do not prove dependency completeness or availability.
+
+Evidence: pyproject.toml; SHA-256: ed6a2b294394ca5324bca85096864e4c843c2faf9353e5f0f5550efb7d3bdc19
+
+## static-0003: python — pass
+
+Observed: Static target Python 3.12.0 satisfies declaration &gt;=3.12.
+
+Suggested next action: Choose an allowed exact runtime; exclusion does not mean the project is broken.
+
+Limit: Only explicit declarations are compared; the static target has not run.
+
+Evidence: pyproject.toml; SHA-256: ed6a2b294394ca5324bca85096864e4c843c2faf9353e5f0f5550efb7d3bdc19
+
+## static-0004: consistency — unknown
+
+Observed: Fewer than two supported Python declarations are available to compare.
+
+Suggested next action: Review documentation and configuration together.
+
+Limit: Explicit declaration overlap does not prove runtime compatibility.
+
+Evidence: snapshot inventory / limited check coverage.
+
+## static-0005: references — finding
+
+Observed: Literal input file &#x27;absent.txt&#x27; is absent from the snapshot.
+
+Suggested next action: Check spelling, working directory and generation before calling this a defect.
+
+Limit: Only literal inputs are checked; missing files may be generated or external.
+
+Evidence: README.md:3; SHA-256: 3d43754e1f072a3765177b0ce0a56f329dc54767bb24187e84adfdc42e72fdb1
+
+Evidence: absent.txt; SHA-256: absent
+
+## static-0006: references — unknown
+
+Observed: Inspected 1 supported inputs; ambiguous commands and prose paths were not resolved.
+
+Suggested next action: Review extraction flags, shell state and generated files manually.
+
+Limit: Only literal inputs are checked; missing files may be generated or external.
+
+Evidence: snapshot inventory / limited check coverage.
+
+## static-0007: environment — unknown
+
+Observed: Variable requiredness and dynamically constructed names are not established.
+
+Suggested next action: Review aliases, defaults and external configuration before diagnosing a defect.
+
+Limit: Name matching does not establish requiredness or resolve dynamic access.
+
+Evidence: snapshot inventory / limited check coverage.
+
+## Reproduce this inspection
+
+1. Obtain the same committed source and verify the recorded snapshot digest.
+2. Use the recorded Doctor version and dependency versions.
+3. Run reprodoctor check SNAPSHOT --python-version 3.12.0 --format markdown.
+4. Review findings alongside the source. No project commands have run.
+
+Doctor version: 0.1.0.dev0
+
+## Coverage and limitations
+
+- Manifest checks do not prove dependency completeness or availability.
+- Only explicit declarations are compared; the static target has not run.
+- Only literal inputs are checked; missing files may be generated or external.
+- Name matching does not establish requiredness or resolve dynamic access.
+- Explicit declaration overlap does not prove runtime compatibility.
+- Static passes are not setup runs; no index or build backend was queried.
+
+
+$ reprodoctor plan $DEMO/snapshot --output $DEMO/plan.json
+{"output": "$DEMO/plan.json", "plan_digest": "2918ee3051ba25f9632cd4f28a0340c8191a895d7ffb9fe26d6bed53e309217a", "state": "blocked"}
+
+
+$ reprodoctor run $DEMO/plan.json --snapshot $DEMO/snapshot --dry-run
+{
+  "kind": "execution_dry_run",
+  "plan_digest": "2918ee3051ba25f9632cd4f28a0340c8191a895d7ffb9fe26d6bed53e309217a",
+  "plan_state": "blocked",
+  "approval_matches": false,
+  "execution_status": "not_run",
+  "executor_available": true,
+  "execution_mode": "experimental_live_validation_pending",
+  "runtime_preflight": "not_performed",
+  "plan": {
+    "schema_version": 1,
+    "kind": "execution_plan",
+    "plan_digest": "2918ee3051ba25f9632cd4f28a0340c8191a895d7ffb9fe26d6bed53e309217a",
+    "payload": {
+      "planner": {
+        "tool_version": "0.1.0.dev0",
+        "contract_version": 1,
+        "code_digest": "09cee873bb14ec47c62b0ab6d0e67d60fec40a671458fa20c97c78c19caa4898",
+        "markdown_it_version": "4.2.0",
+        "mdurl_version": "0.1.2"
+      },
+      "repository": {
+        "commit": "3a166f3ceeb46860af4b2e49484ced23f60f7781",
+        "content_digest": "a1a228ec3b160d7bdd391f67cc31e77836aa83ea2c30c87007e28a1c990fbaf4"
+      },
+      "extraction_digest": "117afe55daa9555c31f4f24e1227fa5d3524495a796018c70f4d3d6754b35146",
+      "container": {
+        "image": null,
+        "platform": "linux/amd64",
+        "expected_python_series": "3.12",
+        "network": "none",
+        "ports": [],
+        "host_mounts": [],
+        "privileged": false,
+        "user": "65532:65532",
+        "cap_drop": [
+          "ALL"
+        ],
+        "no_new_privileges": true,
+        "seccomp": "runtime_default_required",
+        "root_filesystem": "read_only",
+        "entrypoint": "overridden_no_image_startup_command",
+        "healthcheck": "disabled",
+        "runtime_log_driver": "none",
+        "runtime_namespaces": {
+          "ipc": "private",
+          "cgroup": "private",
+          "pid": "private"
+        },
+        "runtime_support": "experimental_local_Docker_Linux_cgroup_v2_builtin_seccomp",
+        "environment": {
+          "PATH": "/usr/local/bin:/usr/bin:/bin",
+          "HOME": "/tmp",
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONNOUSERSITE": "1",
+          "PYTHONPATH": "/workspace/.doctor-packages",
+          "PIP_CONFIG_FILE": "/dev/null",
+          "PIP_NO_INDEX": "1",
+          "PIP_DISABLE_PIP_VERSION_CHECK": "1",
+          "PIP_NO_INPUT": "1"
+        },
+        "inherit_host_environment": false,
+        "image_environment": "must_clear_before_project_steps",
+        "source_transfer": "copy_only_verified_snapshot_no_git_metadata",
+        "source_copy_permissions": "user_writable_0644_or_0755_matching_tracked_executable_bit",
+        "project_umask": "0022",
+        "artifact_transfer": "copy_only_verified_wheels_no_host_mounts",
+        "writable_tmpfs": {
+          "/workspace": 268435456,
+          "/tmp": 67108864,
+          "/wheels": 134217728
+        },
+        "shared_memory_bytes": 16777216,
+        "limits": {
+          "cpus": 1,
+          "memory_bytes": 1073741824,
+          "extra_swap_bytes": 0,
+          "pids": 128,
+          "step_seconds": 120,
+          "run_seconds": 600,
+          "log_bytes_per_stream_per_step": 1048576,
+          "run_log_bytes": 4194304,
+          "core_bytes": 0,
+          "open_files": 256
+        },
+        "cleanup": "remove_container_and_temporary_data_on_exit_or_reconcile_after_interruption",
+        "preflight_required": [
+          "verify_local_image_digest_and_platform",
+          "verify_CPython_3.12",
+          "reject_image_declared_volumes",
+          "verify_all_resource_controls",
+          "clear_image_entrypoint_and_environment",
+          "verify_no_sensitive_mounts"
+        ]
+      },
+      "artifacts": {
+        "files": [],
+        "content_digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "total_bytes": 0,
+        "container_directory": "/wheels",
+        "validation": "hashes_only_not_wheel_validity"
+      },
+      "decisions": {},
+      "steps": [
+        {
+          "instruction": {
+            "id": "instruction-0001",
+            "order": 1,
+            "block_id": "block-0001",
+            "path": "README.md",
+            "start_line": 3,
+            "end_line": 3,
+            "raw_text": "python -m pip install -r absent.txt\n",
+            "candidate_text": "python -m pip install -r absent.txt",
+            "phase": "installation",
+            "command_phase": "installation",
+            "heading_phase": "installation",
+            "heading_context": [
+              {
+                "level": 1,
+                "text": "Install",
+                "line": 1
+              }
+            ],
+            "classification": "command_candidate",
+            "ambiguity_reasons": [],
+            "requires_review": true
+          },
+          "decision": {
+            "action": "include",
+            "reason": "Pending overall human approval"
+          },
+          "reviewed_command": "python -m pip install -r absent.txt",
+          "effective": null,
+          "blocker": "Install steps require a reviewed nonempty offline wheelhouse in this MVP",
+          "disposition": "included"
+        }
+      ],
+      "blockers": [
+        "A digest-pinned container image is required before approval.",
+        "instruction-0001: Install steps require a reviewed nonempty offline wheelhouse in this MVP",
+        "No executable process step is included."
+      ],
+      "state": "blocked",
+      "executor_available": true,
+      "execution_mode": "experimental_live_validation_pending",
+      "limitations": [
+        "Network needs of arbitrary program/build code cannot be inferred statically.",
+        "Image existence, digest/platform, Python and runtime controls are not verified here.",
+        "Approval records are local audit data, not identity proof or blanket permission.",
+        "Containers reduce exposure but do not make arbitrary code completely safe.",
+        "Experimental execution needs opt-in and runtime preflight; live tests are pending."
+      ]
+    }
+  },
+  "side_effects": "no container, image pull, install, project command or approval write"
+}
+

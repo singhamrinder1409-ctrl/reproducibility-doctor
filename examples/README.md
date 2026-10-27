@@ -13,3 +13,15 @@ This script creates a temporary Git repository using a fixed fixture identity, d
 Expected observations: requirements.txt is absent; the explicit README Python declaration conflicts with pyproject.toml; app.py exists; SERVICE_TOKEN has no matching example key, which is only a review hint because source defaults and requiredness are not diagnosed. The static target 3.12.0 satisfies the project constraint but is excluded by the README declaration.
 
 The fixture is a development demonstration, separate from reserved held-out scenarios. It is not a complete installable application or an executed failure diagnosis. Reports record the local checker runtime/dependency versions, so those metadata values can differ when regenerated elsewhere.
+
+## Captured CLI walkthrough
+
+Open `demo/index.html` locally for a readable walkthrough, `demo/transcript.txt` for captured output, or replay `demo/demo.cast` with an asciinema-compatible player. The recording is generated from real Doctor CLI output, paced for presentation, with temporary paths normalized to `$DEMO`. It is static-only: the missing-file fixture's README commands never run. No execution sample is fabricated while Docker validation remains pending.
+
+Regenerate into a new directory:
+
+```sh
+python scripts/demo.py --output /new/path/doctor-demo
+```
+
+The script uses only the authored development fixture, creates temporary Git metadata, runs intake/extract/check/blocked-plan/dry-run, checks each CLI status, records output and removes temporary files. It never approves a plan, starts Docker or executes fixture code. The generated plan is a blocked draft with no selected image; it is not an executable plan or approval receipt.

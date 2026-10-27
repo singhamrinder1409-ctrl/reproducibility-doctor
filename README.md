@@ -2,7 +2,9 @@
 
 An open-source developer-tool project for checking whether documented Python setup instructions can be reproduced, with evidence for each finding.
 
-**Current status: Part 6 prototype; live container validation pending.** Inspection, static reports, plan review and dry-run are implemented. An experimental Docker runner is available only with explicit opt-in and matching approval. Docker is unavailable in the development environment, so Part 6 acceptance is **not complete** and Part 7 has not started.
+**Development preview — live Docker validation pending.** Intake, extraction, static checks, plan review, diagnosis and JSON/Markdown reports are implemented. A static-only CLI demo and frozen authored evaluation are included. The experimental runner requires explicit opt-in and matching approval; actual containment and execution reliability remain unverified.
+
+Start with the [sample report](examples/static-report.md), [captured CLI walkthrough](examples/demo/index.html) (open locally), [demo transcript](examples/demo/transcript.txt), and [architecture/threat model](docs/01-scope-and-architecture.md).
 
 ## Install locally
 
@@ -161,6 +163,42 @@ python -m pytest tests/test_live_execution.py --live-container --live-plan /path
 
 The live test never creates an approval automatically. A successful smoke alone will not close the full containment/reliability checklist. See [Part 6 implementation and remaining gates](docs/06-isolated-execution.md). Live validation is left pending as requested; no container or target repository command has been run during this milestone.
 
+## Diagnose and share a report
+
+Once you have a genuine execution record:
+
+```sh
+reprodoctor diagnose /path/to/run-report.json --format markdown --output /path/to/diagnosis.md
+reprodoctor report /path/to/run-report.json --static /path/to/static.json --format markdown --output /path/to/combined.md
+reprodoctor report /path/to/run-report.json --format json --output /path/to/combined.json
+```
+
+These commands interpret records without running Docker or project code. Suggestions cite bounded log evidence and stay separate from observed exit status. An optional static report must match the exact commit and snapshot digest. Timeout, infrastructure failure, unsupported and unknown outcomes remain distinct from project defects. Logs are untrusted; a matching traceback is only a possible cause.
+
+Output files are new and owner-only. Reports retain exact commands and logs and are **not automatically redacted**: review a separate copy before sharing. No real execution report is published while live testing is pending.
+
+## Try the static demo without Docker
+
+```sh
+python scripts/demo.py --output /new/path/doctor-demo
+```
+
+Open the generated `index.html`, read `transcript.txt`, or replay `demo.cast` with an asciinema-compatible player. The demo captures actual CLI output, normalizes temporary paths and paces it for presentation. It finds a missing requirements file and builds/previews a blocked draft; no fixture command or container runs.
+
+## Evaluation and current completion
+
+Twelve authored fixture repositories are frozen separately into eight development and four held-out cases. The [first static evaluation](evaluation/results-static.json) records per-rule/status assertion denominators, false positives/negatives, unknowns and timings. One held-out assertion has a documented label mapping error; the original result is retained. This small public split is not a blinded or representative GitHub benchmark. Execution attempted: **0**; runtime reliability and cleanup rate are unmeasured.
+
+| Part | Status |
+| --- | --- |
+| 1–5: scope through plan review | Implemented and tested |
+| 6: isolated execution | Prototype; live acceptance pending |
+| 7–8: diagnosis and reports | Implemented and tested on authored records |
+| 9: evaluation | Static run recorded; execution evaluation pending |
+| 10: release | Local CI/demo/license/package prepared; remote publication and CI verification pending |
+
+The CLI uses Python's standard library, markdown-it-py for source-aware Markdown and packaging for Python/dependency constraints. Git supplies immutable source objects; Docker is the optional execution boundary. No paid API, hosted backend, database or AI dependency is required. Poetry/uv/Conda, online dependency fetching, Windows hosts, other languages and a GUI are future work.
+
 ## Limits and exclusions
 
 - Ordinary local SHA-1 Git repositories only; linked worktrees, bare repositories, shared/alternate object stores, and SHA-256 repositories are unsupported.
@@ -180,4 +218,8 @@ ruff format --check .
 
 Tests generate authored Git repositories in temporary directories. They check intake isolation, extraction provenance, static evidence, plan/approval binding, policy tampering, review/state, offline artifacts, cancellation, dry-run side effects and the simulated execution lifecycle. Dry-run tests prohibit subprocess/socket calls and compare file contents/permissions. Trusted host-process fixtures exercise bounded pipe I/O; target repository code never runs on the host. Default tests access no network or containers and do not execute README commands. Interactive approval tests simulate input for authored fixtures; they do not approve real project execution.
 
-See [scope and architecture](docs/01-scope-and-architecture.md), [intake](docs/02-repository-intake.md), [extraction](docs/03-readme-extraction.md), [static checks](docs/04-static-checks.md), [plan review](docs/05-execution-plan-review.md), [execution prototype and pending gates](docs/06-isolated-execution.md), and [reserved evaluation scenarios](evaluation/README.md). Remaining work in Part 6 is live verification; failure diagnosis (Part 7) has not begun.
+See [scope and architecture](docs/01-scope-and-architecture.md), [intake](docs/02-repository-intake.md), [extraction](docs/03-readme-extraction.md), [static checks](docs/04-static-checks.md), [plan review](docs/05-execution-plan-review.md), [execution prototype and pending gates](docs/06-isolated-execution.md), [diagnosis](docs/07-failure-diagnosis.md), [combined reports](docs/08-reports-and-cli.md), [evaluation results and limits](evaluation/README.md), and [release checklist](docs/10-release-checklist.md). The user authorized finishing offline work before returning to the pending live gates.
+
+## License and contributing
+
+[MIT](LICENSE). See [contributing](CONTRIBUTING.md), [security boundaries](SECURITY.md) and [changelog](CHANGELOG.md).

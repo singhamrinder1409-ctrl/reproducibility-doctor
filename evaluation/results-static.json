@@ -1,0 +1,388 @@
+{
+  "schema_version": 1,
+  "kind": "static_evaluation",
+  "frozen_sha256": "273b40e9743de7fd888a541f57ff78b8e860900fd479b16f838b7f6c5dd962e5",
+  "environment": {
+    "python": "3.14.5",
+    "platform": "macOS-26.7.1-arm64-arm-64bit-Mach-O"
+  },
+  "scope": "Authored static rule/status assertions only; not end-to-end setup accuracy.",
+  "results": [
+    {
+      "id": "dev-01",
+      "split": "development",
+      "repository": {
+        "commit": "0f4b3461e1127174b1efd595b34d8a1ec926d5c2",
+        "content_digest": "3c27a5478f5948e849dc5fad2638c1bfa28088ac9a9153abf80650ef98cf611a"
+      },
+      "labels": [
+        {
+          "rule": "references/finding",
+          "expected": false,
+          "observed": false
+        }
+      ],
+      "static_unknown_or_unsupported": 3,
+      "runtime_status": "not_run",
+      "runtime_expected": "Finite launch succeeds; real execution pending",
+      "seconds": 0.330984
+    },
+    {
+      "id": "dev-02",
+      "split": "development",
+      "repository": {
+        "commit": "3a166f3ceeb46860af4b2e49484ced23f60f7781",
+        "content_digest": "a1a228ec3b160d7bdd391f67cc31e77836aa83ea2c30c87007e28a1c990fbaf4"
+      },
+      "labels": [
+        {
+          "rule": "references/finding",
+          "expected": true,
+          "observed": true
+        }
+      ],
+      "static_unknown_or_unsupported": 3,
+      "runtime_status": "not_run",
+      "runtime_expected": "Missing requirement path; real execution pending",
+      "seconds": 0.306733
+    },
+    {
+      "id": "dev-03",
+      "split": "development",
+      "repository": {
+        "commit": "7aff680a80719028c502c23b3c7fbe4e2f925857",
+        "content_digest": "bbd4ef600f2f31cc3402a5ea83ec1c0cb71d7260528aac9c6db321c684c14d93"
+      },
+      "labels": [
+        {
+          "rule": "python/unsupported",
+          "expected": true,
+          "observed": true
+        },
+        {
+          "rule": "python/finding",
+          "expected": false,
+          "observed": false
+        }
+      ],
+      "static_unknown_or_unsupported": 4,
+      "runtime_status": "not_run",
+      "runtime_expected": "Selected runtime unsupported; no project-defect claim",
+      "seconds": 0.280866
+    },
+    {
+      "id": "dev-04",
+      "split": "development",
+      "repository": {
+        "commit": "fee59bc077dd3d6a0053ed1c4824ffb9838d2d2b",
+        "content_digest": "0727498e69648e5948fa90af638dcd1496831da4d4b1bbd934274d53cd00db08"
+      },
+      "labels": [
+        {
+          "rule": "environment/review",
+          "expected": true,
+          "observed": true
+        },
+        {
+          "rule": "environment/finding",
+          "expected": false,
+          "observed": false
+        }
+      ],
+      "static_unknown_or_unsupported": 3,
+      "runtime_status": "not_run",
+      "runtime_expected": "Configuration hint only; no requiredness inference",
+      "seconds": 0.308634
+    },
+    {
+      "id": "dev-05",
+      "split": "development",
+      "repository": {
+        "commit": "4a9914862b12295e864e5fea4b113dc410b61560",
+        "content_digest": "0ccec6f136a10ae8cd2bd8e9c6bfb48e859a2b946140c9072f699791994a2a34"
+      },
+      "labels": [
+        {
+          "rule": "references/finding",
+          "expected": false,
+          "observed": false
+        }
+      ],
+      "static_unknown_or_unsupported": 3,
+      "runtime_status": "not_run",
+      "runtime_expected": "Unsuccessful tests; real execution pending",
+      "seconds": 0.333511
+    },
+    {
+      "id": "dev-06",
+      "split": "development",
+      "repository": {
+        "commit": "e1bda7c3c300402747767c70d3c7aca8f5900b71",
+        "content_digest": "bcbfdff91bc86de97d6931bf2c90f5a233c38c56e685baa7fae244188bf75993"
+      },
+      "labels": [
+        {
+          "rule": "extraction/ambiguous",
+          "expected": true,
+          "observed": true
+        }
+      ],
+      "static_unknown_or_unsupported": 3,
+      "runtime_status": "not_run",
+      "runtime_expected": "Review required; no implicit branch selection",
+      "seconds": 0.347835
+    },
+    {
+      "id": "dev-07",
+      "split": "development",
+      "repository": {
+        "commit": "96573c0484310ad031ceb499766747f487d0a662",
+        "content_digest": "96b0d949f412d4c3ac1f8c997bb0483929db1c6b4a1c3c2f702a05b8fbca4d82"
+      },
+      "labels": [
+        {
+          "rule": "references/finding",
+          "expected": false,
+          "observed": false
+        }
+      ],
+      "static_unknown_or_unsupported": 3,
+      "runtime_status": "not_run",
+      "runtime_expected": "Log cap, timeout and cleanup; real execution pending",
+      "seconds": 0.343083
+    },
+    {
+      "id": "dev-08",
+      "split": "development",
+      "repository": {
+        "commit": "e8f588ea1e67ee96c3f0a227cfdc32259f8b63fc",
+        "content_digest": "10558ec6be1c45db98fb8f63fcd9ea913a20a4896c9176661c4575d68bd8e91a"
+      },
+      "labels": [
+        {
+          "rule": "references/finding",
+          "expected": false,
+          "observed": false
+        }
+      ],
+      "static_unknown_or_unsupported": 3,
+      "runtime_status": "not_run",
+      "runtime_expected": "Offline artifacts unavailable; real execution pending",
+      "seconds": 0.363456
+    },
+    {
+      "id": "hold-01",
+      "split": "held_out",
+      "repository": {
+        "commit": "c38af88a7cbcb6e6b1e29243c32a21ab79a5c2b1",
+        "content_digest": "5c4c143dccae2cb38c62c68e2d87d46013ae97f2269e537f7adaa51102e031f2"
+      },
+      "labels": [
+        {
+          "rule": "references/finding",
+          "expected": false,
+          "observed": false
+        },
+        {
+          "rule": "environment/review",
+          "expected": false,
+          "observed": false
+        }
+      ],
+      "static_unknown_or_unsupported": 3,
+      "runtime_status": "not_run",
+      "runtime_expected": "Sequential directory/environment success; real execution pending",
+      "seconds": 0.393669
+    },
+    {
+      "id": "hold-02",
+      "split": "held_out",
+      "repository": {
+        "commit": "f640696b62e5f7679f7f4ba5674eaf1969a55219",
+        "content_digest": "aa67759592581d02a0c7fb47398a0cfddeded4abe0731ae372fe2b23b902b708"
+      },
+      "labels": [
+        {
+          "rule": "references/finding",
+          "expected": false,
+          "observed": false
+        },
+        {
+          "rule": "environment/review",
+          "expected": true,
+          "observed": true
+        }
+      ],
+      "static_unknown_or_unsupported": 3,
+      "runtime_status": "not_run",
+      "runtime_expected": "Generated configuration lacks required key; exact cause unknown statically; real execution pending",
+      "seconds": 0.37064
+    },
+    {
+      "id": "hold-03",
+      "split": "held_out",
+      "repository": {
+        "commit": "aa141e40cd9ed4432e49feaa006f54d37c514d62",
+        "content_digest": "06a1bf280044c7e28bc8e2c147621f3a1fa850297f804acbadc3d7483c971075"
+      },
+      "labels": [
+        {
+          "rule": "python/finding",
+          "expected": true,
+          "observed": false
+        },
+        {
+          "rule": "extraction/ambiguous",
+          "expected": true,
+          "observed": true
+        }
+      ],
+      "static_unknown_or_unsupported": 3,
+      "runtime_status": "not_run",
+      "runtime_expected": "Inconsistent declarations plus manual multiline review",
+      "seconds": 0.364592
+    },
+    {
+      "id": "hold-04",
+      "split": "held_out",
+      "repository": {
+        "commit": "dc658c03212f5cb4ea0251cc602a9f73f88392ee",
+        "content_digest": "498902dd536aa3eeea1d5524bdf7e80e236ba682c18c69588b057d3618f66d40"
+      },
+      "labels": [
+        {
+          "rule": "references/finding",
+          "expected": false,
+          "observed": false
+        }
+      ],
+      "static_unknown_or_unsupported": 3,
+      "runtime_status": "not_run",
+      "runtime_expected": "Network denial, memory enforcement, sanitized logs, interruption and cleanup; live review required",
+      "seconds": 0.344195
+    }
+  ],
+  "metrics": {
+    "development": {
+      "references/finding": {
+        "tp": 1,
+        "fp": 0,
+        "tn": 4,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "false_positive_rate": 0.0,
+        "labeled_assertions": 5
+      },
+      "python/unsupported": {
+        "tp": 1,
+        "fp": 0,
+        "tn": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "false_positive_rate": null,
+        "labeled_assertions": 1
+      },
+      "python/finding": {
+        "tp": 0,
+        "fp": 0,
+        "tn": 1,
+        "fn": 0,
+        "precision": null,
+        "recall": null,
+        "false_positive_rate": 0.0,
+        "labeled_assertions": 1
+      },
+      "environment/review": {
+        "tp": 1,
+        "fp": 0,
+        "tn": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "false_positive_rate": null,
+        "labeled_assertions": 1
+      },
+      "environment/finding": {
+        "tp": 0,
+        "fp": 0,
+        "tn": 1,
+        "fn": 0,
+        "precision": null,
+        "recall": null,
+        "false_positive_rate": 0.0,
+        "labeled_assertions": 1
+      },
+      "extraction/ambiguous": {
+        "tp": 1,
+        "fp": 0,
+        "tn": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "false_positive_rate": null,
+        "labeled_assertions": 1
+      }
+    },
+    "held_out": {
+      "references/finding": {
+        "tp": 0,
+        "fp": 0,
+        "tn": 3,
+        "fn": 0,
+        "precision": null,
+        "recall": null,
+        "false_positive_rate": 0.0,
+        "labeled_assertions": 3
+      },
+      "environment/review": {
+        "tp": 1,
+        "fp": 0,
+        "tn": 1,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "false_positive_rate": 0.0,
+        "labeled_assertions": 2
+      },
+      "python/finding": {
+        "tp": 0,
+        "fp": 0,
+        "tn": 0,
+        "fn": 1,
+        "precision": null,
+        "recall": 0.0,
+        "false_positive_rate": null,
+        "labeled_assertions": 1
+      },
+      "extraction/ambiguous": {
+        "tp": 1,
+        "fp": 0,
+        "tn": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "false_positive_rate": null,
+        "labeled_assertions": 1
+      }
+    }
+  },
+  "timings": {
+    "sample_count": 12,
+    "p50_seconds": 0.34363900000000003,
+    "p95_seconds_nearest_rank": 0.393669
+  },
+  "execution_reliability": {
+    "attempted": 0,
+    "successful": null,
+    "cleanup_rate": null,
+    "reason": "Live Docker validation deferred"
+  },
+  "limitations": [
+    "Tiny authored fixtures are not representative of GitHub projects.",
+    "Held-out definitions were visible to the author; this is a pre-reserved split, not a blinded study.",
+    "Precision/recall denominators are explicit rule/status assertions, not all possible defects.",
+    "No execution, containment or end-to-end reproducibility accuracy is measured."
+  ]
+}
