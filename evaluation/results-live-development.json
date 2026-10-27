@@ -1,0 +1,132 @@
+{
+  "schema_version": 1,
+  "kind": "approved_live_repetition_evaluation",
+  "plan_digest": "7ec253a20f1876510149c63b63bc46bc7638f394125fbf9f8176bd6b21ce1918",
+  "repository": {
+    "commit": "d91d9b19e8edaff37653b8251df37233d60e59df",
+    "content_digest": "80b4e0b45aba2c7fa8cf5651524dfde9f5936b6fe452a48e09737516945ba9d9"
+  },
+  "engine": {
+    "tool_version": "0.1.0.dev0",
+    "contract_version": 1,
+    "code_digest": "490b871939972a1f75b8e37f4721246d7c1c24168d3eb1de3ed9b85c9f173452",
+    "markdown_it_version": "4.2.0",
+    "mdurl_version": "0.1.2"
+  },
+  "image": {
+    "id": "sha256:12316debbfb86890f6b2d825820612741ba527ad5a44e3902759141d572bfe8f",
+    "repo_digest": "sha256:12316debbfb86890f6b2d825820612741ba527ad5a44e3902759141d572bfe8f",
+    "platform": "linux/arm64",
+    "image_environment_keys_cleared": [
+      "GPG_KEY",
+      "LANG",
+      "PATH",
+      "PYTHON_SHA256",
+      "PYTHON_VERSION"
+    ]
+  },
+  "server": {
+    "ServerVersion": "29.9.2",
+    "OSType": "linux",
+    "CgroupVersion": "2",
+    "SecurityOptions": [
+      "name=seccomp,profile=builtin",
+      "name=cgroupns"
+    ]
+  },
+  "scope": "Ten runs of the same manually approved development state-success fixture on one macOS Docker Desktop ARM64 runtime. No new commands or approvals were generated.",
+  "requested_runs": 10,
+  "completed_and_removed": 10,
+  "observed_runs": 10,
+  "p50_seconds": 0.8160635,
+  "p95_seconds_nearest_rank": 2.380719,
+  "runs": [
+    {
+      "index": 1,
+      "run_id": "b678ac89cca8475ab3cac4eaa2ce60cf",
+      "execution_status": "completed",
+      "cleanup": "removed",
+      "seconds": 2.380719,
+      "expected_marker_observed": true
+    },
+    {
+      "index": 2,
+      "run_id": "f8b39943ff7d45759cbe1de6590c9a0e",
+      "execution_status": "completed",
+      "cleanup": "removed",
+      "seconds": 0.944081,
+      "expected_marker_observed": true
+    },
+    {
+      "index": 3,
+      "run_id": "93fcd7fa62344c99aa9f112f176e6786",
+      "execution_status": "completed",
+      "cleanup": "removed",
+      "seconds": 0.799166,
+      "expected_marker_observed": true
+    },
+    {
+      "index": 4,
+      "run_id": "42b37f4e7979444a8cca465c1e198345",
+      "execution_status": "completed",
+      "cleanup": "removed",
+      "seconds": 0.801912,
+      "expected_marker_observed": true
+    },
+    {
+      "index": 5,
+      "run_id": "c93ed6417ccd46f48edf5e6521f8d585",
+      "execution_status": "completed",
+      "cleanup": "removed",
+      "seconds": 0.801541,
+      "expected_marker_observed": true
+    },
+    {
+      "index": 6,
+      "run_id": "3c7e91f080104f8a92f1669b6923096c",
+      "execution_status": "completed",
+      "cleanup": "removed",
+      "seconds": 0.813572,
+      "expected_marker_observed": true
+    },
+    {
+      "index": 7,
+      "run_id": "e4f5b8d838fe49ebaee2a9e070428d78",
+      "execution_status": "completed",
+      "cleanup": "removed",
+      "seconds": 0.792436,
+      "expected_marker_observed": true
+    },
+    {
+      "index": 8,
+      "run_id": "0912c385785249c7b9290f485972c310",
+      "execution_status": "completed",
+      "cleanup": "removed",
+      "seconds": 0.826408,
+      "expected_marker_observed": true
+    },
+    {
+      "index": 9,
+      "run_id": "e4302dafab754aa9855cdac364d8fdc2",
+      "execution_status": "completed",
+      "cleanup": "removed",
+      "seconds": 0.829146,
+      "expected_marker_observed": true
+    },
+    {
+      "index": 10,
+      "run_id": "c1a8e2f73021406eb1d970902cf9f348",
+      "execution_status": "completed",
+      "cleanup": "removed",
+      "seconds": 0.818555,
+      "expected_marker_observed": true
+    }
+  ],
+  "limitations": [
+    "This is not a representative GitHub benchmark or proof of arbitrary-code safety.",
+    "The earlier strict-network-preflight failure is preserved separately and is not included in this fixed-runner repetition series.",
+    "Separate pytest smoke and failure-stopping checks are not included in these ten measurements.",
+    "Resource-abuse, actual egress attempts, log floods, timeouts, interruption and recovery acceptance remain pending.",
+    "Frozen held-out setup evaluation has not run; these are development validation measurements."
+  ]
+}

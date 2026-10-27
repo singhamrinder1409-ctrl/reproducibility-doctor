@@ -26,3 +26,7 @@ Docker Desktop was subsequently installed and started by the user. Read-only che
 Doctor now also searches Docker Desktop's fixed `/Applications/Docker.app/Contents/Resources/bin` directory on macOS. It still ignores the caller's general PATH. Two regression cases cover platform-specific selection and rejection of an injected search path. All 217 local tests pass, with the live test still skipped. Changing the runner invalidates prior plans/approvals.
 
 New ARM64 plans were prepared against the current runner. The failure fixture's deliberate Tests-heading/direct-Python ambiguity requires a visible reviewer accept decision. An accept decision is not execution approval. Plans are waiting for interactive full-digest confirmation; no real approval receipt, target execution, containment evidence or cleanup result exists yet.
+
+## Current progress
+
+The corrected approved state-success and failure-stops plans have now run. Their genuine reports and the ten-run development measurements are recorded in [Part 6](06-isolated-execution.md). The next three **new**, unapproved plans come from `scripts/prepare_live_controls.py`: network/host sentinels, resource stress and log caps. Read the complete source and plan before creating approval receipts. Preparation never executes them; default tests only syntax-parse their source. Timeout/interruption/recovery plans are a subsequent step, not silently covered by approving these probes.

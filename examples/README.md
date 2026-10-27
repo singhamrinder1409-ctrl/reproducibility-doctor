@@ -29,3 +29,11 @@ The script uses only the authored development fixture, creates temporary Git met
 ## Genuine live preflight failure
 
 `live-preflight-failed.json` and `.md` record the first approved live attempt. Docker/kernel settings were observed, but the original strict network enumeration stopped the runner before source transfer or target code execution. Cleanup succeeded. The original evidence is retained after fixing the network probe; it does not demonstrate successful setup or complete containment acceptance. No approval receipt or private source is published.
+
+## Genuine approved target runs
+
+- `live-success.json` / `.md`: environment and directory state succeeded; expected marker observed; container removed.
+- `live-failure-stops.json` / `.md`: deliberate exit 7 recorded; the later command remained not reached; container removed.
+- `live-success-fixture/` and `live-failure-stops-fixture/`: exact authored snapshot source used for these records. These source copies are excluded from Ruff reformatting to preserve their recorded bytes. They are never imported/run by default tests.
+
+The reports are genuine, retain their original `experimental` and `live_validation: pending` fields, and contain only the authored fixture's harmless literals and logs. Approval receipts and private host paths are excluded. They demonstrate those narrow outcomes on one runtime, not universal reproducibility or complete containment.

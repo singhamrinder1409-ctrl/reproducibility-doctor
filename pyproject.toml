@@ -27,6 +27,7 @@ testpaths = ["tests"]
 pythonpath = ["src"]
 
 [tool.ruff]
+extend-exclude = ["examples/live-success-fixture", "examples/live-failure-stops-fixture"]
 target-version = "py312"
 line-length = 100
 

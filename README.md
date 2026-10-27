@@ -2,7 +2,7 @@
 
 An open-source developer-tool project for checking whether documented Python setup instructions can be reproduced, with evidence for each finding.
 
-**Development preview — live Docker validation pending.** Intake, extraction, static checks, plan review, diagnosis and JSON/Markdown reports are implemented. A static-only CLI demo and frozen authored evaluation are included. The experimental runner requires explicit opt-in and matching approval; actual containment and execution reliability remain unverified.
+**Development preview — live Docker validation pending.** Intake, extraction, static checks, plan review, diagnosis and JSON/Markdown reports are implemented. A static-only CLI demo and frozen authored evaluation are included. The experimental runner requires explicit opt-in and matching approval; full containment and broader execution reliability remain unverified.
 
 [GitHub repository](https://github.com/singhamrinder1409-ctrl/reproducibility-doctor) · [CI runs](https://github.com/singhamrinder1409-ctrl/reproducibility-doctor/actions)
 
@@ -165,7 +165,7 @@ The default suite uses a simulated Docker adapter and trusted host I/O fixtures,
 python -m pytest tests/test_live_execution.py --live-container --live-plan /path/to/plan.json --live-snapshot /path/to/snapshot --live-approval /path/to/approval.json
 ```
 
-The live test never creates an approval automatically. A successful smoke alone will not close the full containment/reliability checklist. See [Part 6 implementation and remaining gates](docs/06-isolated-execution.md). Live validation is left pending as requested; no container or target repository command has been run during this milestone.
+The live test never creates an approval automatically. A successful smoke alone will not close the full containment/reliability checklist. See [Part 6 implementation and remaining gates](docs/06-isolated-execution.md). The opt-in live smoke now passes with a genuine approved plan. Basic success, stop-on-failure and ten-run cleanup repeatability have been observed; broader resource/network/timeout/recovery acceptance remains pending.
 
 ## Diagnose and share a report
 
@@ -179,7 +179,7 @@ reprodoctor report /path/to/run-report.json --format json --output /path/to/comb
 
 These commands interpret records without running Docker or project code. Suggestions cite bounded log evidence and stay separate from observed exit status. An optional static report must match the exact commit and snapshot digest. Timeout, infrastructure failure, unsupported and unknown outcomes remain distinct from project defects. Logs are untrusted; a matching traceback is only a possible cause.
 
-Output files are new and owner-only. Reports retain exact commands and logs and are **not automatically redacted**: review a separate copy before sharing. A [genuine preflight failure report](examples/live-preflight-failed.md) is available: the runner stopped before target code, and cleanup succeeded. Successful target execution and full live acceptance remain pending.
+Output files are new and owner-only. Reports retain exact commands and logs and are **not automatically redacted**: review a separate copy before sharing. A [genuine preflight failure report](examples/live-preflight-failed.md) is available: the runner stopped before target code, and cleanup succeeded. The [successful state fixture](examples/live-success.md) and [stop-on-failure fixture](examples/live-failure-stops.md) now have genuine results and confirmed cleanup. Full live acceptance remains pending.
 
 ## Try the static demo without Docker
 
@@ -191,12 +191,12 @@ Open the generated `index.html`, read `transcript.txt`, or replay `demo.cast` wi
 
 ## Evaluation and current completion
 
-Twelve authored fixture repositories are frozen separately into eight development and four held-out cases. The [first static evaluation](evaluation/results-static.json) records per-rule/status assertion denominators, false positives/negatives, unknowns and timings. One held-out assertion has a documented label mapping error; the original result is retained. This small public split is not a blinded or representative GitHub benchmark. Execution attempted: **0**; runtime reliability and cleanup rate are unmeasured.
+Twelve authored fixture repositories are frozen separately into eight development and four held-out cases. The [first static evaluation](evaluation/results-static.json) records per-rule/status assertion denominators, false positives/negatives, unknowns and timings. One held-out assertion has a documented label mapping error; the original result is retained. This small public split is not a blinded or representative GitHub benchmark. That frozen static run attempted **0** executions. A [separate approved development series](evaluation/results-live-development.json) now records 10/10 completions with confirmed cleanup on one fixture/runtime; this is not broad reliability or held-out setup accuracy.
 
 | Part | Status |
 | --- | --- |
 | 1–5: scope through plan review | Implemented and tested |
-| 6: isolated execution | Prototype; live acceptance pending |
+| 6: isolated execution | Basic live success/failure and 10-run repeatability verified; broader enforcement pending |
 | 7–8: diagnosis and reports | Implemented and tested on authored records |
 | 9: evaluation | Static run recorded; execution evaluation pending |
 | 10: release | Public development preview published; CI/demo/license/package included; see CI runs for remote status |

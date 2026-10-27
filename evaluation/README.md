@@ -25,3 +25,11 @@ The development split has 10 labeled rule/status assertions. The held-out split 
 The small public split was reserved before tuning but is not blinded. Metrics measure only explicit assertions; they do not measure all possible defects, full extraction recall, diagnosis causality, successful setup or real-world GitHub accuracy. No broad “accuracy” percentage is claimed. Full Part 9 acceptance remains pending live execution, resource/cleanup tests and ten repeated supported offline runs.
 
 The later Docker Desktop CLI discovery change modifies a frozen implementation file, so the first evaluation's drift guard now intentionally rejects reruns on the current checkout. To reproduce that historical evaluation unchanged, use a separate checkout at `f7638b3` and write results to a new path. The recorded first results and labels have not been overwritten or tuned. Runtime integration work is not a replacement held-out evaluation.
+
+## Approved development runtime measurements (2026-10-27)
+
+`results-live-development.json` records ten executions of the **same** manually approved state-success development fixture with the corrected runner, on one Docker Desktop Linux ARM64 VM. All ten completed with the expected marker and confirmed container removal. Median duration was 0.8160635 seconds; nearest-rank p95 was 2.380719 seconds (ten samples, so this is the maximum). Each run retains a unique run ID, observed duration and cleanup/status evidence. The first run is also published as `examples/live-success.json`; the nine additional full private reports remain local.
+
+These ten measurements exclude the separately passing pytest live smoke, the separately verified deliberate exit-7/stop-next-step fixture, and the original strict-network-preflight failure. That original failure remains published separately, not erased from history or counted as a corrected-runner success. The zero-attempt fields in the older static evaluation describe that earlier frozen static run, not the current project state.
+
+This is a small development repeatability check, not held-out setup accuracy or broad execution reliability. Actual resource abuse, network attempts, log flooding, timeout/interruption and recovery acceptance are still pending their own approved probes. Frozen held-out setup scenarios have not been executed or used to tune the runner.

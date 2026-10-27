@@ -60,8 +60,8 @@ The live smoke gate requires an explicit `--live-container` pytest option and ma
 
 ## Remaining gates before Part 6 can be called complete
 
-- [ ] Run the approved zero-dependency success fixture on the reference Linux/cgroup-v2 Docker runtime; verify preflight and exact environment evidence.
-- [ ] Verify actual failed-step status and that later steps never start.
+- [x] Run the approved zero-dependency success fixture on Linux/cgroup-v2 Docker Desktop ARM64; verify preflight and exact environment evidence. This validates this specific VM runtime, not all Linux/macOS hosts.
+- [x] Verify actual failed-step status and that later steps never start.
 - [ ] Observe network denial and absence of host files/credentials/mounts using approved sentinel fixtures.
 - [ ] Exercise actual CPU, memory/swap, PID, core/nofile and writable-storage limits; include logs of the observed outcomes.
 - [ ] Flood stdout/stderr beyond both per-step and aggregate caps; verify no daemon log growth and correct truncation/timing.
@@ -81,3 +81,15 @@ The user interactively approved both original ARM64 fixture plans. The success f
 An infrastructure-only follow-up (no target transfer/import/execution) established that socket interface enumeration includes dormant tunnel devices; `/sys/class/net` additionally contains the non-interface `bonding_masters` entry. The corrected fixed probe uses socket enumeration plus ioctl interface flags/IPv4 addresses and proc IPv4/IPv6 route/address observations. Every non-loopback device must be DOWN/not RUNNING and lack an IPv4 address; IPv4 routes and any non-loopback IPv6 addresses/routes are rejected. It still requires no networking in Docker, zero capabilities, non-root and the other original controls. Missing/malformed observations fail closed. No external-interface activation or egress exception is allowed. Regression tests cover up/running devices, addresses, routes and malformed/missing mappings.
 
 The revised kernel preflight passed in a separately constrained infrastructure-only inspection container, with removal confirmed. The two target plans were rebuilt and dry-run validated; they require fresh full-digest approval because the runner fingerprint changed. No target setup command has run yet. Resource-abuse, egress, timeouts, recovery and repeatability gates remain unchecked.
+
+## Approved target results and next probes — 2026-10-27
+
+The user interactively approved the corrected plans. The state-success fixture completed: the environment assignment persisted, the relative directory change passed, and the final Python command emitted `DOCTOR_STATE_SUCCESS` with exit 0. The deliberate failure fixture emitted `DOCTOR_EXPECTED_FAILURE` with exit 7; `instruction-0002` was not reached. Both containers were removed and absence confirmed. Genuine JSON/Markdown records are linked in [examples](../examples/README.md).
+
+The explicit pytest live smoke passed with the actual user-approved plan/receipt. A ten-run series of the same approved success fixture completed with the expected marker and removal in all ten cases; [runtime measurements](../evaluation/results-live-development.json) record the exact denominator, engine/image and timings. This provides basic state/exit/cleanup repeatability evidence on Docker Desktop 4.97.0 / Engine 29.9.2 / CPython 3.12.16 / Linux ARM64. It does not complete broader enforcement or platform acceptance.
+
+Three NEW development plans are prepared by `scripts/prepare_live_controls.py`, requiring a new output directory, explicit image digest and platform. It copies authored fixtures without importing them, creates a harmless private host-only sentinel outside container inputs, pins snapshots, and generates unapproved plans plus an approval-only helper. It never starts Docker or creates approval receipts. Unit tests allow only trusted Git infrastructure calls during preparation and syntax-parse fixture Python rather than executing it.
+
+The new probes cover network/host sentinels, bounded CPU/memory/PID/descriptor/core/tmpfs stress, and per-stream/whole-run log overflow. None has run yet. For the future network run, the harness must verify the original host-only file still exists with its recorded hash and set the synthetic `DOCTOR_HOST_SENTINEL` in Doctor's host environment; neither belongs in the target environment or staged file inventory. Remove only that exact authored sentinel after the probe, never broad host files. CPU/memory probes have finite source-side bounds in addition to the approved cgroup limits. Containers still share a kernel and do not make arbitrary code completely safe.
+
+Timeouts (including the full 600-second run budget), Ctrl-C, SIGTERM, host-kill recovery, unrelated-resource preservation, live staging/mutation cases and held-out execution remain subsequent gates. Full live validation remains pending.
