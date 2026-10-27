@@ -48,4 +48,4 @@ References for supported metadata semantics: [PyPA pyproject specification](http
 
 ## Next milestone
 
-Part 5 will present extracted commands, required network/artifacts, environment and container settings in a reviewable execution plan, bind approval to source/plan digests and support a no-execution dry-run. No approval workflow or container runner has been implemented in Part 4.
+Part 5 is now tracked in [execution-plan review](05-execution-plan-review.md). Static inspection itself never approves or executes commands. Container execution remains a later milestone.

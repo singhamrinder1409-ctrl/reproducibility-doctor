@@ -40,7 +40,7 @@ Treat repository names, Git metadata, README text, manifests, dependency artifac
 
 The initial executor is for controlled fixtures and repositories the user has reviewed. Do not advertise it as a malware sandbox. Recommend a disposable VM for repositories of unknown provenance. Rootless Docker is preferred where supported; Linux is the reference execution platform. macOS may use a Linux VM runtime but must pass the same capability checks. Static inspection remains usable without Docker.
 
-Proposed default limits: 1 CPU, 1 GiB memory with no extra swap, 128 PIDs, 120 seconds per step, 600 seconds per run, 1 MiB captured output per stream per step, a 256 MiB writable workspace and 64 MiB /tmp. Bound snapshot size to 50 MiB and individual parsed files to 1 MiB. Store truncation markers and counts. Validate these defaults against fixtures before release; if a runtime cannot enforce the disk budget, execution is unavailable on that runtime.
+Proposed default limits: 1 CPU, 1 GiB memory with no extra swap, 128 PIDs, 120 seconds per step, 600 seconds per run, 1 MiB captured output per stream per step, a 256 MiB writable workspace and 64 MiB /tmp. Milestone 5 adds a separately bounded 128 MiB /wheels artifact tmpfs and 16 MiB shared memory. Bound snapshot size to 50 MiB and individual parsed files to 1 MiB. Store truncation markers and counts. Validate these defaults against fixtures before release; if a runtime cannot enforce the disk budget, execution is unavailable on that runtime.
 
 ## Architecture and invariants
 
@@ -66,14 +66,16 @@ Plan states: draft → needs-review → approved → running → completed / fai
 
 Readme commands retain their order. Persistent shell effects require explicit modeling: reviewed environment assignments and relative directory changes update plan state. Unsupported pipelines, substitutions, background jobs, source/activation scripts, or multiline constructs block automatic plan completion. Never silently split compound commands or omit a command. A finite launch can succeed by exiting zero; a long-running server reaching a timeout is inconclusive unless a separately reviewed health check defines success.
 
-Suggested CLI contract (design only):
+Implemented CLI flow through milestone 5:
 
-    reprodoctor inspect INPUT --ref REF --output REPORT_DIR
-    reprodoctor plan REPORT_DIR --output PLAN_JSON
-    reprodoctor run PLAN_JSON --dry-run
-    reprodoctor run PLAN_JSON
+    reprodoctor intake INPUT --ref REF --output SNAPSHOT
+    reprodoctor extract SNAPSHOT --output INSTRUCTIONS_JSON
+    reprodoctor check SNAPSHOT --output STATIC_REPORT_JSON
+    reprodoctor plan SNAPSHOT --output PLAN_JSON
+    reprodoctor approve PLAN_JSON --snapshot SNAPSHOT --output APPROVAL_JSON
+    reprodoctor run PLAN_JSON --snapshot SNAPSHOT --dry-run
 
-The final run command displays the full effective plan and requires interactive confirmation of its digest. Dry-run performs no project execution, dependency installation, image pull, or container creation. Image preparation is an explicit prerequisite. A plan that requires edits returns to review. JSON is the canonical report; Markdown is generated from that same record.
+The approve command displays the full effective plan and requires interactive confirmation of its digest. Future execution will require a freshly validated matching approval record and successful runtime preflight; run without dry-run currently refuses. Dry-run performs no project execution, dependency installation, image pull, or container creation. Image preparation is an explicit prerequisite. A plan that requires edits returns to review. JSON is the canonical static report; Markdown is generated from that same record.
 
 ## Static checks and their limits
 

@@ -2,11 +2,11 @@
 
 An open-source developer-tool project for checking whether documented Python setup instructions can be reproduced, with evidence for each finding.
 
-**Current status: milestone 4, static inspection.** The CLI pins a commit, extracts README command candidates, and checks manifests, Python declarations, literal input files and environment examples. JSON and Markdown reports include evidence and check limits. It does not execute extracted commands, diagnose runtime failures, or run containers.
+**Current status: milestone 5, execution-plan review and dry-run.** The CLI inspects committed source, produces static reports, and prepares digest-bound command plans for explicit review. It does not execute extracted commands, diagnose runtime failures, or run containers.
 
 ## Install locally
 
-Requires Python 3.12+ and Git on Linux or macOS. Windows is not supported yet. No API key, Docker installation, or hosted service is needed for intake.
+Requires Python 3.12+ and Git on Linux or macOS. Windows is not supported yet. No API key, Docker installation, or hosted service is needed for the implemented inspection, planning or dry-run workflow.
 
 ```sh
 python3 -m venv .venv
@@ -89,6 +89,48 @@ Statuses are `pass` (the narrow static observation holds), `finding` (an observe
 
 See the authored [Markdown sample](examples/static-report.md), [JSON sample](examples/static-report.json), and [regeneration instructions](examples/README.md). Static reports are bounded to 2,000 findings and 8 MiB. Source scanning for environment names has additional documented budgets and coverage limits. The report is not a secret scanner; review it before sharing.
 
+## Review an execution plan without running it
+
+Create a blocked draft and inspect the full plan in a dry-run:
+
+```sh
+reprodoctor plan /path/to/snapshot --output /path/to/draft-plan.json
+reprodoctor run /path/to/draft-plan.json --snapshot /path/to/snapshot --dry-run
+```
+
+The draft has no default image. To make a plan eligible for approval, supply an explicitly selected image reference pinned to a SHA-256 digest with `--image`, and resolve every ambiguity. Image presence, Python version and runtime controls are **not verified** at this milestone; no image is pulled. The planned runtime is CPython 3.12 on Linux, with `--platform linux/amd64` or `linux/arm64`.
+
+Every plan displays original instructions and locations, reviewed commands, exact proposed argv, transformations, command order, directory/environment state, offline artifact hashes, network assessments, container settings, limits and blockers. Supported steps are direct Python script/module launches, pytest, a restricted pip-install subset, simple relative `cd` and literal environment assignments. Unsupported shell commands stay blocked. Missing input files can still be tested later; the planner does not silently create or repair them.
+
+For an ambiguous instruction, create a decisions JSON file outside the snapshot. Keys are extracted instruction IDs. These are examples of the three supported actions; choose decisions for your actual instructions:
+
+```json
+{
+  "instruction-0001": {"action": "accept", "reason": "Reviewed the visible prompt removal."},
+  "instruction-0002": {"action": "exclude", "reason": "This alternative is outside the selected workflow."},
+  "instruction-0003": {"action": "replace", "command": "python app.py", "reason": "Use an explicitly reviewed finite launch."}
+}
+```
+
+Rebuild into a new plan file using `--decisions /path/to/decisions.json`, your actual digest-pinned `--image`, and optionally `--wheelhouse /path/to/wheels`. Original text and order remain in the plan even for excluded/replaced instructions. An accept decision acknowledges ambiguity; it cannot enable unsupported pipelines, expansions or other commands outside the subset. Decisions are review inputs, not execution approval.
+
+All pip-install steps require an explicitly selected nonempty offline wheelhouse in this MVP. It accepts only regular `.whl` files, hashes their names/bytes, downloads nothing, and does not claim the wheels are valid or sufficient. Pip argv transformations are visible: no index/cache/input, no automatic build isolation, find links only in `/wheels`, and install into `/workspace/.doctor-packages`. Build dependencies must already be in the selected image or earlier explicit steps. There is no automatic missing-dependency installation.
+
+For an unblocked plan, review and approve in an interactive terminal:
+
+```sh
+reprodoctor approve /path/to/plan.json --snapshot /path/to/snapshot --output /path/to/approval.json
+reprodoctor run /path/to/plan.json --snapshot /path/to/snapshot --approval /path/to/approval.json --dry-run
+```
+
+Supply the same `--wheelhouse` to both commands if the plan contains wheels. The approval command prints the entire escaped plan and requires typing its **full digest**; there is no `--yes` or piped approval. It revalidates source and artifacts after confirmation. A mismatch, interruption, blocker or changed input writes no approval record. Plan/approval output files must be new and outside snapshot/wheelhouse inputs; they are created with owner-only permissions.
+
+Approval binds the commit, source digest, instructions, review decisions, argv/state, artifact hashes, image/platform, fixed settings and planner implementation. A changed input requires rebuilding and fresh review. Validation reconstructs the plan, so simply rehashing edited derived fields cannot weaken policy. Artifact paths are supplied explicitly again rather than followed from an untrusted plan file.
+
+The fixed proposed policy denies networking and ports; permits no host mounts or inherited host environment; requires non-root, dropped capabilities, no-new-privileges, default seccomp, a read-only root, bounded tmpfs storage, CPU/memory/PID/time/log limits, and cleanup. These are **requirements for the future executor**, not controls exercised by dry-run. Dry-run performs no container/runtime call, image pull, installation, project execution or approval write. `run` without `--dry-run` currently refuses execution.
+
+Keep plans local: they retain exact README commands and literal configuration values. Approval records are editable local audit data, not identity proof or protection against host compromise. Containers do not make arbitrary code completely safe. See [milestone 5 details](docs/05-execution-plan-review.md) for the complete contract and limits.
+
 ## Limits and exclusions
 
 - Ordinary local SHA-1 Git repositories only; linked worktrees, bare repositories, shared/alternate object stores, and SHA-256 repositories are unsupported.
@@ -106,6 +148,6 @@ ruff check .
 ruff format --check .
 ```
 
-Tests generate authored Git repositories in temporary directories. They check commit pinning, deterministic export, dirty/index states, hooks/filters/config isolation, invalid paths, symlinks/submodules, bounds, errors, and the GitHub transport contract. Extraction tests include a hand-authored golden fixture, line-ending/source mapping, ambiguity handling, excluded formats, modified snapshots and output limits. Static checks cover positive, negative and unknown cases, path escapes, generated files, optional variables, deterministic reports and hostile Markdown output. Normal tests do not access the network or execute fixture project code or README commands.
+Tests generate authored Git repositories in temporary directories. They check intake isolation, extraction provenance, static evidence, plan/approval binding, policy tampering, command/state review, offline artifact changes, cancellation, and dry-run side effects. Dry-run tests prohibit subprocess and socket calls and compare file contents/permissions before and after. Normal tests do not access the network, create containers or execute fixture project code or README commands. Interactive approval tests simulate terminal input for authored fixtures; they do not approve real project execution.
 
-See [scope and architecture](docs/01-scope-and-architecture.md), [milestone 2 evidence](docs/02-repository-intake.md), [milestone 3 evidence](docs/03-readme-extraction.md), [milestone 4 evidence](docs/04-static-checks.md), and the [reserved evaluation scenarios](evaluation/README.md). Next milestone: execution-plan review and dry-run. No setup execution is implemented.
+See [scope and architecture](docs/01-scope-and-architecture.md), [milestone 2 evidence](docs/02-repository-intake.md), [milestone 3 evidence](docs/03-readme-extraction.md), [milestone 4 evidence](docs/04-static-checks.md), [milestone 5 evidence](docs/05-execution-plan-review.md), and the [reserved evaluation scenarios](evaluation/README.md). Next milestone: isolated execution, after runtime controls and cleanup are implemented and verified. No setup execution is implemented yet.
