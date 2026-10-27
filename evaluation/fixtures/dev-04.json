@@ -1,0 +1,22 @@
+{
+  "id": "dev-04",
+  "authored_fixture": true,
+  "files": {
+    "pyproject.toml": "[project]\nname = \"doctor-fixture\"\nversion = \"0.0.0\"\ndependencies = []\nrequires-python = \">=3.12\"\n",
+    "README.md": "# Configuration\n```sh\nexport DOCTOR_MODE=example\n```\n",
+    ".env.example": "OTHER=example\n"
+  },
+  "labels": [
+    [
+      "environment",
+      "review",
+      true
+    ],
+    [
+      "environment",
+      "finding",
+      false
+    ]
+  ],
+  "runtime_expected": "Configuration hint only; no requiredness inference"
+}

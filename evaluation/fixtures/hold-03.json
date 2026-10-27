@@ -1,0 +1,22 @@
+{
+  "id": "hold-03",
+  "authored_fixture": true,
+  "files": {
+    "pyproject.toml": "[project]\nname = \"doctor-fixture\"\nversion = \"0.0.0\"\ndependencies = []\nrequires-python = \">=3.12\"\n",
+    "README.md": "Python: 3.11\n# Install\n```sh\npython -m pip install \\\n  -r requirements.txt\n```\n",
+    "requirements.txt": ""
+  },
+  "labels": [
+    [
+      "python",
+      "finding",
+      true
+    ],
+    [
+      "extraction",
+      "ambiguous",
+      true
+    ]
+  ],
+  "runtime_expected": "Inconsistent declarations plus manual multiline review"
+}

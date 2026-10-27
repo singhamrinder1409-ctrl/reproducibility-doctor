@@ -1,0 +1,17 @@
+{
+  "id": "dev-05",
+  "authored_fixture": true,
+  "files": {
+    "pyproject.toml": "[project]\nname = \"doctor-fixture\"\nversion = \"0.0.0\"\ndependencies = []\nrequires-python = \">=3.12\"\n",
+    "README.md": "# Tests\n```sh\npython -m unittest\n```\n",
+    "test_app.py": "import unittest\nclass Demo(unittest.TestCase):\n    def test_known_failure(self):\n        self.fail(\"authored failure\")\n"
+  },
+  "labels": [
+    [
+      "references",
+      "finding",
+      false
+    ]
+  ],
+  "runtime_expected": "Unsuccessful tests; real execution pending"
+}

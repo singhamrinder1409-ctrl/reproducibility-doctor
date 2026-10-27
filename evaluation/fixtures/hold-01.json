@@ -1,0 +1,23 @@
+{
+  "id": "hold-01",
+  "authored_fixture": true,
+  "files": {
+    "pyproject.toml": "[project]\nname = \"doctor-fixture\"\nversion = \"0.0.0\"\ndependencies = []\nrequires-python = \">=3.12\"\n",
+    "README.md": "# Configuration\n```sh\nexport DOCTOR_MODE=example\ncd app\n```\n# Run\n```sh\npython main.py\n```\n",
+    ".env.example": "DOCTOR_MODE=example\n",
+    "app/main.py": "import os\nassert os.environ[\"DOCTOR_MODE\"] == \"example\"\nprint(\"ok\")\n"
+  },
+  "labels": [
+    [
+      "references",
+      "finding",
+      false
+    ],
+    [
+      "environment",
+      "review",
+      false
+    ]
+  ],
+  "runtime_expected": "Sequential directory/environment success; real execution pending"
+}

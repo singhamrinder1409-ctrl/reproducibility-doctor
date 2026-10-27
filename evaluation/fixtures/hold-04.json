@@ -1,0 +1,17 @@
+{
+  "id": "hold-04",
+  "authored_fixture": true,
+  "files": {
+    "pyproject.toml": "[project]\nname = \"doctor-fixture\"\nversion = \"0.0.0\"\ndependencies = []\nrequires-python = \">=3.12\"\n",
+    "README.md": "# Run\n```sh\npython probe.py\n```\n",
+    "probe.py": "import socket\nprint(\"\\x1b[2Jauthored control output\", flush=True)\ntry:\n    socket.create_connection((\"192.0.2.1\", 9), timeout=1)\nexcept OSError:\n    pass\nblocks = []\nwhile True:\n    blocks.append(bytearray(1024 * 1024))\n"
+  },
+  "labels": [
+    [
+      "references",
+      "finding",
+      false
+    ]
+  ],
+  "runtime_expected": "Network denial, memory enforcement, sanitized logs, interruption and cleanup; live review required"
+}

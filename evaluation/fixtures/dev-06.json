@@ -1,0 +1,16 @@
+{
+  "id": "dev-06",
+  "authored_fixture": true,
+  "files": {
+    "pyproject.toml": "[project]\nname = \"doctor-fixture\"\nversion = \"0.0.0\"\ndependencies = []\nrequires-python = \">=3.12\"\n",
+    "README.md": "# Install\nChoose one alternative:\n```sh\npip install <package>\n```\n"
+  },
+  "labels": [
+    [
+      "extraction",
+      "ambiguous",
+      true
+    ]
+  ],
+  "runtime_expected": "Review required; no implicit branch selection"
+}

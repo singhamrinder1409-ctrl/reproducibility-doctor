@@ -1,0 +1,23 @@
+{
+  "id": "hold-02",
+  "authored_fixture": true,
+  "files": {
+    "pyproject.toml": "[project]\nname = \"doctor-fixture\"\nversion = \"0.0.0\"\ndependencies = []\nrequires-python = \">=3.12\"\n",
+    "README.md": "# Configuration\n```sh\ncp settings.example.json settings.json\n```\n# Run\n```sh\npython app.py\n```\n",
+    "settings.example.json": "{}\n",
+    "app.py": "import json, os\noptional = os.getenv(\"OPTIONAL\", \"default\")\nwith open(\"settings.json\") as stream:\n    config = json.load(stream)\nprint(config[\"required\"])\n"
+  },
+  "labels": [
+    [
+      "references",
+      "finding",
+      false
+    ],
+    [
+      "environment",
+      "review",
+      true
+    ]
+  ],
+  "runtime_expected": "Generated configuration lacks required key; exact cause unknown statically; real execution pending"
+}

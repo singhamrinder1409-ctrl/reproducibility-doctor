@@ -1,0 +1,17 @@
+{
+  "id": "dev-08",
+  "authored_fixture": true,
+  "files": {
+    "pyproject.toml": "[project]\nname = \"doctor-fixture\"\nversion = \"0.0.0\"\ndependencies = []\nrequires-python = \">=3.12\"\n",
+    "README.md": "# Install\n```sh\npython -m pip install -r requirements.txt\n```\n",
+    "requirements.txt": "doctor-fixture-distribution-not-supplied==0.0.0\n"
+  },
+  "labels": [
+    [
+      "references",
+      "finding",
+      false
+    ]
+  ],
+  "runtime_expected": "Offline artifacts unavailable; real execution pending"
+}

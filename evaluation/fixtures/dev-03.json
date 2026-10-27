@@ -1,0 +1,21 @@
+{
+  "id": "dev-03",
+  "authored_fixture": true,
+  "files": {
+    "pyproject.toml": "[project]\nname = \"doctor-fixture\"\nversion = \"0.0.0\"\ndependencies = []\nrequires-python = \"<3.12\"\n",
+    "README.md": "# Run\n"
+  },
+  "labels": [
+    [
+      "python",
+      "unsupported",
+      true
+    ],
+    [
+      "python",
+      "finding",
+      false
+    ]
+  ],
+  "runtime_expected": "Selected runtime unsupported; no project-defect claim"
+}

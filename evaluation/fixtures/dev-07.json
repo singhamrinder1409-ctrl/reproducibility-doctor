@@ -1,0 +1,17 @@
+{
+  "id": "dev-07",
+  "authored_fixture": true,
+  "files": {
+    "pyproject.toml": "[project]\nname = \"doctor-fixture\"\nversion = \"0.0.0\"\ndependencies = []\nrequires-python = \">=3.12\"\n",
+    "README.md": "# Run\n```sh\npython flood.py\n```\n",
+    "flood.py": "while True:\n    print(\"fixture flood\", flush=True)\n"
+  },
+  "labels": [
+    [
+      "references",
+      "finding",
+      false
+    ]
+  ],
+  "runtime_expected": "Log cap, timeout and cleanup; real execution pending"
+}

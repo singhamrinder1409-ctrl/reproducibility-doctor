@@ -1,0 +1,16 @@
+{
+  "id": "dev-02",
+  "authored_fixture": true,
+  "files": {
+    "pyproject.toml": "[project]\nname = \"doctor-fixture\"\nversion = \"0.0.0\"\ndependencies = []\nrequires-python = \">=3.12\"\n",
+    "README.md": "# Install\n```sh\npython -m pip install -r absent.txt\n```\n"
+  },
+  "labels": [
+    [
+      "references",
+      "finding",
+      true
+    ]
+  ],
+  "runtime_expected": "Missing requirement path; real execution pending"
+}
