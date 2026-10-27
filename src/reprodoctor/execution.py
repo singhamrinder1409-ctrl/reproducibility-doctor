@@ -13,6 +13,7 @@ import os
 import re
 import shutil
 import signal
+import sys
 import tarfile
 import tempfile
 import time
@@ -68,7 +69,10 @@ class Docker:
     def __init__(self, home: Path, socket: str):
         if not socket.startswith("/") or any(ord(c) < 32 for c in socket):
             raise RuntimeFailure("Docker socket must be an explicit absolute local Unix path")
-        binary = shutil.which("docker", path=os.defpath + ":/usr/local/bin:/opt/homebrew/bin")
+        search_path = os.defpath + ":/usr/local/bin:/opt/homebrew/bin"
+        if sys.platform == "darwin":
+            search_path += ":/Applications/Docker.app/Contents/Resources/bin"
+        binary = shutil.which("docker", path=search_path)
         if binary is None:
             raise RuntimeFailure("Docker CLI is not installed; live execution unavailable")
         self.prefix = [binary, "--host", "unix://" + socket, "--config", str(home)]

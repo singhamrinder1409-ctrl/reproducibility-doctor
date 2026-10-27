@@ -662,3 +662,21 @@ def test_infrastructure_failures_keep_bounded_exit_and_stderr_evidence(tmp_path,
     assert error.value.evidence["exit_code"] == 125
     assert "text" not in error.value.evidence["stdout"]
     assert "stderr" in error.value.evidence
+
+
+@pytest.mark.parametrize("platform", ["darwin", "linux"])
+def test_docker_cli_search_uses_fixed_paths_only(tmp_path, monkeypatch, platform):
+    observed = {}
+
+    def locate(name, *, path):
+        observed.update(name=name, path=path)
+        return "/trusted/docker"
+
+    monkeypatch.setattr("reprodoctor.execution.sys.platform", platform)
+    monkeypatch.setattr("reprodoctor.execution.shutil.which", locate)
+    monkeypatch.setenv("PATH", "/untrusted/project-bin")
+    Docker(tmp_path, "/local.sock")
+    assert "/untrusted/project-bin" not in observed["path"]
+    assert ("/Applications/Docker.app/Contents/Resources/bin" in observed["path"]) == (
+        platform == "darwin"
+    )
