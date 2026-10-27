@@ -4,8 +4,10 @@ import argparse
 import json
 from pathlib import Path
 
+from .checks import check_snapshot
 from .extraction import encode_candidates, extract_snapshot
 from .intake import IntakeError, intake
+from .static_report import markdown_report
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -29,15 +31,32 @@ def main(argv: list[str] | None = None) -> int:
     extraction.add_argument(
         "--output", type=Path, help="New JSON file outside the snapshot; else stdout"
     )
+    checking = commands.add_parser("check", help="Check a snapshot statically; no execution")
+    checking.add_argument("snapshot", type=Path)
+    checking.add_argument("--output", type=Path, help="New file outside snapshot; otherwise stdout")
+    checking.add_argument("--format", choices=["json", "markdown"], default="json")
+    checking.add_argument(
+        "--python-version", default="3.12.0", help="Static target, not an executed runtime"
+    )
     args = parser.parse_args(argv)
     try:
-        if args.command == "extract":
+        if args.command in {"extract", "check"}:
             if args.output is not None and args.output.resolve().is_relative_to(
                 args.snapshot.resolve()
             ):
-                raise IntakeError("Extraction output must be outside the snapshot")
-            result = extract_snapshot(args.snapshot)
-            encoded = encode_candidates(result)
+                raise IntakeError("Report output must be outside the snapshot")
+            result = (
+                extract_snapshot(args.snapshot)
+                if args.command == "extract"
+                else check_snapshot(args.snapshot, python_version=args.python_version)
+            )
+            encoded = (
+                markdown_report(result)
+                if args.command == "check" and args.format == "markdown"
+                else encode_candidates(result)
+            )
+            if len(encoded.encode()) > 8 * 1024 * 1024:
+                raise IntakeError("Report output byte limit exceeded; no partial result")
             if args.output is None:
                 print(encoded, end="")
             else:
@@ -47,7 +66,7 @@ def main(argv: list[str] | None = None) -> int:
                     json.dumps(
                         {
                             "output": str(args.output.absolute()),
-                            "candidates": len(result["instructions"]),
+                            "records": len(result.get("instructions", result.get("findings", []))),
                         }
                     )
                 )

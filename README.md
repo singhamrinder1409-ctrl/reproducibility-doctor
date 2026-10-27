@@ -2,7 +2,7 @@
 
 An open-source developer-tool project for checking whether documented Python setup instructions can be reproduced, with evidence for each finding.
 
-**Current status: milestone 3, repository intake and README instruction extraction.** The CLI pins a commit, exports a bounded snapshot, and extracts ordered command candidates with source locations and review flags. It does not execute extracted commands, diagnose setup failures, or run containers.
+**Current status: milestone 4, static inspection.** The CLI pins a commit, extracts README command candidates, and checks manifests, Python declarations, literal input files and environment examples. JSON and Markdown reports include evidence and check limits. It does not execute extracted commands, diagnose runtime failures, or run containers.
 
 ## Install locally
 
@@ -67,7 +67,27 @@ The extractor reads root `README.md` as UTF-8 and selects fenced `sh`, `bash`, `
 
 This example is an excerpt from the authored [extraction fixture](tests/fixtures/extraction/basic.md). An empty ambiguity list does **not** approve a command. Every candidate requires review and the document explicitly records `execution_permitted: false`. Prompts, alternatives, placeholders, nested Markdown, multiline constructs, shell expansion and unsupported syntax receive review flags. Complex shell blocks are kept together; the extractor does not resolve shell state or choose an installation branch.
 
-Missing root README is reported as missing coverage, not a setup failure. Parsing is limited to 1 MiB, 2,000 candidates and 8 MiB of JSON evidence; exceeding a limit fails without producing a partial candidate document. Phase and ambiguity rules are deliberately conservative and can miss instructions or flag benign quoted text. No static dependency/configuration checks exist yet.
+Missing root README is reported as missing coverage, not a setup failure. Parsing is limited to 1 MiB, 2,000 candidates and 8 MiB of JSON evidence; exceeding a limit fails without producing a partial candidate document. Phase and ambiguity rules are deliberately conservative and can miss instructions or flag benign quoted text.
+
+## Run static checks
+
+```sh
+reprodoctor check /path/to/snapshot --output /path/to/static-report.json
+reprodoctor check /path/to/snapshot --python-version 3.12.0 --format markdown --output /path/to/static-report.md
+```
+
+`--python-version` is an exact **static target**, defaulting to 3.12.0. It is independent of the Python interpreter running Doctor and does not select or launch a container. Both formats come from the same findings, recording the commit/digest, checker versions, evidence locations and hashes, observed facts, suggested actions, and the limits of each check. Output must be a new file outside the snapshot; omit `--output` for stdout.
+
+Supported checks:
+
+- Dependency manifest inventory, root PEP 621 dependency string parsing and supported requirements-file syntax. Missing manifests prompt review; they do not prove missing dependencies. No package index or build backend is queried.
+- `project.requires-python`, one numeric `.python-version`, and standalone README declarations such as `Python: 3.12`. Exact versions and minor-series ranges are compared. Disjoint declarations are inconsistencies; a target excluded by a declaration is unsupported, not proof of a broken project.
+- Literal requirements/constraints include paths, direct Python script inputs, copy sources and relative directory changes. Paths are resolved inside the snapshot inventory. Shell expansion, uncertain command state and external paths remain unknown/review items. Generated targets receive only a documented-copy hint.
+- Environment names in README `export NAME=...` / `${NAME}` and simple source patterns `os.environ["NAME"]`, `os.getenv("NAME")`, `os.environ.get("NAME")`, compared with root `.env.example`. Missing keys prompt review; requiredness is never inferred. Example/default values are omitted from findings.
+
+Statuses are `pass` (the narrow static observation holds), `finding` (an observed absence, malformed declaration or direct inconsistency), `review`, `unknown`, and `unsupported`. Every report says execution was **not run**. CLI exit 0 means inspection completed, even with findings; exit 2 means input/inspection/output failed. A static pass does not establish a successful setup.
+
+See the authored [Markdown sample](examples/static-report.md), [JSON sample](examples/static-report.json), and [regeneration instructions](examples/README.md). Static reports are bounded to 2,000 findings and 8 MiB. Source scanning for environment names has additional documented budgets and coverage limits. The report is not a secret scanner; review it before sharing.
 
 ## Limits and exclusions
 
@@ -86,6 +106,6 @@ ruff check .
 ruff format --check .
 ```
 
-Tests generate authored Git repositories in temporary directories. They check commit pinning, deterministic export, dirty/index states, hooks/filters/config isolation, invalid paths, symlinks/submodules, bounds, errors, and the GitHub transport contract. Extraction tests include a hand-authored golden fixture, line-ending/source mapping, ambiguity handling, excluded formats, modified snapshots and output limits. Normal tests do not access the network or execute fixture project code or README commands.
+Tests generate authored Git repositories in temporary directories. They check commit pinning, deterministic export, dirty/index states, hooks/filters/config isolation, invalid paths, symlinks/submodules, bounds, errors, and the GitHub transport contract. Extraction tests include a hand-authored golden fixture, line-ending/source mapping, ambiguity handling, excluded formats, modified snapshots and output limits. Static checks cover positive, negative and unknown cases, path escapes, generated files, optional variables, deterministic reports and hostile Markdown output. Normal tests do not access the network or execute fixture project code or README commands.
 
-See [scope and architecture](docs/01-scope-and-architecture.md), [milestone 2 evidence](docs/02-repository-intake.md), [milestone 3 evidence](docs/03-readme-extraction.md), and the [reserved evaluation scenarios](evaluation/README.md). Next milestone: static checks. No setup execution is implemented.
+See [scope and architecture](docs/01-scope-and-architecture.md), [milestone 2 evidence](docs/02-repository-intake.md), [milestone 3 evidence](docs/03-readme-extraction.md), [milestone 4 evidence](docs/04-static-checks.md), and the [reserved evaluation scenarios](evaluation/README.md). Next milestone: execution-plan review and dry-run. No setup execution is implemented.

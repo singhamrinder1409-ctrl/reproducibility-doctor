@@ -38,4 +38,4 @@ Command and phase recognition use a small set of deterministic patterns. Review 
 
 File-size and evidence limits bound accepted inputs and output; they are not OS-enforced CPU/memory isolation for the Markdown parser. Concurrent hostile filesystem mutation remains outside the current local threat model. Every extracted command is still untrusted, regardless of its classification or flags.
 
-Part 4 will add static checks for manifests, declared Python versions, referenced files, environment examples and directly evidenced contradictions. It has not started. Command approval, containers, failure diagnosis and full reports remain later milestones.
+Part 4 static checks are now tracked in [milestone 4](04-static-checks.md). Command approval, containers, runtime failure diagnosis and reports containing execution evidence remain later milestones.

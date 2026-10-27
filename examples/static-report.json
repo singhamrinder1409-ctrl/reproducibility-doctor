@@ -1,0 +1,216 @@
+{
+  "schema_version": 1,
+  "tool_version": "0.1.0.dev0",
+  "kind": "static_report",
+  "checker_environment": {
+    "python": "3.14.5",
+    "dependencies": {
+      "packaging": "26.3",
+      "markdown-it-py": "4.2.0",
+      "mdurl": "0.1.2"
+    }
+  },
+  "repository": {
+    "commit": "593c52a77464eef9b1db4893b8614e5f7530488a",
+    "content_digest": "f86b1e8f4e7d4e011339015240f993bc55179b88e82b0a651c705dc2c7950eac"
+  },
+  "target_python": "3.12.0",
+  "execution_permitted": false,
+  "execution_status": "not_run",
+  "summary": {
+    "finding": 2,
+    "pass": 4,
+    "review": 1,
+    "unknown": 2,
+    "unsupported": 1
+  },
+  "findings": [
+    {
+      "id": "static-0001",
+      "rule_id": "dependencies",
+      "status": "pass",
+      "severity": "info",
+      "observed_fact": "Recognized manifest files are present.",
+      "evidence": [
+        {
+          "path": "pyproject.toml",
+          "start_line": null,
+          "end_line": null,
+          "sha256": "5cb9f53d803bc814371a7f73165a5c68c3e262c663d71b78d9a38bc0d7758204"
+        }
+      ],
+      "suggested_action": "Review the dependency workflow; manifest presence is not an installation result.",
+      "limitation": "Manifest checks do not prove dependency completeness or availability."
+    },
+    {
+      "id": "static-0002",
+      "rule_id": "dependencies",
+      "status": "pass",
+      "severity": "info",
+      "observed_fact": "Explicit project dependency strings parse successfully.",
+      "evidence": [
+        {
+          "path": "pyproject.toml",
+          "start_line": null,
+          "end_line": null,
+          "sha256": "5cb9f53d803bc814371a7f73165a5c68c3e262c663d71b78d9a38bc0d7758204"
+        }
+      ],
+      "suggested_action": "Verify completeness and installation in an approved environment.",
+      "limitation": "Manifest checks do not prove dependency completeness or availability."
+    },
+    {
+      "id": "static-0003",
+      "rule_id": "python",
+      "status": "pass",
+      "severity": "info",
+      "observed_fact": "Static target Python 3.12.0 satisfies declaration >=3.12.",
+      "evidence": [
+        {
+          "path": "pyproject.toml",
+          "start_line": null,
+          "end_line": null,
+          "sha256": "5cb9f53d803bc814371a7f73165a5c68c3e262c663d71b78d9a38bc0d7758204"
+        }
+      ],
+      "suggested_action": "Choose an allowed exact runtime; exclusion does not mean the project is broken.",
+      "limitation": "Only explicit declarations are compared; the static target has not run."
+    },
+    {
+      "id": "static-0004",
+      "rule_id": "python",
+      "status": "unsupported",
+      "severity": "info",
+      "observed_fact": "Static target Python 3.12.0 is excluded by declaration ==3.11.*.",
+      "evidence": [
+        {
+          "path": "README.md",
+          "start_line": 3,
+          "end_line": 3,
+          "sha256": "d81636374153ec8f78a30381ab36b373c66d91156dc08df5bc0e84726cae5e98"
+        }
+      ],
+      "suggested_action": "Choose an allowed exact runtime; exclusion does not mean the project is broken.",
+      "limitation": "Only explicit declarations are compared; the static target has not run."
+    },
+    {
+      "id": "static-0005",
+      "rule_id": "consistency",
+      "status": "finding",
+      "severity": "warning",
+      "observed_fact": "Explicit Python declarations >=3.12 and ==3.11.* have no overlap.",
+      "evidence": [
+        {
+          "path": "pyproject.toml",
+          "start_line": null,
+          "end_line": null,
+          "sha256": "5cb9f53d803bc814371a7f73165a5c68c3e262c663d71b78d9a38bc0d7758204"
+        },
+        {
+          "path": "README.md",
+          "start_line": 3,
+          "end_line": 3,
+          "sha256": "d81636374153ec8f78a30381ab36b373c66d91156dc08df5bc0e84726cae5e98"
+        }
+      ],
+      "suggested_action": "Reconcile disjoint declarations; overlap does not prove compatibility.",
+      "limitation": "Explicit declaration overlap does not prove runtime compatibility."
+    },
+    {
+      "id": "static-0006",
+      "rule_id": "references",
+      "status": "finding",
+      "severity": "warning",
+      "observed_fact": "Literal input file 'requirements.txt' is absent from the snapshot.",
+      "evidence": [
+        {
+          "path": "README.md",
+          "start_line": 8,
+          "end_line": 8,
+          "sha256": "d81636374153ec8f78a30381ab36b373c66d91156dc08df5bc0e84726cae5e98"
+        },
+        {
+          "path": "requirements.txt",
+          "start_line": null,
+          "end_line": null,
+          "sha256": null
+        }
+      ],
+      "suggested_action": "Check spelling, working directory and generation before calling this a defect.",
+      "limitation": "Only literal inputs are checked; missing files may be generated or external."
+    },
+    {
+      "id": "static-0007",
+      "rule_id": "references",
+      "status": "pass",
+      "severity": "info",
+      "observed_fact": "Literal input file 'app.py' is present in the snapshot.",
+      "evidence": [
+        {
+          "path": "README.md",
+          "start_line": 14,
+          "end_line": 14,
+          "sha256": "d81636374153ec8f78a30381ab36b373c66d91156dc08df5bc0e84726cae5e98"
+        },
+        {
+          "path": "app.py",
+          "start_line": null,
+          "end_line": null,
+          "sha256": "1479972bee8529081b50ff04f7a2a75c113b5e76be8aabf960d7c3918442ddb2"
+        }
+      ],
+      "suggested_action": "Check spelling, working directory and generation before calling this a defect.",
+      "limitation": "Only literal inputs are checked; missing files may be generated or external."
+    },
+    {
+      "id": "static-0008",
+      "rule_id": "references",
+      "status": "unknown",
+      "severity": "info",
+      "observed_fact": "Inspected 2 supported inputs; ambiguous commands and prose paths were not resolved.",
+      "evidence": [],
+      "suggested_action": "Review extraction flags, shell state and generated files manually.",
+      "limitation": "Only literal inputs are checked; missing files may be generated or external."
+    },
+    {
+      "id": "static-0009",
+      "rule_id": "environment",
+      "status": "review",
+      "severity": "warning",
+      "observed_fact": "Environment name SERVICE_TOKEN has no matching key in root .env.example.",
+      "evidence": [
+        {
+          "path": "app.py",
+          "start_line": 5,
+          "end_line": 5,
+          "sha256": "1479972bee8529081b50ff04f7a2a75c113b5e76be8aabf960d7c3918442ddb2"
+        }
+      ],
+      "suggested_action": "Confirm requiredness and document a safe example. Values are omitted.",
+      "limitation": "Name matching does not establish requiredness or resolve dynamic access."
+    },
+    {
+      "id": "static-0010",
+      "rule_id": "environment",
+      "status": "unknown",
+      "severity": "info",
+      "observed_fact": "Variable requiredness and dynamically constructed names are not established.",
+      "evidence": [],
+      "suggested_action": "Review aliases, defaults and external configuration before diagnosing a defect.",
+      "limitation": "Name matching does not establish requiredness or resolve dynamic access."
+    }
+  ],
+  "extraction_coverage": {
+    "candidates": 2,
+    "review_items": 1,
+    "readme_present": true
+  },
+  "limitations": [
+    "Manifest checks do not prove dependency completeness or availability.",
+    "Only explicit declarations are compared; the static target has not run.",
+    "Only literal inputs are checked; missing files may be generated or external.",
+    "Name matching does not establish requiredness or resolve dynamic access.",
+    "Explicit declaration overlap does not prove runtime compatibility.",
+    "Static passes are not setup runs; no index or build backend was queried."
+  ]
+}

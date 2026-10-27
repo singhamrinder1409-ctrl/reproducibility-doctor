@@ -1,6 +1,6 @@
 # Reproducibility Doctor: scope and architecture
 
-Status: Part 1 complete as a design baseline. No analyzer or executor is implemented.
+Status: Part 1 complete as a design baseline. See the project README for implementation progress; design decisions below describe the intended first release.
 
 ## Purpose and feasibility
 
