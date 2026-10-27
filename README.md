@@ -4,6 +4,8 @@ An open-source developer-tool project for checking whether documented Python set
 
 **Development preview — live Docker validation pending.** Intake, extraction, static checks, plan review, diagnosis and JSON/Markdown reports are implemented. A static-only CLI demo and frozen authored evaluation are included. The experimental runner requires explicit opt-in and matching approval; actual containment and execution reliability remain unverified.
 
+[GitHub repository](https://github.com/singhamrinder1409-ctrl/reproducibility-doctor) · [CI runs](https://github.com/singhamrinder1409-ctrl/reproducibility-doctor/actions)
+
 Start with the [sample report](examples/static-report.md), [captured CLI walkthrough](examples/demo/index.html) (open locally), [demo transcript](examples/demo/transcript.txt), and [architecture/threat model](docs/01-scope-and-architecture.md).
 
 ## Install locally
@@ -11,6 +13,8 @@ Start with the [sample report](examples/static-report.md), [captured CLI walkthr
 Requires Python 3.12+ and Git on Linux or macOS. Windows is not supported yet. Inspection, planning and dry-run need no API key, Docker installation or hosted service. Experimental execution additionally requires a local Docker engine with Linux cgroup v2, builtin seccomp and a prepared digest-pinned CPython 3.12 image. The tool never installs a runtime or pulls an image.
 
 ```sh
+git clone https://github.com/singhamrinder1409-ctrl/reproducibility-doctor.git
+cd reproducibility-doctor
 python3 -m venv .venv
 . .venv/bin/activate
 python -m pip install -r requirements-dev.txt -e .
@@ -195,7 +199,7 @@ Twelve authored fixture repositories are frozen separately into eight developmen
 | 6: isolated execution | Prototype; live acceptance pending |
 | 7–8: diagnosis and reports | Implemented and tested on authored records |
 | 9: evaluation | Static run recorded; execution evaluation pending |
-| 10: release | Local CI/demo/license/package prepared; remote publication and CI verification pending |
+| 10: release | Public development preview published; CI/demo/license/package included; see CI runs for remote status |
 
 The CLI uses Python's standard library, markdown-it-py for source-aware Markdown and packaging for Python/dependency constraints. Git supplies immutable source objects; Docker is the optional execution boundary. No paid API, hosted backend, database or AI dependency is required. Poetry/uv/Conda, online dependency fetching, Windows hosts, other languages and a GUI are future work.
 

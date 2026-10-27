@@ -30,3 +30,7 @@ The first static evaluation has 10 development and 7 held-out labeled assertions
 The GitHub connection could read the owner profile and repository list, but has no repository-creation tool. No `reproducibility-doctor` remote existed. The browser creation page required sign-in. Publication/remote CI are pending user sign-in or an empty destination repository, rather than being claimed complete locally.
 
 Final local checks: **214 tests passed, 1 live Docker test skipped**; Ruff lint and all 47 Python files' formatting passed. A clean local Git clone installed into a fresh virtual environment and ran the static-only CLI demo successfully. These results are from macOS with Python 3.14.5; the CI matrix is prepared but has not run remotely. Runtime/container acceptance remains pending.
+
+## Publication record — 2026-10-27
+
+The public [GitHub repository](https://github.com/singhamrinder1409-ctrl/reproducibility-doctor) was created in the owner’s signed-in browser. All local source commits were pushed to `main`; the initial remote head matched `253d60acdbe1fc3694efc8d882ba7845d163c4a3`. The README now links the real repository and [CI runs](https://github.com/singhamrinder1409-ctrl/reproducibility-doctor/actions). This is an experimental source preview, with no stable release tag and no claimed live Docker acceptance. The earlier sign-in blocker is resolved.
