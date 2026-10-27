@@ -2,11 +2,11 @@
 
 An open-source developer-tool project for checking whether documented Python setup instructions can be reproduced, with evidence for each finding.
 
-**Current status: milestone 5, execution-plan review and dry-run.** The CLI inspects committed source, produces static reports, and prepares digest-bound command plans for explicit review. It does not execute extracted commands, diagnose runtime failures, or run containers.
+**Current status: Part 6 prototype; live container validation pending.** Inspection, static reports, plan review and dry-run are implemented. An experimental Docker runner is available only with explicit opt-in and matching approval. Docker is unavailable in the development environment, so Part 6 acceptance is **not complete** and Part 7 has not started.
 
 ## Install locally
 
-Requires Python 3.12+ and Git on Linux or macOS. Windows is not supported yet. No API key, Docker installation, or hosted service is needed for the implemented inspection, planning or dry-run workflow.
+Requires Python 3.12+ and Git on Linux or macOS. Windows is not supported yet. Inspection, planning and dry-run need no API key, Docker installation or hosted service. Experimental execution additionally requires a local Docker engine with Linux cgroup v2, builtin seccomp and a prepared digest-pinned CPython 3.12 image. The tool never installs a runtime or pulls an image.
 
 ```sh
 python3 -m venv .venv
@@ -127,9 +127,39 @@ Supply the same `--wheelhouse` to both commands if the plan contains wheels. The
 
 Approval binds the commit, source digest, instructions, review decisions, argv/state, artifact hashes, image/platform, fixed settings and planner implementation. A changed input requires rebuilding and fresh review. Validation reconstructs the plan, so simply rehashing edited derived fields cannot weaken policy. Artifact paths are supplied explicitly again rather than followed from an untrusted plan file.
 
-The fixed proposed policy denies networking and ports; permits no host mounts or inherited host environment; requires non-root, dropped capabilities, no-new-privileges, default seccomp, a read-only root, bounded tmpfs storage, CPU/memory/PID/time/log limits, and cleanup. These are **requirements for the future executor**, not controls exercised by dry-run. Dry-run performs no container/runtime call, image pull, installation, project execution or approval write. `run` without `--dry-run` currently refuses execution.
+The fixed policy denies networking and ports; permits no host mounts or inherited host environment; requires non-root, dropped capabilities, no-new-privileges, default seccomp, a read-only root, bounded tmpfs storage, CPU/memory/PID/time/log limits, and cleanup. Dry-run exercises none of those runtime controls and performs no container/runtime call, image pull, installation, project execution or approval write. Normal `run` refuses unless the separate experimental execution opt-in, matching approval and output path are all supplied. Dry-run and experimental execution flags are mutually exclusive.
 
 Keep plans local: they retain exact README commands and literal configuration values. Approval records are editable local audit data, not identity proof or protection against host compromise. Containers do not make arbitrary code completely safe. See [milestone 5 details](docs/05-execution-plan-review.md) for the complete contract and limits.
+
+## Experimental execution — live verification pending
+
+The prototype validates plan/approval/source/artifact bindings, inspects the existing local image, creates a disposable constrained container, checks runtime configuration and kernel controls, transfers verified bytes without a host mount, and then runs the reviewed argv inside the container. There is no host fallback. Missing controls stop execution before target code starts.
+
+Execution is deliberately gated. After preparing a trusted local runtime/image, rebuilding the plan for the current implementation and explicitly approving it in the terminal:
+
+```sh
+reprodoctor run /path/to/plan.json --snapshot /path/to/snapshot --approval /path/to/approval.json --experimental-execution --output /path/to/run-report.json
+```
+
+Supply the same `--wheelhouse` when needed, and `--docker-socket /absolute/local/docker.sock` if the local engine uses a nondefault socket. TCP/remote connections and inherited Docker contexts/configuration/credentials are unsupported. The socket is used by Doctor on the host and is **never mounted into the container**. Prior plans/approvals must be regenerated because the runner and policy fingerprint changed.
+
+The JSON execution record contains exact initial environments/argv, source and artifact bindings, image/engine/kernel observations, per-step exit status, bounded sanitized logs with byte counts/hashes, timings, excluded/not-reached steps and cleanup status. It remains explicitly marked `experimental` / `live_validation: pending`. Failed preflight writes an infrastructure-error report instead of claiming a setup defect. CLI exit 0 requires completed steps and confirmed container removal; failure, timeout, cancellation or cleanup trouble returns 2.
+
+Alongside the report, a private `run-report.json.run.json` journal records the unique owned container name and plan binding. Recover an interrupted run explicitly:
+
+```sh
+reprodoctor cleanup /path/to/run-report.json.run.json
+```
+
+Use the same explicit local socket when applicable. Cleanup checks the exact name and run/plan labels, removes only that container, and verifies absence. It never prunes images or unrelated containers. Normal errors, timeouts, Ctrl-C and SIGTERM attempt cleanup; SIGKILL/host crashes or a failed daemon can still leave resources behind. Recovery is not a guarantee of cleanup while the daemon is unreachable.
+
+The default suite uses a simulated Docker adapter and trusted host I/O fixtures, **not real container enforcement tests**. A live smoke gate is skipped unless explicitly enabled with a real, manually approved plan:
+
+```sh
+python -m pytest tests/test_live_execution.py --live-container --live-plan /path/to/plan.json --live-snapshot /path/to/snapshot --live-approval /path/to/approval.json
+```
+
+The live test never creates an approval automatically. A successful smoke alone will not close the full containment/reliability checklist. See [Part 6 implementation and remaining gates](docs/06-isolated-execution.md). Live validation is left pending as requested; no container or target repository command has been run during this milestone.
 
 ## Limits and exclusions
 
@@ -148,6 +178,6 @@ ruff check .
 ruff format --check .
 ```
 
-Tests generate authored Git repositories in temporary directories. They check intake isolation, extraction provenance, static evidence, plan/approval binding, policy tampering, command/state review, offline artifact changes, cancellation, and dry-run side effects. Dry-run tests prohibit subprocess and socket calls and compare file contents/permissions before and after. Normal tests do not access the network, create containers or execute fixture project code or README commands. Interactive approval tests simulate terminal input for authored fixtures; they do not approve real project execution.
+Tests generate authored Git repositories in temporary directories. They check intake isolation, extraction provenance, static evidence, plan/approval binding, policy tampering, review/state, offline artifacts, cancellation, dry-run side effects and the simulated execution lifecycle. Dry-run tests prohibit subprocess/socket calls and compare file contents/permissions. Trusted host-process fixtures exercise bounded pipe I/O; target repository code never runs on the host. Default tests access no network or containers and do not execute README commands. Interactive approval tests simulate input for authored fixtures; they do not approve real project execution.
 
-See [scope and architecture](docs/01-scope-and-architecture.md), [milestone 2 evidence](docs/02-repository-intake.md), [milestone 3 evidence](docs/03-readme-extraction.md), [milestone 4 evidence](docs/04-static-checks.md), [milestone 5 evidence](docs/05-execution-plan-review.md), and the [reserved evaluation scenarios](evaluation/README.md). Next milestone: isolated execution, after runtime controls and cleanup are implemented and verified. No setup execution is implemented yet.
+See [scope and architecture](docs/01-scope-and-architecture.md), [intake](docs/02-repository-intake.md), [extraction](docs/03-readme-extraction.md), [static checks](docs/04-static-checks.md), [plan review](docs/05-execution-plan-review.md), [execution prototype and pending gates](docs/06-isolated-execution.md), and [reserved evaluation scenarios](evaluation/README.md). Remaining work in Part 6 is live verification; failure diagnosis (Part 7) has not begun.

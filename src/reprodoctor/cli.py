@@ -7,6 +7,7 @@ import sys
 from pathlib import Path
 
 from .checks import check_snapshot
+from .execution import execute_plan, recover
 from .extraction import encode_candidates, extract_snapshot
 from .intake import IntakeError, intake
 from .planning import (
@@ -63,7 +64,9 @@ def main(argv: list[str] | None = None) -> int:
     approving = commands.add_parser(
         "approve", help="Display a plan and require full-digest confirmation"
     )
-    running = commands.add_parser("run", help="Dry-run only at this milestone; no executor exists")
+    running = commands.add_parser(
+        "run", help="Dry-run, or explicitly opt into experimental execution"
+    )
     for command in (approving, running):
         command.add_argument("plan", type=Path)
         command.add_argument("--snapshot", required=True, type=Path)
@@ -71,15 +74,67 @@ def main(argv: list[str] | None = None) -> int:
             "--wheelhouse", type=Path, help="Supply again if the plan includes wheels"
         )
     approving.add_argument("--output", required=True, type=Path, help="New local approval record")
-    running.add_argument("--dry-run", action="store_true")
+    run_mode = running.add_mutually_exclusive_group()
+    run_mode.add_argument("--dry-run", action="store_true")
     running.add_argument(
         "--approval", type=Path, help="Optionally verify a matching approval record"
     )
+    run_mode.add_argument(
+        "--experimental-execution",
+        action="store_true",
+        help="Opt in to the prototype runner; live validation is pending",
+    )
+    running.add_argument(
+        "--output", type=Path, help="New JSON execution report; required for execution"
+    )
+    running.add_argument(
+        "--docker-socket", default="/var/run/docker.sock", help="Local Unix socket only"
+    )
+    cleanup = commands.add_parser(
+        "cleanup", help="Recover one owned container using its run journal"
+    )
+    cleanup.add_argument("journal", type=Path)
+    cleanup.add_argument("--docker-socket", default="/var/run/docker.sock")
     args = parser.parse_args(argv)
     try:
+        if args.command == "cleanup":
+            print(json.dumps(recover(args.journal, socket=args.docker_socket)))
+            return 0
         if args.command in {"plan", "approve", "run"}:
+            if args.command == "run" and args.dry_run and args.output is not None:
+                raise IntakeError("Dry-run writes no files; omit --output")
             if args.command == "run" and not args.dry_run:
-                raise IntakeError("Execution is not implemented. Use --dry-run; no commands ran.")
+                if not args.experimental_execution or not args.approval or not args.output:
+                    raise IntakeError(
+                        "Live validation is pending. Execution requires explicit "
+                        "--experimental-execution, --approval and --output; else use --dry-run."
+                    )
+                _new_output(args.output, args.snapshot, args.wheelhouse)
+                result = execute_plan(
+                    read_document(args.plan),
+                    read_document(args.approval),
+                    args.snapshot,
+                    args.output,
+                    wheelhouse=args.wheelhouse,
+                    socket=args.docker_socket,
+                    experimental=True,
+                )
+                print(
+                    json.dumps(
+                        {
+                            "output": str(args.output.absolute()),
+                            "execution_status": result["execution_status"],
+                            "cleanup": result["cleanup"]["status"],
+                            "live_validation": "pending",
+                        }
+                    )
+                )
+                return (
+                    0
+                    if result["execution_status"] == "completed"
+                    and result["cleanup"]["status"] in {"removed", "absent"}
+                    else 2
+                )
             if args.command != "run":
                 _new_output(args.output, args.snapshot, args.wheelhouse)
             if args.command == "plan":

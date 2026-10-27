@@ -1,6 +1,6 @@
 # Milestone 5: execution-plan review and dry-run
 
-Status: implemented on the current local macOS / Python 3.14.5 development environment. The preceding static milestone was saved as local commit `60c3037`. No executor, container creation, runtime preflight or image fetching is implemented here.
+Status: plan review completed on macOS / Python 3.14.5, saved as local commit `102033c`. This document describes the Part 5 contract. The subsequent experimental runner and its **pending live validation** are tracked in [Part 6](06-isolated-execution.md); prior plans must be regenerated for the updated code/policy fingerprint.
 
 ## Contract
 
@@ -8,7 +8,7 @@ Status: implemented on the current local macOS / Python 3.14.5 development envir
 2. `--decisions FILE` supplies per-instruction accept/exclude/replace inputs with mandatory reasons. Every original instruction remains visible, including excluded/replaced ones. Rebuild a new plan after edits; do not hand-edit derived fields.
 3. `approve PLAN --snapshot SNAPSHOT --output NEW_APPROVAL` reconstructs and validates the plan, displays it fully with terminal-control escaping, refuses blockers, requires an interactive stdin/stdout terminal and the entire plan digest, then revalidates source/artifacts and creates the approval record. EOF, Ctrl-C and digest mismatches create no approval.
 4. `run PLAN --snapshot SNAPSHOT --dry-run [--approval FILE]` verifies the plan and optional matching approval without invoking subprocesses, sockets, Docker, installers or project commands. It writes no files or approval record. The result includes the entire validated plan, logical plan state, approval match and explicit `execution_status: not_run` / `runtime_preflight: not_performed` / `executor_available: false`.
-5. `run` without `--dry-run` refuses, even with a valid approval. Actual execution belongs to milestone 6.
+5. Normal `run` without `--dry-run` refuses unless the separate Part 6 experimental-execution opt-in, matching approval and report output are supplied. Dry-run itself remains read-only.
 
 If wheel artifacts are included, supply `--wheelhouse DIR` again on approval/dry-run. The plan stores file names, sizes and SHA-256 hashes rather than embedded host source paths. The tool never follows a host artifact path supplied by untrusted plan JSON. New output files must be outside snapshot/wheelhouse inputs and have owner-only permissions.
 
@@ -70,4 +70,4 @@ Implementation references: [Docker run controls](https://docs.docker.com/referen
 
 ## Next boundary
 
-Milestone 6 must implement and verify runtime preflight, copied-byte integrity, resource/network/filesystem enforcement, process/log/time handling, actual environment capture and cleanup before offering execution. A runtime that cannot enforce a required control must fail closed. Runtime checks, container security tests and failure diagnosis have not been performed by this milestone.
+Part 6 now has an opt-in prototype with mocked lifecycle tests. Runtime preflight, copied-byte integrity, limits, time/log handling and cleanup must still pass live tests before acceptance is complete. See [remaining gates](06-isolated-execution.md). No live container security tests or failure diagnosis have been performed.

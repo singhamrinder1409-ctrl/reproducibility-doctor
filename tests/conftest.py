@@ -4,6 +4,16 @@ import subprocess
 import pytest
 
 
+def pytest_addoption(parser):
+    group = parser.getgroup("live container execution (explicitly approved inputs only)")
+    group.addoption(
+        "--live-container", action="store_true", help="Run the opt-in Docker smoke gate"
+    )
+    for name in ("plan", "snapshot", "approval", "wheelhouse"):
+        group.addoption("--live-" + name, help="Explicitly reviewed live " + name + " path")
+    group.addoption("--live-docker-socket", default="/var/run/docker.sock")
+
+
 @pytest.fixture
 def repo(tmp_path):
     root = tmp_path / "project"

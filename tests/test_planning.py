@@ -44,7 +44,8 @@ def test_deterministic_plan_preserves_all_provenance_and_fixed_settings(snapshot
     assert plan == build_plan(snapshot, image=IMAGE)
     assert validate_plan(plan, snapshot) == plan
     payload = plan["payload"]
-    assert payload["state"] == "needs_approval" and not payload["executor_available"]
+    assert payload["state"] == "needs_approval" and payload["executor_available"]
+    assert payload["execution_mode"] == "experimental_live_validation_pending"
     (step,) = payload["steps"]
     assert step["instruction"]["raw_text"] == "python hello.py\n"
     assert step["instruction"]["start_line"] == 4

@@ -84,6 +84,9 @@ def planner_identity() -> dict:
                     "intake.py",
                     "cli.py",
                     "__init__.py",
+                    "execution.py",
+                    "processes.py",
+                    "container_scripts.py",
                 )
             }
         ),
@@ -160,10 +163,16 @@ def container_settings(image: str | None, platform: str) -> dict:
         "seccomp": "runtime_default_required",
         "root_filesystem": "read_only",
         "entrypoint": "overridden_no_image_startup_command",
+        "healthcheck": "disabled",
+        "runtime_log_driver": "none",
+        "runtime_namespaces": {"ipc": "private", "cgroup": "private", "pid": "private"},
+        "runtime_support": "experimental_local_Docker_Linux_cgroup_v2_builtin_seccomp",
         "environment": ENVIRONMENT.copy(),
         "inherit_host_environment": False,
         "image_environment": "must_clear_before_project_steps",
         "source_transfer": "copy_only_verified_snapshot_no_git_metadata",
+        "source_copy_permissions": "user_writable_0644_or_0755_matching_tracked_executable_bit",
+        "project_umask": "0022",
         "artifact_transfer": "copy_only_verified_wheels_no_host_mounts",
         "writable_tmpfs": {
             "/workspace": 256 * 1024 * 1024,
@@ -179,6 +188,9 @@ def container_settings(image: str | None, platform: str) -> dict:
             "step_seconds": 120,
             "run_seconds": 600,
             "log_bytes_per_stream_per_step": 1024 * 1024,
+            "run_log_bytes": 4 * 1024 * 1024,
+            "core_bytes": 0,
+            "open_files": 256,
         },
         "cleanup": "remove_container_and_temporary_data_on_exit_or_reconcile_after_interruption",
         "preflight_required": [
@@ -437,13 +449,14 @@ def build_plan(
         "steps": steps,
         "blockers": blockers,
         "state": "blocked" if blockers else "needs_approval",
-        "executor_available": False,
+        "executor_available": True,
+        "execution_mode": "experimental_live_validation_pending",
         "limitations": [
             "Network needs of arbitrary program/build code cannot be inferred statically.",
             "Image existence, digest/platform, Python and runtime controls are not verified here.",
             "Approval records are local audit data, not identity proof or blanket permission.",
             "Containers reduce exposure but do not make arbitrary code completely safe.",
-            "No executor exists here; future execution must reject missing controls.",
+            "Experimental execution needs opt-in and runtime preflight; live tests are pending.",
         ],
     }
     plan = {
@@ -545,7 +558,8 @@ def dry_run(
         "plan_state": plan["payload"]["state"],
         "approval_matches": approval is not None,
         "execution_status": "not_run",
-        "executor_available": False,
+        "executor_available": True,
+        "execution_mode": "experimental_live_validation_pending",
         "runtime_preflight": "not_performed",
         "plan": plan,
         "side_effects": "no container, image pull, install, project command or approval write",
