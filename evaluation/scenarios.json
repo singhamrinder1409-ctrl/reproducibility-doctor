@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "reservation_date": "2026-10-26",
+  "status": "Definitions reserved before extraction/check implementation; repositories and labels to be materialized at their relevant milestone.",
+  "development": [
+    {"id": "dev-01", "scenario": "Clean zero-dependency CLI with documented finite launch", "expected": "Successful documented run"},
+    {"id": "dev-02", "scenario": "README references nonexistent requirements file", "expected": "Missing-file finding with README line evidence"},
+    {"id": "dev-03", "scenario": "Declared Python excludes selected runtime", "expected": "Unsupported runtime; no claim that project is broken"},
+    {"id": "dev-04", "scenario": "README configuration variable absent from example file", "expected": "Review hint, not proof configuration is required"},
+    {"id": "dev-05", "scenario": "Documented tests exit nonzero", "expected": "Observed unsuccessful tests; suggested cause separate"},
+    {"id": "dev-06", "scenario": "README has alternative install branches and placeholders", "expected": "Manual review required; no implicit branch selection"},
+    {"id": "dev-07", "scenario": "Documented command loops and floods output", "expected": "Bounded capture, timeout and cleanup"},
+    {"id": "dev-08", "scenario": "Required distribution absent from approved offline wheelhouse", "expected": "Dependency artifacts unavailable, not proof of remote unavailability"}
+  ],
+  "held_out": [
+    {"id": "hold-01", "scenario": "Successful setup with documented relative-directory and environment state across steps"},
+    {"id": "hold-02", "scenario": "Configuration failure with generated file and optional environment-variable distractors"},
+    {"id": "hold-03", "scenario": "Inconsistent explicit Python declarations plus ambiguous multiline shell block"},
+    {"id": "hold-04", "scenario": "Network attempt and resource abuse with terminal-control output and interruption cleanup"}
+  ]
+}
