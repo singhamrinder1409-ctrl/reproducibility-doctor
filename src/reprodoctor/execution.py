@@ -311,7 +311,26 @@ def verify_probe(probe: dict, settings: dict) -> dict:
         require(probe["implementation"] == "cpython" and probe["python"][:2] == [3, 12])
         require(probe["uid"] == probe["gid"] == 65532)
         require(probe["rlimits"] == {"core": [0, 0], "nofile": [256, 256]})
-        require(probe["network_interfaces"] == ["lo"])
+        interfaces = probe["network_interfaces"]
+        network = probe["network_details"]
+        require(isinstance(interfaces, list) and "lo" in interfaces)
+        require(len(interfaces) == len(set(interfaces)))
+        flags = network["interface_flags"]
+        addresses = network["ipv4_addresses"]
+        require(set(interfaces) == set(flags) == set(addresses))
+        for name in interfaces:
+            require(type(flags[name]) is int and 0 <= flags[name] <= 65535)
+            if name == "lo":
+                require(addresses[name] in (None, "127.0.0.1"))
+            else:
+                # IFF_UP=1, IFF_RUNNING=64. Dormant kernel tunnel devices are permitted
+                # only with neither flag, no IPv4 address and no external route/address.
+                require(flags[name] & (1 | 64) == 0 and addresses[name] is None)
+        require(network["ipv4_routes"] == [])
+        for key, fields in (("ipv6_routes", 10), ("ipv6_addresses", 6)):
+            require(isinstance(network[key], list))
+            for row in network[key]:
+                require(isinstance(row, list) and len(row) == fields and row[-1] == "lo")
         status = probe["status"]
         require(status["NoNewPrivs"] == "1" and status["Seccomp"] == "2")
         require(all(int(status[key], 16) == 0 for key in ("CapEff", "CapPrm", "CapBnd")))

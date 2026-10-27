@@ -179,7 +179,7 @@ reprodoctor report /path/to/run-report.json --format json --output /path/to/comb
 
 These commands interpret records without running Docker or project code. Suggestions cite bounded log evidence and stay separate from observed exit status. An optional static report must match the exact commit and snapshot digest. Timeout, infrastructure failure, unsupported and unknown outcomes remain distinct from project defects. Logs are untrusted; a matching traceback is only a possible cause.
 
-Output files are new and owner-only. Reports retain exact commands and logs and are **not automatically redacted**: review a separate copy before sharing. No real execution report is published while live testing is pending.
+Output files are new and owner-only. Reports retain exact commands and logs and are **not automatically redacted**: review a separate copy before sharing. A [genuine preflight failure report](examples/live-preflight-failed.md) is available: the runner stopped before target code, and cleanup succeeded. Successful target execution and full live acceptance remain pending.
 
 ## Try the static demo without Docker
 

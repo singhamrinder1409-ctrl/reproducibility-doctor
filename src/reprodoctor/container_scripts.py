@@ -5,8 +5,30 @@ Project code is not imported, including during metadata/transfer operations.
 """
 
 PROBE = r"""
-import json, os, platform, resource, sys
+import errno, fcntl, json, os, platform, resource, socket, struct, sys
 from pathlib import Path
+interfaces = sorted(name for _, name in socket.if_nameindex())
+interface_flags, ipv4_addresses = {}, {}
+with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as network_socket:
+    for name in interfaces:
+        request = struct.pack('256s', name.encode())
+        flags = fcntl.ioctl(network_socket.fileno(), 0x8913, request)
+        interface_flags[name] = struct.unpack('H', flags[16:18])[0]
+        try:
+            address = fcntl.ioctl(network_socket.fileno(), 0x8915, request)
+            ipv4_addresses[name] = socket.inet_ntoa(address[20:24])
+        except OSError as error:
+            if error.errno != errno.EADDRNOTAVAIL:
+                raise
+            ipv4_addresses[name] = None
+network_details = {
+ 'interface_flags': interface_flags, 'ipv4_addresses': ipv4_addresses,
+ 'ipv4_routes': [line.split() for line in Path('/proc/net/route').read_text().splitlines()[1:]
+                 if line.strip()],
+ 'ipv6_routes': [line.split() for line in Path('/proc/net/ipv6_route').read_text().splitlines()
+                 if line.strip()],
+ 'ipv6_addresses': [line.split() for line in Path('/proc/net/if_inet6').read_text().splitlines()
+                    if line.strip()]}
 def number(name):
     return Path('/sys/fs/cgroup/' + name).read_text().strip()
 status = dict(line.split(':', 1) for line in
@@ -30,7 +52,7 @@ print(json.dumps({'implementation': sys.implementation.name, 'python': list(sys.
  'status': {k: status[k].strip() for k in ('NoNewPrivs', 'Seccomp', 'CapEff', 'CapPrm', 'CapBnd')},
  'cgroups': {name: number(name) for name in
             ('memory.max', 'memory.swap.max', 'pids.max', 'cpu.max')},
- 'network_interfaces': sorted(p.name for p in Path('/sys/class/net').iterdir()),
+ 'network_interfaces': interfaces, 'network_details': network_details,
  'paths': paths,
  'managed_files_writable': [p for p in ('/etc/hosts', '/etc/hostname', '/etc/resolv.conf')
                             if os.access(p, os.W_OK)]}))

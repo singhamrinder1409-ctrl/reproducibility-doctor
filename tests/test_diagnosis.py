@@ -120,3 +120,10 @@ def test_diagnosis_does_not_mutate_input():
     before = copy.deepcopy(value)
     diagnose(value)
     assert value == before
+
+
+def test_combined_markdown_preserves_runner_error():
+    value = record(status="infrastructure_error", code=None)
+    value["error"] = "Preflight refused <untrusted> control"
+    rendered = combined_markdown(combined_report(value))
+    assert "Runner error: Preflight refused &lt;untrusted&gt; control" in rendered

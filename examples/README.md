@@ -25,3 +25,7 @@ python scripts/demo.py --output /new/path/doctor-demo
 ```
 
 The script uses only the authored development fixture, creates temporary Git metadata, runs intake/extract/check/blocked-plan/dry-run, checks each CLI status, records output and removes temporary files. It never approves a plan, starts Docker or executes fixture code. The generated plan is a blocked draft with no selected image; it is not an executable plan or approval receipt.
+
+## Genuine live preflight failure
+
+`live-preflight-failed.json` and `.md` record the first approved live attempt. Docker/kernel settings were observed, but the original strict network enumeration stopped the runner before source transfer or target code execution. Cleanup succeeded. The original evidence is retained after fixing the network probe; it does not demonstrate successful setup or complete containment acceptance. No approval receipt or private source is published.

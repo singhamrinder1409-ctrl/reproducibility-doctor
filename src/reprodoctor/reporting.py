@@ -105,6 +105,8 @@ def combined_markdown(report: dict) -> str:
         "",
         "Cleanup: " + _text(execution["cleanup"]),
         "",
+        "Runner error: " + _text(execution.get("error")),
+        "",
         "## Recorded steps",
         "",
     ]

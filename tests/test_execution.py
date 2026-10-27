@@ -67,6 +67,13 @@ def kernel_metadata(settings):
             "cpu.max": "100000 100000",
         },
         "network_interfaces": ["lo"],
+        "network_details": {
+            "interface_flags": {"lo": 73},
+            "ipv4_addresses": {"lo": "127.0.0.1"},
+            "ipv4_routes": [],
+            "ipv6_routes": [],
+            "ipv6_addresses": [],
+        },
         "managed_files_writable": [],
         "paths": paths,
     }
@@ -680,3 +687,30 @@ def test_docker_cli_search_uses_fixed_paths_only(tmp_path, monkeypatch, platform
     assert ("/Applications/Docker.app/Contents/Resources/bin" in observed["path"]) == (
         platform == "darwin"
     )
+
+
+def test_dormant_unaddressed_tunnel_requires_no_external_routes(execution_inputs):
+    _, plan, _ = execution_inputs
+    settings = plan["payload"]["container"]
+    probe = kernel_metadata(settings)
+    probe["network_interfaces"].append("gre0")
+    probe["network_details"]["interface_flags"]["gre0"] = 128
+    probe["network_details"]["ipv4_addresses"]["gre0"] = None
+    verify_probe(probe, settings)
+    for flags in (1, 64, 65):
+        bad = copy.deepcopy(probe)
+        bad["network_details"]["interface_flags"]["gre0"] = flags
+        with pytest.raises(RuntimeFailure):
+            verify_probe(bad, settings)
+    for key, value in (
+        ("ipv4_addresses", {"lo": None, "gre0": "192.0.2.1"}),
+        ("ipv4_routes", [["gre0", "00000000"]]),
+        ("ipv6_routes", [["0"] * 9 + ["gre0"]]),
+        ("ipv6_addresses", [["0"] * 5 + ["gre0"]]),
+        ("interface_flags", {"lo": 0}),
+        ("ipv6_routes", [["lo"]]),
+    ):
+        bad = copy.deepcopy(probe)
+        bad["network_details"][key] = value
+        with pytest.raises(RuntimeFailure):
+            verify_probe(bad, settings)

@@ -1,0 +1,64 @@
+> **Genuine preflight failure — no target fixture code ran.** The container was removed. This records the original strict network enumeration check before its correction; it is not a successful setup or full containment result.
+
+# Reproducibility Doctor — run report
+
+Experimental execution; live validation: pending
+
+This report interprets a local record; it does not authenticate evidence or certify safety.
+
+Snapshot digest: 80b4e0b45aba2c7fa8cf5651524dfde9f5936b6fe452a48e09737516945ba9d9
+
+Plan digest: 190cd4d0ff72924dd018b52c4da05fed260cadc4a7427a9c3fc3cd83e6a5cd04
+
+Input execution record SHA-256 (canonical JSON): da34a65a22fad646ae88957bfcba36b4d8203564e99487ddf53f5351e5f9df5f
+
+Cleanup: {&#x27;status&#x27;: &#x27;removed&#x27;, &#x27;container&#95;name&#x27;: &#x27;reprodoctor-8a9474b3a69b4b94a37867851eaaa984&#x27;}
+
+Runner error: Kernel preflight could not establish every required control
+
+## Recorded steps
+
+Not reached: &#91;&#x27;instruction-0001&#x27;, &#x27;instruction-0002&#x27;, &#x27;instruction-0003&#x27;&#93;
+
+## Environment and evidence
+
+Approved settings: {&#x27;image&#x27;: &#x27;python@sha256:12316debbfb86890f6b2d825820612741ba527ad5a44e3902759141d572bfe8f&#x27;, &#x27;platform&#x27;: &#x27;linux/arm64&#x27;, &#x27;expected&#95;python&#95;series&#x27;: &#x27;3.12&#x27;, &#x27;network&#x27;: &#x27;none&#x27;, &#x27;ports&#x27;: &#91;&#93;, &#x27;host&#95;mounts&#x27;: &#91;&#93;, &#x27;privileged&#x27;: False, &#x27;user&#x27;: &#x27;65532:65532&#x27;, &#x27;cap&#95;drop&#x27;: &#91;&#x27;ALL&#x27;&#93;, &#x27;no&#95;new&#95;privileges&#x27;: True, &#x27;seccomp&#x27;: &#x27;runtime&#95;default&#95;required&#x27;, &#x27;root&#95;filesystem&#x27;: &#x27;read&#95;only&#x27;, &#x27;entrypoint&#x27;: &#x27;overridden&#95;no&#95;image&#95;startup&#95;command&#x27;, &#x27;healthcheck&#x27;: &#x27;disabled&#x27;, &#x27;runtime&#95;log&#95;driver&#x27;: &#x27;none&#x27;, &#x27;runtime&#95;namespaces&#x27;: {&#x27;ipc&#x27;: &#x27;private&#x27;, &#x27;cgroup&#x27;: &#x27;private&#x27;, &#x27;pid&#x27;: &#x27;private&#x27;}, &#x27;runtime&#95;support&#x27;: &#x27;experimental&#95;local&#95;Docker&#95;Linux&#95;cgroup&#95;v2&#95;builtin&#95;seccomp&#x27;, &#x27;environment&#x27;: {&#x27;PATH&#x27;: &#x27;/usr/local/bin:/usr/bin:/bin&#x27;, &#x27;HOME&#x27;: &#x27;/tmp&#x27;, &#x27;PYTHONDONTWRITEBYTECODE&#x27;: &#x27;1&#x27;, &#x27;PYTHONNOUSERSITE&#x27;: &#x27;1&#x27;, &#x27;PYTHONPATH&#x27;: &#x27;/workspace/.doctor-packages&#x27;, &#x27;PIP&#95;CONFIG&#95;FILE&#x27;: &#x27;/dev/null&#x27;, &#x27;PIP&#95;NO&#95;INDEX&#x27;: &#x27;1&#x27;, &#x27;PIP&#95;DISABLE&#95;PIP&#95;VERSION&#95;CHECK&#x27;: &#x27;1&#x27;, &#x27;PIP&#95;NO&#95;INPUT&#x27;: &#x27;1&#x27;}, &#x27;inherit&#95;host&#95;environment&#x27;: False, &#x27;image&#95;environment&#x27;: &#x27;must&#95;clear&#95;before&#95;project&#95;steps&#x27;, &#x27;source&#95;transfer&#x27;: &#x27;copy&#95;only&#95;verified&#95;snapshot&#95;no&#95;git&#95;metadata&#x27;, &#x27;source&#95;copy&#95;permissions&#x27;: &#x27;user&#95;writable&#95;0644&#95;or&#95;0755&#95;matching&#95;tracked&#95;executable&#95;bit&#x27;, &#x27;project&#95;umask&#x27;: &#x27;0022&#x27;, &#x27;artifact&#95;transfer&#x27;: &#x27;copy&#95;only&#95;verified&#95;wheels&#95;no&#95;host&#95;mounts&#x27;, &#x27;writable&#95;tmpfs&#x27;: {&#x27;/workspace&#x27;: 268435456, &#x27;/tmp&#x27;: 67108864, &#x27;/wheels&#x27;: 134217728}, &#x27;shared&#95;memory&#95;bytes&#x27;: 16777216, &#x27;limits&#x27;: {&#x27;cpus&#x27;: 1, &#x27;memory&#95;bytes&#x27;: 1073741824, &#x27;extra&#95;swap&#95;bytes&#x27;: 0, &#x27;pids&#x27;: 128, &#x27;step&#95;seconds&#x27;: 120, &#x27;run&#95;seconds&#x27;: 600, &#x27;log&#95;bytes&#95;per&#95;stream&#95;per&#95;step&#x27;: 1048576, &#x27;run&#95;log&#95;bytes&#x27;: 4194304, &#x27;core&#95;bytes&#x27;: 0, &#x27;open&#95;files&#x27;: 256}, &#x27;cleanup&#x27;: &#x27;remove&#95;container&#95;and&#95;temporary&#95;data&#95;on&#95;exit&#95;or&#95;reconcile&#95;after&#95;interruption&#x27;, &#x27;preflight&#95;required&#x27;: &#91;&#x27;verify&#95;local&#95;image&#95;digest&#95;and&#95;platform&#x27;, &#x27;verify&#95;CPython&#95;3.12&#x27;, &#x27;reject&#95;image&#95;declared&#95;volumes&#x27;, &#x27;verify&#95;all&#95;resource&#95;controls&#x27;, &#x27;clear&#95;image&#95;entrypoint&#95;and&#95;environment&#x27;, &#x27;verify&#95;no&#95;sensitive&#95;mounts&#x27;&#93;}
+
+Observed preflight: {&#x27;server&#95;observed&#x27;: {&#x27;ServerVersion&#x27;: &#x27;29.9.2&#x27;, &#x27;OSType&#x27;: &#x27;linux&#x27;, &#x27;CgroupVersion&#x27;: &#x27;2&#x27;, &#x27;SecurityOptions&#x27;: &#91;&#x27;name=seccomp,profile=builtin&#x27;, &#x27;name=cgroupns&#x27;&#93;}, &#x27;server&#x27;: {&#x27;ServerVersion&#x27;: &#x27;29.9.2&#x27;, &#x27;OSType&#x27;: &#x27;linux&#x27;, &#x27;CgroupVersion&#x27;: &#x27;2&#x27;, &#x27;SecurityOptions&#x27;: &#91;&#x27;name=seccomp,profile=builtin&#x27;, &#x27;name=cgroupns&#x27;&#93;}, &#x27;image&#x27;: {&#x27;id&#x27;: &#x27;sha256:12316debbfb86890f6b2d825820612741ba527ad5a44e3902759141d572bfe8f&#x27;, &#x27;repo&#95;digest&#x27;: &#x27;sha256:12316debbfb86890f6b2d825820612741ba527ad5a44e3902759141d572bfe8f&#x27;, &#x27;platform&#x27;: &#x27;linux/arm64&#x27;, &#x27;image&#95;environment&#95;keys&#95;cleared&#x27;: &#91;&#x27;GPG&#95;KEY&#x27;, &#x27;LANG&#x27;, &#x27;PATH&#x27;, &#x27;PYTHON&#95;SHA256&#x27;, &#x27;PYTHON&#95;VERSION&#x27;&#93;}, &#x27;container&#95;observed&#x27;: {&#x27;image&#95;id&#x27;: &#x27;sha256:12316debbfb86890f6b2d825820612741ba527ad5a44e3902759141d572bfe8f&#x27;, &#x27;host&#95;config&#x27;: {&#x27;NetworkMode&#x27;: &#x27;none&#x27;, &#x27;ReadonlyRootfs&#x27;: True, &#x27;Memory&#x27;: 1073741824, &#x27;MemorySwap&#x27;: 1073741824, &#x27;PidsLimit&#x27;: 128, &#x27;NanoCpus&#x27;: 1000000000, &#x27;SecurityOpt&#x27;: &#91;&#x27;no-new-privileges=true&#x27;&#93;, &#x27;Privileged&#x27;: False, &#x27;Binds&#x27;: None, &#x27;Devices&#x27;: &#91;&#93;, &#x27;Tmpfs&#x27;: {&#x27;/tmp&#x27;: &#x27;rw,nosuid,nodev,size=67108864,uid=65532,gid=65532,mode=0700&#x27;, &#x27;/wheels&#x27;: &#x27;rw,nosuid,nodev,size=134217728,uid=65532,gid=65532,mode=0700&#x27;, &#x27;/workspace&#x27;: &#x27;rw,nosuid,nodev,size=268435456,uid=65532,gid=65532,mode=0700&#x27;}}}, &#x27;container&#x27;: {&#x27;image&#95;id&#x27;: &#x27;sha256:12316debbfb86890f6b2d825820612741ba527ad5a44e3902759141d572bfe8f&#x27;, &#x27;host&#95;config&#95;verified&#x27;: {&#x27;NetworkMode&#x27;: &#x27;none&#x27;, &#x27;IpcMode&#x27;: &#x27;private&#x27;, &#x27;CgroupnsMode&#x27;: &#x27;private&#x27;, &#x27;ReadonlyRootfs&#x27;: True, &#x27;Privileged&#x27;: False, &#x27;NanoCpus&#x27;: 1000000000, &#x27;Memory&#x27;: 1073741824, &#x27;MemorySwap&#x27;: 1073741824, &#x27;PidsLimit&#x27;: 128, &#x27;ShmSize&#x27;: 16777216, &#x27;CapDrop&#x27;: &#91;&#x27;ALL&#x27;&#93;, &#x27;Init&#x27;: True}, &#x27;environment&#95;keys&#x27;: &#91;&#x27;GPG&#95;KEY&#x27;, &#x27;HOME&#x27;, &#x27;LANG&#x27;, &#x27;PATH&#x27;, &#x27;PIP&#95;CONFIG&#95;FILE&#x27;, &#x27;PIP&#95;DISABLE&#95;PIP&#95;VERSION&#95;CHECK&#x27;, &#x27;PIP&#95;NO&#95;INDEX&#x27;, &#x27;PIP&#95;NO&#95;INPUT&#x27;, &#x27;PYTHONDONTWRITEBYTECODE&#x27;, &#x27;PYTHONNOUSERSITE&#x27;, &#x27;PYTHONPATH&#x27;, &#x27;PYTHON&#95;SHA256&#x27;, &#x27;PYTHON&#95;VERSION&#x27;&#93;, &#x27;healthcheck&#95;disabled&#x27;: True}, &#x27;kernel&#x27;: {&#x27;implementation&#x27;: &#x27;cpython&#x27;, &#x27;python&#x27;: &#91;3, 12, 16&#93;, &#x27;executable&#x27;: &#x27;/usr/local/bin/python&#x27;, &#x27;version&#x27;: &#x27;3.12.16 (main, Oct 26 2026, 22:56:41) &#91;GCC 14.2.0&#93;&#x27;, &#x27;machine&#x27;: &#x27;aarch64&#x27;, &#x27;uid&#x27;: 65532, &#x27;gid&#x27;: 65532, &#x27;rlimits&#x27;: {&#x27;core&#x27;: &#91;0, 0&#93;, &#x27;nofile&#x27;: &#91;256, 256&#93;}, &#x27;status&#x27;: {&#x27;NoNewPrivs&#x27;: &#x27;1&#x27;, &#x27;Seccomp&#x27;: &#x27;2&#x27;, &#x27;CapEff&#x27;: &#x27;0000000000000000&#x27;, &#x27;CapPrm&#x27;: &#x27;0000000000000000&#x27;, &#x27;CapBnd&#x27;: &#x27;0000000000000000&#x27;}, &#x27;cgroups&#x27;: {&#x27;memory.max&#x27;: &#x27;1073741824&#x27;, &#x27;memory.swap.max&#x27;: &#x27;0&#x27;, &#x27;pids.max&#x27;: &#x27;128&#x27;, &#x27;cpu.max&#x27;: &#x27;100000 100000&#x27;}, &#x27;network&#95;interfaces&#x27;: &#91;&#x27;bonding&#95;masters&#x27;, &#x27;erspan0&#x27;, &#x27;gre0&#x27;, &#x27;gretap0&#x27;, &#x27;ip6&#95;vti0&#x27;, &#x27;ip6gre0&#x27;, &#x27;ip6tnl0&#x27;, &#x27;ip&#95;vti0&#x27;, &#x27;lo&#x27;, &#x27;sit0&#x27;, &#x27;tunl0&#x27;&#93;, &#x27;paths&#x27;: {&#x27;/&#x27;: {&#x27;read&#95;only&#x27;: True, &#x27;bytes&#x27;: 240120725504, &#x27;mount&#x27;: {&#x27;options&#x27;: &#91;&#x27;ro&#x27;, &#x27;relatime&#x27;&#93;, &#x27;type&#x27;: &#x27;overlay&#x27;}}, &#x27;/sys&#x27;: {&#x27;read&#95;only&#x27;: True, &#x27;bytes&#x27;: 0, &#x27;mount&#x27;: {&#x27;options&#x27;: &#91;&#x27;ro&#x27;, &#x27;nosuid&#x27;, &#x27;nodev&#x27;, &#x27;noexec&#x27;, &#x27;relatime&#x27;&#93;, &#x27;type&#x27;: &#x27;sysfs&#x27;}}, &#x27;/sys/fs/cgroup&#x27;: {&#x27;read&#95;only&#x27;: True, &#x27;bytes&#x27;: 0, &#x27;mount&#x27;: {&#x27;options&#x27;: &#91;&#x27;ro&#x27;, &#x27;nosuid&#x27;, &#x27;nodev&#x27;, &#x27;noexec&#x27;, &#x27;relatime&#x27;&#93;, &#x27;type&#x27;: &#x27;cgroup2&#x27;}}, &#x27;/proc/sys&#x27;: {&#x27;read&#95;only&#x27;: True, &#x27;bytes&#x27;: 0, &#x27;mount&#x27;: {&#x27;options&#x27;: &#91;&#x27;ro&#x27;, &#x27;nosuid&#x27;, &#x27;nodev&#x27;, &#x27;noexec&#x27;, &#x27;relatime&#x27;&#93;, &#x27;type&#x27;: &#x27;proc&#x27;}}, &#x27;/workspace&#x27;: {&#x27;read&#95;only&#x27;: False, &#x27;bytes&#x27;: 268435456, &#x27;mount&#x27;: {&#x27;options&#x27;: &#91;&#x27;rw&#x27;, &#x27;nosuid&#x27;, &#x27;nodev&#x27;, &#x27;noexec&#x27;, &#x27;relatime&#x27;&#93;, &#x27;type&#x27;: &#x27;tmpfs&#x27;}}, &#x27;/tmp&#x27;: {&#x27;read&#95;only&#x27;: False, &#x27;bytes&#x27;: 67108864, &#x27;mount&#x27;: {&#x27;options&#x27;: &#91;&#x27;rw&#x27;, &#x27;nosuid&#x27;, &#x27;nodev&#x27;, &#x27;noexec&#x27;, &#x27;relatime&#x27;&#93;, &#x27;type&#x27;: &#x27;tmpfs&#x27;}}, &#x27;/wheels&#x27;: {&#x27;read&#95;only&#x27;: False, &#x27;bytes&#x27;: 134217728, &#x27;mount&#x27;: {&#x27;options&#x27;: &#91;&#x27;rw&#x27;, &#x27;nosuid&#x27;, &#x27;nodev&#x27;, &#x27;noexec&#x27;, &#x27;relatime&#x27;&#93;, &#x27;type&#x27;: &#x27;tmpfs&#x27;}}, &#x27;/dev/shm&#x27;: {&#x27;read&#95;only&#x27;: False, &#x27;bytes&#x27;: 16777216, &#x27;mount&#x27;: {&#x27;options&#x27;: &#91;&#x27;rw&#x27;, &#x27;nosuid&#x27;, &#x27;nodev&#x27;, &#x27;noexec&#x27;, &#x27;relatime&#x27;&#93;, &#x27;type&#x27;: &#x27;tmpfs&#x27;}}}, &#x27;managed&#95;files&#95;writable&#x27;: &#91;&#93;}}
+
+Artifacts: {&#x27;files&#x27;: &#91;&#93;, &#x27;content&#95;digest&#x27;: &#x27;4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945&#x27;, &#x27;total&#95;bytes&#x27;: 0, &#x27;container&#95;directory&#x27;: &#x27;/wheels&#x27;, &#x27;validation&#x27;: &#x27;hashes&#95;only&#95;not&#95;wheel&#95;validity&#x27;}
+
+Engine: {&#x27;tool&#95;version&#x27;: &#x27;0.1.0.dev0&#x27;, &#x27;contract&#95;version&#x27;: 1, &#x27;code&#95;digest&#x27;: &#x27;c5dce477c911230b8eaf1ccad4ecfc2e1d14be2a7cfeaa2dbab60ffd077c0cb1&#x27;, &#x27;markdown&#95;it&#95;version&#x27;: &#x27;4.2.0&#x27;, &#x27;mdurl&#95;version&#x27;: &#x27;0.1.2&#x27;}
+
+# Reproducibility Doctor — failure diagnosis
+
+Execution status: infrastructure&#95;error
+
+Live validation: pending
+
+Commit: d91d9b19e8edaff37653b8251df37233d60e59df
+
+## diagnosis-0001: infrastructure&#95;error
+
+Type: observation
+
+Observed: The execution record reports infrastructure&#95;error.
+
+Suggested next action: Inspect runner errors, timings and runtime settings before attributing this outcome to the project.
+
+Evidence: {&quot;json&#95;pointer&quot;: &quot;/execution&#95;status&quot;, &quot;value&quot;: &quot;infrastructure&#95;error&quot;}
+
+## Limits
+
+- This interprets an editable local execution record; it does not authenticate the record or rerun commands.
+- Logs are untrusted and may be forged, incomplete or truncated. Pattern matches are suggestions only.
+- No match means unknown cause. Successful commands are not proof of reproducibility or application correctness.
+- Docker CLI and program exit codes can be ambiguous; no signal or exact root cause is inferred.
+
+## Reproduction steps
+
+1. Obtain the recorded commit and verify its snapshot content digest.
+2. Use the recorded Doctor engine, platform, digest-pinned image and offline artifact hashes.
+3. Rebuild the plan with the same explicit review decisions and inspect every command/settings.
+4. Approve the new plan interactively before any execution; supply the explicit local Docker socket.
+5. Run only if the runtime passes the recorded policy. Compare statuses, logs and cleanup evidence.
