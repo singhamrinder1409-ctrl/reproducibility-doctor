@@ -37,3 +37,7 @@ This is a small development repeatability check, not held-out setup accuracy or 
 ## Approved development control probes
 
 `results-live-controls.json` records the three approved network/resource/log probes, all completed with confirmed removal. It includes exact source/plan bindings, kernel observations, fixture assertions and retained/observed stream counts/hashes. Full flood text remains local; the original full-record SHA-256 is recorded rather than presenting a shortened record as original evidence. A second approved flood execution was observed for Docker log type/path. The actual synthetic host file was verified and removed after the network run. These probes are development integration tests, not new held-out detection-accuracy results. CPU sampling duration, core collector scope and Docker operational-log limits are disclosed. Timeouts, recovery and remaining artifact checks are next.
+
+## Lifecycle/artifact reference acceptance
+
+`results-live-lifecycle.json` records actual step/run deadlines, cancellation, SIGKILL recovery, preservation of a separate owned sentinel container/image, path-boundary refusal, offline wheel success and four controlled input-mutation rejections. The entire Part 6 reference checklist is now satisfied for the recorded Docker Desktop ARM64 setup. Original per-run pending/experimental fields are not rewritten into a certification claim. Reserved runtime-corpus evaluation is still separate and has not run.

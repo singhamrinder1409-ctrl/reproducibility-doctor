@@ -1,0 +1,538 @@
+{
+  "schema_version": 1,
+  "kind": "execution_report",
+  "tool_version": "0.1.0.dev0",
+  "experimental": true,
+  "live_validation": "pending",
+  "run_id": "b001211d133f4e239a0ea7997e1393e5",
+  "plan_digest": "eae9d464bb4fc913be982c0b22150bda33a839eecc8f731ec552f3f09faa1ced",
+  "repository": {
+    "commit": "46be5efb581c3c03cdb8f8145cc0660ee06f57b7",
+    "content_digest": "e641afc6713c858901d2f3f00c7c1b8b8b999ed4008568b1a976272a1c6544cf"
+  },
+  "started_at": "2026-10-28T02:37:27.064632+00:00",
+  "execution_status": "timed_out",
+  "steps": [
+    {
+      "id": "instruction-0001",
+      "effective": {
+        "kind": "process",
+        "argv": [
+          "python",
+          "wait.py"
+        ],
+        "cwd": ".",
+        "environment": {
+          "PATH": "/usr/local/bin:/usr/bin:/bin",
+          "HOME": "/tmp",
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONNOUSERSITE": "1",
+          "PYTHONPATH": "/workspace/.doctor-packages",
+          "PIP_CONFIG_FILE": "/dev/null",
+          "PIP_NO_INDEX": "1",
+          "PIP_DISABLE_PIP_VERSION_CHECK": "1",
+          "PIP_NO_INPUT": "1"
+        },
+        "transformations": [],
+        "network_assessment": "Program network requirements are unknown; network is denied.",
+        "cwd_after": ".",
+        "environment_after": {
+          "PATH": "/usr/local/bin:/usr/bin:/bin",
+          "HOME": "/tmp",
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "PYTHONNOUSERSITE": "1",
+          "PYTHONPATH": "/workspace/.doctor-packages",
+          "PIP_CONFIG_FILE": "/dev/null",
+          "PIP_NO_INDEX": "1",
+          "PIP_DISABLE_PIP_VERSION_CHECK": "1",
+          "PIP_NO_INPUT": "1"
+        }
+      },
+      "source": {
+        "id": "instruction-0001",
+        "order": 1,
+        "block_id": "block-0001",
+        "path": "README.md",
+        "start_line": 6,
+        "end_line": 6,
+        "raw_text": "python wait.py\n",
+        "candidate_text": "python wait.py",
+        "phase": "launch",
+        "command_phase": "launch",
+        "heading_phase": "launch",
+        "heading_context": [
+          {
+            "level": 1,
+            "text": "Run the wait fixture",
+            "line": 1
+          }
+        ],
+        "classification": "command_candidate",
+        "ambiguity_reasons": [],
+        "requires_review": true
+      },
+      "decision": {
+        "action": "include",
+        "reason": "Pending overall human approval"
+      },
+      "started_at": "2026-10-28T02:37:27.964331+00:00",
+      "status": "timed_out",
+      "exit_code": -9,
+      "timed_out": true,
+      "seconds": 120.010306,
+      "host_process_reaped": true,
+      "stdout": {
+        "text": "DOCTOR_WAIT_STARTED\n",
+        "total_bytes": 20,
+        "captured_bytes": 20,
+        "truncated": false,
+        "sha256_observed_stream": "ddd5c85b82809d591f9328f5c6e1ef8e9c553392ffa251f17b990cbb7e816181"
+      },
+      "stderr": {
+        "text": "",
+        "total_bytes": 0,
+        "captured_bytes": 0,
+        "truncated": false,
+        "sha256_observed_stream": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "exit_code_source": "docker_exec_cli",
+      "signal": null,
+      "finished_at": "2026-10-28T02:39:27.976049+00:00"
+    }
+  ],
+  "preflight": {
+    "server_observed": {
+      "ServerVersion": "29.9.2",
+      "OSType": "linux",
+      "CgroupVersion": "2",
+      "SecurityOptions": [
+        "name=seccomp,profile=builtin",
+        "name=cgroupns"
+      ]
+    },
+    "server": {
+      "ServerVersion": "29.9.2",
+      "OSType": "linux",
+      "CgroupVersion": "2",
+      "SecurityOptions": [
+        "name=seccomp,profile=builtin",
+        "name=cgroupns"
+      ]
+    },
+    "image": {
+      "id": "sha256:12316debbfb86890f6b2d825820612741ba527ad5a44e3902759141d572bfe8f",
+      "repo_digest": "sha256:12316debbfb86890f6b2d825820612741ba527ad5a44e3902759141d572bfe8f",
+      "platform": "linux/arm64",
+      "image_environment_keys_cleared": [
+        "GPG_KEY",
+        "LANG",
+        "PATH",
+        "PYTHON_SHA256",
+        "PYTHON_VERSION"
+      ]
+    },
+    "container_observed": {
+      "image_id": "sha256:12316debbfb86890f6b2d825820612741ba527ad5a44e3902759141d572bfe8f",
+      "host_config": {
+        "NetworkMode": "none",
+        "ReadonlyRootfs": true,
+        "Memory": 1073741824,
+        "MemorySwap": 1073741824,
+        "PidsLimit": 128,
+        "NanoCpus": 1000000000,
+        "SecurityOpt": [
+          "no-new-privileges=true"
+        ],
+        "Privileged": false,
+        "Binds": null,
+        "Devices": [],
+        "Tmpfs": {
+          "/tmp": "rw,nosuid,nodev,size=67108864,uid=65532,gid=65532,mode=0700",
+          "/wheels": "rw,nosuid,nodev,size=134217728,uid=65532,gid=65532,mode=0700",
+          "/workspace": "rw,nosuid,nodev,size=268435456,uid=65532,gid=65532,mode=0700"
+        }
+      }
+    },
+    "container": {
+      "image_id": "sha256:12316debbfb86890f6b2d825820612741ba527ad5a44e3902759141d572bfe8f",
+      "host_config_verified": {
+        "NetworkMode": "none",
+        "IpcMode": "private",
+        "CgroupnsMode": "private",
+        "ReadonlyRootfs": true,
+        "Privileged": false,
+        "NanoCpus": 1000000000,
+        "Memory": 1073741824,
+        "MemorySwap": 1073741824,
+        "PidsLimit": 128,
+        "ShmSize": 16777216,
+        "CapDrop": [
+          "ALL"
+        ],
+        "Init": true
+      },
+      "environment_keys": [
+        "GPG_KEY",
+        "HOME",
+        "LANG",
+        "PATH",
+        "PIP_CONFIG_FILE",
+        "PIP_DISABLE_PIP_VERSION_CHECK",
+        "PIP_NO_INDEX",
+        "PIP_NO_INPUT",
+        "PYTHONDONTWRITEBYTECODE",
+        "PYTHONNOUSERSITE",
+        "PYTHONPATH",
+        "PYTHON_SHA256",
+        "PYTHON_VERSION"
+      ],
+      "healthcheck_disabled": true
+    },
+    "kernel": {
+      "implementation": "cpython",
+      "python": [
+        3,
+        12,
+        16
+      ],
+      "executable": "/usr/local/bin/python",
+      "version": "3.12.16 (main, Oct 26 2026, 22:56:41) [GCC 14.2.0]",
+      "machine": "aarch64",
+      "uid": 65532,
+      "gid": 65532,
+      "rlimits": {
+        "core": [
+          0,
+          0
+        ],
+        "nofile": [
+          256,
+          256
+        ]
+      },
+      "status": {
+        "NoNewPrivs": "1",
+        "Seccomp": "2",
+        "CapEff": "0000000000000000",
+        "CapPrm": "0000000000000000",
+        "CapBnd": "0000000000000000"
+      },
+      "cgroups": {
+        "memory.max": "1073741824",
+        "memory.swap.max": "0",
+        "pids.max": "128",
+        "cpu.max": "100000 100000"
+      },
+      "network_interfaces": [
+        "erspan0",
+        "gre0",
+        "gretap0",
+        "ip6_vti0",
+        "ip6gre0",
+        "ip6tnl0",
+        "ip_vti0",
+        "lo",
+        "sit0",
+        "tunl0"
+      ],
+      "network_details": {
+        "interface_flags": {
+          "erspan0": 4098,
+          "gre0": 128,
+          "gretap0": 4098,
+          "ip6_vti0": 128,
+          "ip6gre0": 128,
+          "ip6tnl0": 128,
+          "ip_vti0": 128,
+          "lo": 73,
+          "sit0": 128,
+          "tunl0": 128
+        },
+        "ipv4_addresses": {
+          "erspan0": null,
+          "gre0": null,
+          "gretap0": null,
+          "ip6_vti0": null,
+          "ip6gre0": null,
+          "ip6tnl0": null,
+          "ip_vti0": null,
+          "lo": "127.0.0.1",
+          "sit0": null,
+          "tunl0": null
+        },
+        "ipv4_routes": [],
+        "ipv6_routes": [
+          [
+            "00000000000000000000000000000000",
+            "00",
+            "00000000000000000000000000000000",
+            "00",
+            "00000000000000000000000000000000",
+            "ffffffff",
+            "00000001",
+            "00000000",
+            "00200200",
+            "lo"
+          ],
+          [
+            "00000000000000000000000000000001",
+            "80",
+            "00000000000000000000000000000000",
+            "00",
+            "00000000000000000000000000000000",
+            "00000000",
+            "00000002",
+            "00000000",
+            "80200001",
+            "lo"
+          ],
+          [
+            "00000000000000000000000000000000",
+            "00",
+            "00000000000000000000000000000000",
+            "00",
+            "00000000000000000000000000000000",
+            "ffffffff",
+            "00000001",
+            "00000000",
+            "00200200",
+            "lo"
+          ]
+        ],
+        "ipv6_addresses": [
+          [
+            "00000000000000000000000000000001",
+            "01",
+            "80",
+            "10",
+            "80",
+            "lo"
+          ]
+        ]
+      },
+      "paths": {
+        "/": {
+          "read_only": true,
+          "bytes": 240120725504,
+          "mount": {
+            "options": [
+              "ro",
+              "relatime"
+            ],
+            "type": "overlay"
+          }
+        },
+        "/sys": {
+          "read_only": true,
+          "bytes": 0,
+          "mount": {
+            "options": [
+              "ro",
+              "nosuid",
+              "nodev",
+              "noexec",
+              "relatime"
+            ],
+            "type": "sysfs"
+          }
+        },
+        "/sys/fs/cgroup": {
+          "read_only": true,
+          "bytes": 0,
+          "mount": {
+            "options": [
+              "ro",
+              "nosuid",
+              "nodev",
+              "noexec",
+              "relatime"
+            ],
+            "type": "cgroup2"
+          }
+        },
+        "/proc/sys": {
+          "read_only": true,
+          "bytes": 0,
+          "mount": {
+            "options": [
+              "ro",
+              "nosuid",
+              "nodev",
+              "noexec",
+              "relatime"
+            ],
+            "type": "proc"
+          }
+        },
+        "/workspace": {
+          "read_only": false,
+          "bytes": 268435456,
+          "mount": {
+            "options": [
+              "rw",
+              "nosuid",
+              "nodev",
+              "noexec",
+              "relatime"
+            ],
+            "type": "tmpfs"
+          }
+        },
+        "/tmp": {
+          "read_only": false,
+          "bytes": 67108864,
+          "mount": {
+            "options": [
+              "rw",
+              "nosuid",
+              "nodev",
+              "noexec",
+              "relatime"
+            ],
+            "type": "tmpfs"
+          }
+        },
+        "/wheels": {
+          "read_only": false,
+          "bytes": 134217728,
+          "mount": {
+            "options": [
+              "rw",
+              "nosuid",
+              "nodev",
+              "noexec",
+              "relatime"
+            ],
+            "type": "tmpfs"
+          }
+        },
+        "/dev/shm": {
+          "read_only": false,
+          "bytes": 16777216,
+          "mount": {
+            "options": [
+              "rw",
+              "nosuid",
+              "nodev",
+              "noexec",
+              "relatime"
+            ],
+            "type": "tmpfs"
+          }
+        }
+      },
+      "managed_files_writable": []
+    },
+    "transfer": {
+      "digest": "7663ffbff8c63e0847663c53895495c55d4cdf5ab1e16e2988adeb3c14d1ca44",
+      "files": 3,
+      "bytes": 1072
+    },
+    "status": "verified_for_this_run"
+  },
+  "approved_container_settings": {
+    "image": "python@sha256:12316debbfb86890f6b2d825820612741ba527ad5a44e3902759141d572bfe8f",
+    "platform": "linux/arm64",
+    "expected_python_series": "3.12",
+    "network": "none",
+    "ports": [],
+    "host_mounts": [],
+    "privileged": false,
+    "user": "65532:65532",
+    "cap_drop": [
+      "ALL"
+    ],
+    "no_new_privileges": true,
+    "seccomp": "runtime_default_required",
+    "root_filesystem": "read_only",
+    "entrypoint": "overridden_no_image_startup_command",
+    "healthcheck": "disabled",
+    "runtime_log_driver": "none",
+    "runtime_namespaces": {
+      "ipc": "private",
+      "cgroup": "private",
+      "pid": "private"
+    },
+    "runtime_support": "experimental_local_Docker_Linux_cgroup_v2_builtin_seccomp",
+    "environment": {
+      "PATH": "/usr/local/bin:/usr/bin:/bin",
+      "HOME": "/tmp",
+      "PYTHONDONTWRITEBYTECODE": "1",
+      "PYTHONNOUSERSITE": "1",
+      "PYTHONPATH": "/workspace/.doctor-packages",
+      "PIP_CONFIG_FILE": "/dev/null",
+      "PIP_NO_INDEX": "1",
+      "PIP_DISABLE_PIP_VERSION_CHECK": "1",
+      "PIP_NO_INPUT": "1"
+    },
+    "inherit_host_environment": false,
+    "image_environment": "must_clear_before_project_steps",
+    "source_transfer": "copy_only_verified_snapshot_no_git_metadata",
+    "source_copy_permissions": "user_writable_0644_or_0755_matching_tracked_executable_bit",
+    "project_umask": "0022",
+    "artifact_transfer": "copy_only_verified_wheels_no_host_mounts",
+    "writable_tmpfs": {
+      "/workspace": 268435456,
+      "/tmp": 67108864,
+      "/wheels": 134217728
+    },
+    "shared_memory_bytes": 16777216,
+    "limits": {
+      "cpus": 1,
+      "memory_bytes": 1073741824,
+      "extra_swap_bytes": 0,
+      "pids": 128,
+      "step_seconds": 120,
+      "run_seconds": 600,
+      "log_bytes_per_stream_per_step": 1048576,
+      "run_log_bytes": 4194304,
+      "core_bytes": 0,
+      "open_files": 256
+    },
+    "cleanup": "remove_container_and_temporary_data_on_exit_or_reconcile_after_interruption",
+    "preflight_required": [
+      "verify_local_image_digest_and_platform",
+      "verify_CPython_3.12",
+      "reject_image_declared_volumes",
+      "verify_all_resource_controls",
+      "clear_image_entrypoint_and_environment",
+      "verify_no_sensitive_mounts"
+    ]
+  },
+  "artifacts": {
+    "files": [],
+    "content_digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "total_bytes": 0,
+    "container_directory": "/wheels",
+    "validation": "hashes_only_not_wheel_validity"
+  },
+  "engine": {
+    "tool_version": "0.1.0.dev0",
+    "contract_version": 1,
+    "code_digest": "490b871939972a1f75b8e37f4721246d7c1c24168d3eb1de3ed9b85c9f173452",
+    "markdown_it_version": "4.2.0",
+    "mdurl_version": "0.1.2"
+  },
+  "cleanup": {
+    "status": "removed",
+    "container_name": "reprodoctor-b001211d133f4e239a0ea7997e1393e5"
+  },
+  "container_state_before_cleanup": {
+    "Running": true,
+    "ExitCode": 0,
+    "OOMKilled": false,
+    "Error": ""
+  },
+  "finished_at": "2026-10-28T02:39:28.145424+00:00",
+  "seconds": 121.07866,
+  "steps_not_reached": [
+    "instruction-0002"
+  ],
+  "limitations": [
+    "Live containment acceptance tests are pending.",
+    "Zero status does not prove application correctness or arbitrary-code safety.",
+    "Codes 125/126/127 may be Docker errors or the program's own exit status.",
+    "Background descendants can persist inside the container until removal.",
+    "Host crashes/SIGKILL or daemon failure can prevent cleanup; use the journal."
+  ]
+}

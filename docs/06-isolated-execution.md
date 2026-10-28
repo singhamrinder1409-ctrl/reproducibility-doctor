@@ -1,6 +1,6 @@
 # Part 6: isolated execution prototype
 
-Status: **implemented as an experimental prototype; acceptance incomplete**. At initial implementation Docker, Podman and Colima were absent. Docker Desktop is now installed; the first live attempt and corrective preflight inspection are recorded below. The user explicitly chose to leave live validation pending. No runtime was installed, no image pulled and no target repository code executed. The user subsequently authorized offline Parts 7–10 before returning to live validation; diagnosis, reports and public preview publication are now implemented. See [live validation preparation](11-live-validation-start.md).
+Status: **reference acceptance passed on the tested Docker Desktop ARM64 configuration; execution remains experimental**. At initial implementation Docker, Podman and Colima were absent. Docker Desktop is now installed; the first live attempt and corrective preflight inspection are recorded below. The user explicitly chose to leave live validation pending. No runtime was installed, no image pulled and no target repository code executed. The user subsequently authorized offline Parts 7–10 before returning to live validation; diagnosis, reports and public preview publication are now implemented. See [live validation preparation](11-live-validation-start.md).
 
 Initial prototype verification: 198 tests passed and the live smoke test was skipped by default. Lint/format checks pass. Simulated daemon tests validate control flow and rejection logic; they do **not** demonstrate kernel/container containment. Host process tests execute only fixed Doctor infrastructure test code to exercise pipe draining and timers, never extracted target instructions.
 
@@ -58,17 +58,17 @@ The hardening pass now records attempted steps before launching transport, so ca
 
 The live smoke gate requires an explicit `--live-container` pytest option and manually prepared `--live-plan`, `--live-snapshot`, `--live-approval` inputs (plus wheelhouse/socket when needed). It never fabricates a real execution approval. Default test runs skip it.
 
-## Remaining gates before Part 6 can be called complete
+## Reference acceptance checklist
 
 - [x] Run the approved zero-dependency success fixture on Linux/cgroup-v2 Docker Desktop ARM64; verify preflight and exact environment evidence. This validates this specific VM runtime, not all Linux/macOS hosts.
 - [x] Verify actual failed-step status and that later steps never start.
 - [x] Observe IPv4/IPv6 denial and absence of synthetic host file/environment sentinels, host home/socket paths and sharing mounts in the approved fixture.
 - [x] Exercise actual CPU, memory/swap, PID, core/nofile and writable-storage limits; retain observed outcomes and core-collector limitations.
 - [x] Flood stdout/stderr beyond per-step and aggregate caps; verify truncation/timing and no allocated Docker-managed target stdout/stderr log path. Docker operational logs are outside this measurement.
-- [ ] Exercise step and whole-run timeouts, Ctrl-C and SIGTERM; confirm all processes/containers are removed.
-- [ ] Exercise host interruption, retained journal and targeted recovery; verify unrelated containers/images remain intact.
-- [ ] Test source/wheel mutations around staging and copied-byte verification; exercise malicious target filenames/symlinks inside the disposable environment.
-- [ ] Record repeatability/runtime results and either verify macOS VM support or explicitly limit the release to the validated Linux configuration.
+- [x] Exercise step and whole-run timeouts, Ctrl-C and SIGTERM; confirm all processes/containers are removed.
+- [x] Exercise host interruption, retained journal and targeted recovery; verify unrelated containers/images remain intact.
+- [x] Test source/wheel mutations around staging and copied-byte verification; exercise malicious target filenames/symlinks inside the disposable environment.
+- [x] Record repeatability/runtime results and either verify macOS VM support or explicitly limit the release to the validated Linux configuration.
 
 One passing live smoke does not satisfy this checklist. Reserved held-out setup-evaluation scenarios remain unchanged, and no detection-accuracy or containment claim follows from mocked tests. The user approved proceeding with offline milestones while these gates remain pending. Their completion does not close the live gates.
 
@@ -104,3 +104,19 @@ All three user-approved control plans completed with exit 0 and confirmed contai
 - Three commands emitted exactly 18 MiB total (3 MiB per stream per command). Retained raw bytes were exactly 4 MiB: 1 MiB per stream on each of the first two commands, zero retained on the third. All streams were marked truncated, controls were escaped and invalid UTF-8 replaced. A second execution of the same approved flood plan was observed externally: while running, Docker reported log type `none` and empty LogPath throughout all samples. This means no Docker-managed stdout/stderr file was allocated; Docker operational-log growth was not measured.
 
 Four new plans are prepared, still unapproved/unexecuted, for step timeout and repeated interruption/recovery checks, the actual 600-second whole-run deadline, quoted filenames/symlink directory boundaries, and an authored offline wheel installation plus stale-input rejection. The run-budget probe intentionally needs about ten minutes, mostly idle. The helper prepares a wheel from fixed authored bytes without importing/building target code; its complete plaintext contents and hash are displayed before approval.
+
+## Lifecycle/artifact reference acceptance — 2026-10-27
+
+[Structured lifecycle evidence](../evaluation/results-live-lifecycle.json) and the genuine [step timeout](../examples/live-step-timeout.md), [run timeout](../examples/live-run-timeout.md), [path boundary](../examples/live-path-boundary.md), [offline wheel](../examples/live-offline-wheel.md) and [cancelled run](../examples/live-cancelled.md) records complete the checklist for the tested reference configuration.
+
+- The step watchdog stopped the wait at 120.010306 step seconds; total run/cleanup was 121.07866 seconds. Its later command was not reached.
+- The whole-run watchdog stopped the six-sleep workflow at 600.207851 total seconds. Five 110-second sleeps passed; the sixth timed out after 47.064815 seconds, below the individual step limit. Both timeout containers were removed.
+- SIGINT and SIGTERM reached an actual started target, produced cancelled records, preserved partial bounded output, reaped their host Docker helpers and confirmed container removal. The harness signaled only its own Doctor child.
+- SIGKILL prevented finally/report writing and left the owned container running. Its retained journal recovered exactly that container. The other owned sentinel container and existing image remained intact; zero observed helper processes remained. The sentinel was then removed separately by its exact ownership record. This is not a guarantee of cleanup when the host/daemon is unavailable.
+- A quoted filename executed as one argv element. A target-created symlink to container /tmp was then refused as a documented working directory; the later command was not reached. No host path was mounted.
+- One 1,279-byte authored pure-Python wheel installed offline, and its marker imported. The source/wheel transfer observed 3 files / 2,067 bytes and matched the staged digest before target execution. The original artifact hash/source binding is preserved.
+- Four controlled mutations (source and wheel, before validation and between real image metadata inspection and staging) were rejected without container creation. A fail-stop observer prevented creation if the test failed; it was never triggered. Original inputs and approvals remained unchanged. These are deterministic copy mutations, not proof against arbitrary malicious concurrent host changes.
+
+Reference scope is macOS with Docker Desktop 4.97.0, Engine 29.9.2, Linux ARM64 cgroup v2/builtin seccomp, CPython 3.12.16 and the recorded image digest. Other execution hosts/images are unverified even when static CLI CI passes. The runtime stays opt-in/experimental. Original per-run `experimental` / `live_validation: pending` and planner markers are deliberately not rewritten: the runner does not implement automatic platform certification, and broader hostile-code/platform assurance is not claimed. Containers do not make arbitrary code completely safe.
+
+Parts 7–8 already exist. Next is the separate reserved repository runtime evaluation in Part 9, followed by final release/demo/remote-CI verification. No reserved runtime fixture has been executed yet.

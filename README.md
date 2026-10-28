@@ -2,7 +2,7 @@
 
 An open-source developer-tool project for checking whether documented Python setup instructions can be reproduced, with evidence for each finding.
 
-**Development preview — live Docker validation pending.** Intake, extraction, static checks, plan review, diagnosis and JSON/Markdown reports are implemented. A static-only CLI demo and frozen authored evaluation are included. The experimental runner requires explicit opt-in and matching approval; full containment and broader execution reliability remain unverified.
+**Development preview — reference Docker acceptance passed; reserved runtime evaluation pending.** Intake, extraction, static checks, plan review, diagnosis and JSON/Markdown reports are implemented. A static-only CLI demo and frozen authored evaluation are included. The experimental runner requires explicit opt-in and matching approval; broader platform compatibility and arbitrary hostile-code containment are not established.
 
 [GitHub repository](https://github.com/singhamrinder1409-ctrl/reproducibility-doctor) · [CI runs](https://github.com/singhamrinder1409-ctrl/reproducibility-doctor/actions)
 
@@ -137,7 +137,7 @@ The fixed policy denies networking and ports; permits no host mounts or inherite
 
 Keep plans local: they retain exact README commands and literal configuration values. Approval records are editable local audit data, not identity proof or protection against host compromise. Containers do not make arbitrary code completely safe. See [milestone 5 details](docs/05-execution-plan-review.md) for the complete contract and limits.
 
-## Experimental execution — live verification pending
+## Experimental execution — reference configuration validated
 
 The prototype validates plan/approval/source/artifact bindings, inspects the existing local image, creates a disposable constrained container, checks runtime configuration and kernel controls, transfers verified bytes without a host mount, and then runs the reviewed argv inside the container. There is no host fallback. Missing controls stop execution before target code starts.
 
@@ -165,7 +165,7 @@ The default suite uses a simulated Docker adapter and trusted host I/O fixtures,
 python -m pytest tests/test_live_execution.py --live-container --live-plan /path/to/plan.json --live-snapshot /path/to/snapshot --live-approval /path/to/approval.json
 ```
 
-The live test never creates an approval automatically. A successful smoke alone will not close the full containment/reliability checklist. See [Part 6 implementation and remaining gates](docs/06-isolated-execution.md). The opt-in live smoke now passes with a genuine approved plan. Basic success, stop-on-failure and ten-run cleanup repeatability have been observed; approved network/resource/log probes also pass; timeout/recovery/artifact acceptance remains pending.
+The live test never creates an approval automatically. A successful smoke alone will not close the full containment/reliability checklist. See [Part 6 implementation and remaining gates](docs/06-isolated-execution.md). The opt-in live smoke now passes with a genuine approved plan. Basic success, stop-on-failure and ten-run cleanup repeatability have been observed; network/resource/log, timeout/recovery and artifact checks also pass on the documented reference configuration. Broader platform/security assurance remains unverified.
 
 ## Diagnose and share a report
 
@@ -179,7 +179,7 @@ reprodoctor report /path/to/run-report.json --format json --output /path/to/comb
 
 These commands interpret records without running Docker or project code. Suggestions cite bounded log evidence and stay separate from observed exit status. An optional static report must match the exact commit and snapshot digest. Timeout, infrastructure failure, unsupported and unknown outcomes remain distinct from project defects. Logs are untrusted; a matching traceback is only a possible cause.
 
-Output files are new and owner-only. Reports retain exact commands and logs and are **not automatically redacted**: review a separate copy before sharing. A [genuine preflight failure report](examples/live-preflight-failed.md) is available: the runner stopped before target code, and cleanup succeeded. The [successful state fixture](examples/live-success.md) and [stop-on-failure fixture](examples/live-failure-stops.md) now have genuine results and confirmed cleanup. The [network](examples/live-network.md) and [resource](examples/live-resources.md) probes also have genuine approved results. Full live acceptance remains pending.
+Output files are new and owner-only. Reports retain exact commands and logs and are **not automatically redacted**: review a separate copy before sharing. A [genuine preflight failure report](examples/live-preflight-failed.md) is available: the runner stopped before target code, and cleanup succeeded. The [successful state fixture](examples/live-success.md) and [stop-on-failure fixture](examples/live-failure-stops.md) now have genuine results and confirmed cleanup. The [network](examples/live-network.md) and [resource](examples/live-resources.md) probes also have genuine approved results. Reference acceptance is complete on the documented configuration; broader platform/security assurance remains unverified.
 
 ## Try the static demo without Docker
 
@@ -196,9 +196,9 @@ Twelve authored fixture repositories are frozen separately into eight developmen
 | Part | Status |
 | --- | --- |
 | 1–5: scope through plan review | Implemented and tested |
-| 6: isolated execution | Basic state/failure, network/resource/log probes and 10-run cleanup verified; timeout/recovery/artifact gates pending |
+| 6: isolated execution | Reference suite passed on Docker Desktop Linux ARM64; other execution configurations unverified |
 | 7–8: diagnosis and reports | Implemented and tested on authored records |
-| 9: evaluation | Static run recorded; execution evaluation pending |
+| 9: evaluation | Static and development runtime results recorded; reserved corpus runtime evaluation pending |
 | 10: release | Public development preview published; CI/demo/license/package included; see CI runs for remote status |
 
 The CLI uses Python's standard library, markdown-it-py for source-aware Markdown and packaging for Python/dependency constraints. Git supplies immutable source objects; Docker is the optional execution boundary. No paid API, hosted backend, database or AI dependency is required. Poetry/uv/Conda, online dependency fetching, Windows hosts, other languages and a GUI are future work.

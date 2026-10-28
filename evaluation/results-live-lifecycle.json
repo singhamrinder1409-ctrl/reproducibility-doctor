@@ -1,0 +1,324 @@
+{
+  "schema_version": 1,
+  "kind": "approved_live_lifecycle_evaluation",
+  "scope": "Reference acceptance on macOS Docker Desktop 4.97.0 / Engine 29.9.2 / Linux ARM64 cgroup v2 / CPython 3.12.16.",
+  "reports": [
+    {
+      "case": "step-wait",
+      "record_sha256": "e00e4e32888d709a1835b2d2bea3ddc866d73387dcc4fc8601f29827d64d3a40",
+      "run_id": "b001211d133f4e239a0ea7997e1393e5",
+      "plan_digest": "eae9d464bb4fc913be982c0b22150bda33a839eecc8f731ec552f3f09faa1ced",
+      "repository": {
+        "commit": "46be5efb581c3c03cdb8f8145cc0660ee06f57b7",
+        "content_digest": "e641afc6713c858901d2f3f00c7c1b8b8b999ed4008568b1a976272a1c6544cf"
+      },
+      "execution_status": "timed_out",
+      "cleanup": {
+        "status": "removed",
+        "container_name": "reprodoctor-b001211d133f4e239a0ea7997e1393e5"
+      },
+      "seconds": 121.07866,
+      "step_statuses": [
+        {
+          "id": "instruction-0001",
+          "status": "timed_out",
+          "seconds": 120.010306,
+          "exit_code": -9
+        }
+      ],
+      "steps_not_reached": [
+        "instruction-0002"
+      ]
+    },
+    {
+      "case": "run-budget",
+      "record_sha256": "8b09b0d24aa65351d3f9b0aa46ad8c709281d3b8d02a12f70a59a989666642b6",
+      "run_id": "93738189cf3c42419fb85c616300f26e",
+      "plan_digest": "9d165acda5319b7a19dbb0138a2cf5623db9432fe991e4b3b6838b16c5f00b04",
+      "repository": {
+        "commit": "49c57b219295b5dab6e4bbf4ffc9fb72a64fb7f1",
+        "content_digest": "936aec0c07b1ba4f56fc4578ee4ca92a3dff70b3e33e1f42c8874858f37674e0"
+      },
+      "execution_status": "timed_out",
+      "cleanup": {
+        "status": "removed",
+        "container_name": "reprodoctor-93738189cf3c42419fb85c616300f26e"
+      },
+      "seconds": 600.207851,
+      "step_statuses": [
+        {
+          "id": "instruction-0001",
+          "status": "passed",
+          "seconds": 110.138817,
+          "exit_code": 0
+        },
+        {
+          "id": "instruction-0002",
+          "status": "passed",
+          "seconds": 110.168717,
+          "exit_code": 0
+        },
+        {
+          "id": "instruction-0003",
+          "status": "passed",
+          "seconds": 110.172616,
+          "exit_code": 0
+        },
+        {
+          "id": "instruction-0004",
+          "status": "passed",
+          "seconds": 110.171755,
+          "exit_code": 0
+        },
+        {
+          "id": "instruction-0005",
+          "status": "passed",
+          "seconds": 110.174909,
+          "exit_code": 0
+        },
+        {
+          "id": "instruction-0006",
+          "status": "timed_out",
+          "seconds": 47.064815,
+          "exit_code": -9
+        }
+      ],
+      "steps_not_reached": []
+    },
+    {
+      "case": "path-boundary",
+      "record_sha256": "1e570f78c90301ed59b8c4445ebdba96f764f42faa92792b71a4a49e76d64c68",
+      "run_id": "d6c241d352a8432b8b4e97ba126fd2ee",
+      "plan_digest": "a0fef9b2f33a779d993fe1f6f7b6316161f4589f1c60a840c68e3d65884b782e",
+      "repository": {
+        "commit": "dd0d348b4beb982f8eff99455499bd892761dc7a",
+        "content_digest": "f65e4536d455918382977dedb69ae83341056946f2ba355520e0be3e59896693"
+      },
+      "execution_status": "failed",
+      "cleanup": {
+        "status": "removed",
+        "container_name": "reprodoctor-d6c241d352a8432b8b4e97ba126fd2ee"
+      },
+      "seconds": 0.934007,
+      "step_statuses": [
+        {
+          "id": "instruction-0001",
+          "status": "passed",
+          "seconds": 0.107571,
+          "exit_code": 0
+        },
+        {
+          "id": "instruction-0002",
+          "status": "passed",
+          "seconds": 0.153618,
+          "exit_code": 0
+        },
+        {
+          "id": "instruction-0003",
+          "status": "failed",
+          "seconds": 0.106935,
+          "exit_code": 1
+        }
+      ],
+      "steps_not_reached": [
+        "instruction-0004"
+      ]
+    },
+    {
+      "case": "offline-wheel",
+      "record_sha256": "de5c3ffadfc5314875a81b5241732a40109ab5e91345c1aece3a2bc2dde0cfbb",
+      "run_id": "30c9faf1f99a4f61a754e04fe33a28fa",
+      "plan_digest": "0297808ce0455cba29fcb77a4fee791d50d3384ab39083a5a31dd492787768a8",
+      "repository": {
+        "commit": "88cea4e764493132e263a97f5244759d41a7f944",
+        "content_digest": "1cd13f982167febff40cbb6346ab72fa9b77c848572e6bba431503de3de628bc"
+      },
+      "execution_status": "completed",
+      "cleanup": {
+        "status": "removed",
+        "container_name": "reprodoctor-30c9faf1f99a4f61a754e04fe33a28fa"
+      },
+      "seconds": 1.510166,
+      "step_statuses": [
+        {
+          "id": "instruction-0001",
+          "status": "passed",
+          "seconds": 0.883229,
+          "exit_code": 0
+        },
+        {
+          "id": "instruction-0002",
+          "status": "passed",
+          "seconds": 0.100115,
+          "exit_code": 0
+        }
+      ],
+      "steps_not_reached": []
+    },
+    {
+      "case": "signal-validation",
+      "record_sha256": "83f1c6ba283148a2fc36349bad6064d420ac115c0380f4e8b04bc6568baa4669",
+      "run_id": "3b0333285f174f99879e6b329b67dfcc",
+      "plan_digest": "eae9d464bb4fc913be982c0b22150bda33a839eecc8f731ec552f3f09faa1ced",
+      "repository": {
+        "commit": "46be5efb581c3c03cdb8f8145cc0660ee06f57b7",
+        "content_digest": "e641afc6713c858901d2f3f00c7c1b8b8b999ed4008568b1a976272a1c6544cf"
+      },
+      "execution_status": "cancelled",
+      "cleanup": {
+        "status": "removed",
+        "container_name": "reprodoctor-3b0333285f174f99879e6b329b67dfcc"
+      },
+      "seconds": 0.767397,
+      "step_statuses": [
+        {
+          "id": "instruction-0001",
+          "status": "cancelled",
+          "seconds": 0.245092,
+          "exit_code": -9
+        }
+      ],
+      "steps_not_reached": [
+        "instruction-0002"
+      ]
+    }
+  ],
+  "signal_and_recovery_checks": {
+    "schema_version": 1,
+    "kind": "approved_live_signal_validation",
+    "plan_digest": "eae9d464bb4fc913be982c0b22150bda33a839eecc8f731ec552f3f09faa1ced",
+    "cases": [
+      {
+        "case": "sigint",
+        "host_return_code": 2,
+        "target_started": true,
+        "cleanup": {
+          "status": "removed",
+          "container_name": "reprodoctor-3b0333285f174f99879e6b329b67dfcc"
+        },
+        "partial_output_capture": "partial_on_interrupt",
+        "host_helpers_remaining": 0,
+        "other_owned_container_preserved": true,
+        "image_preserved": true,
+        "final_target_absence": {
+          "status": "absent",
+          "container_name": "reprodoctor-3b0333285f174f99879e6b329b67dfcc"
+        }
+      },
+      {
+        "case": "sigterm",
+        "host_return_code": 2,
+        "target_started": true,
+        "cleanup": {
+          "status": "removed",
+          "container_name": "reprodoctor-2c85b3309e334e1f98340efe137599aa"
+        },
+        "partial_output_capture": "partial_on_interrupt",
+        "host_helpers_remaining": 0,
+        "other_owned_container_preserved": true,
+        "image_preserved": true,
+        "final_target_absence": {
+          "status": "absent",
+          "container_name": "reprodoctor-2c85b3309e334e1f98340efe137599aa"
+        }
+      },
+      {
+        "case": "sigkill-recovery",
+        "host_return_code": -9,
+        "target_started": true,
+        "container_retained_after_host_kill": true,
+        "recovery": {
+          "status": "removed",
+          "container_name": "reprodoctor-376c5e672cfc4c758a30e272a2db4112"
+        },
+        "host_helpers_remaining": 0,
+        "other_owned_container_preserved": true,
+        "image_preserved": true,
+        "final_target_absence": {
+          "status": "absent",
+          "container_name": "reprodoctor-376c5e672cfc4c758a30e272a2db4112"
+        }
+      }
+    ],
+    "sentinel_cleanup": {
+      "status": "removed",
+      "container_name": "reprodoctor-9014cdee0fcd465aa6acbb6628c326a0"
+    },
+    "limitations": [
+      "Only harness-owned processes and exact labeled containers were targeted.",
+      "SIGKILL itself cannot run cleanup; explicit journal recovery was necessary.",
+      "This does not guarantee cleanup during daemon failure or host loss."
+    ]
+  },
+  "input_mutation_checks": {
+    "schema_version": 1,
+    "kind": "approved_input_mutation_validation",
+    "plan_digest": "0297808ce0455cba29fcb77a4fee791d50d3384ab39083a5a31dd492787768a8",
+    "cases": [
+      {
+        "case": "source-before-validation",
+        "events": {
+          "backend_created": false,
+          "mutated": true,
+          "real_metadata_calls": 0,
+          "container_create_attempts": 0
+        },
+        "outcome": "rejected_before_backend",
+        "error": "Snapshot file hash or size does not match",
+        "target_executed": false
+      },
+      {
+        "case": "source-before-staging",
+        "events": {
+          "backend_created": true,
+          "mutated": true,
+          "real_metadata_calls": 2,
+          "container_create_attempts": 0
+        },
+        "outcome": "infrastructure_error",
+        "error": "Snapshot file hash or size does not match",
+        "target_executed": false
+      },
+      {
+        "case": "wheel-before-validation",
+        "events": {
+          "backend_created": false,
+          "mutated": true,
+          "real_metadata_calls": 0,
+          "container_create_attempts": 0
+        },
+        "outcome": "rejected_before_backend",
+        "error": "Source, artifacts, planner or derived settings changed; rebuild and review",
+        "target_executed": false
+      },
+      {
+        "case": "wheel-before-staging",
+        "events": {
+          "backend_created": true,
+          "mutated": true,
+          "real_metadata_calls": 2,
+          "container_create_attempts": 0
+        },
+        "outcome": "infrastructure_error",
+        "error": "Wheel artifacts changed before staging",
+        "target_executed": false
+      }
+    ],
+    "original_inputs_unchanged": true,
+    "limitations": [
+      "These are controlled copy mutations with a host-side observer.",
+      "No target code or container was created in these cases.",
+      "Real Docker server/image metadata was used before staging mutations.",
+      "This is not proof against arbitrary concurrent malicious host changes."
+    ]
+  },
+  "reference_acceptance": "passed_for_this_configuration",
+  "limitations": [
+    "Records retain the experimental/pending field values written when those runs occurred; original audit data is not rewritten.",
+    "This is not certification of arbitrary-code safety or of other Docker/OS/image combinations.",
+    "SIGKILL required explicit journal recovery; cleanup cannot be guaranteed after host/daemon failure.",
+    "Controlled copy mutations and a fail-stop host observer were used; arbitrary concurrent malicious host changes remain outside scope.",
+    "Offline installation was tested with one authored pure-Python wheel; no claim about general package/build-backend compatibility.",
+    "Reserved corpus runtime evaluation and final release checks are separate milestones."
+  ]
+}

@@ -41,3 +41,7 @@ The reports are genuine, retain their original `experimental` and `live_validati
 ## Approved network and resource probes
 
 `live-network.json` / `.md` and `live-resources.json` / `.md` are genuine approved development runs with successful cleanup. Their source is in `tests/fixtures/live-controls`; the network sentinel configuration is generated explicitly by the preparation helper and contains only an authored temporary path. No host credentials or approval receipts are included. The [control evaluation](../evaluation/results-live-controls.json) preserves flood-stream metadata and hashes without publishing multi-MiB log prefixes; complete original logs remain private local artifacts.
+
+## Lifecycle and artifact records
+
+The `live-step-timeout`, `live-run-timeout`, `live-path-boundary`, `live-offline-wheel` and `live-cancelled` JSON/Markdown pairs preserve genuine user-approved runs. Their expected nonzero/timeout/cancelled outcomes are validation successes, not unexpected repository defects. The lifecycle evaluation records SIGTERM and SIGKILL recovery separately; no fake execution report is created for the killed host process. Approval receipts, host credentials and private paths are excluded. See [reference acceptance and limitations](../docs/06-isolated-execution.md).
