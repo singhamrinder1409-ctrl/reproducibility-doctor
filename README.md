@@ -2,11 +2,11 @@
 
 An open-source developer-tool project for checking whether documented Python setup instructions can be reproduced, with evidence for each finding.
 
-**Development preview — reference Docker acceptance passed; reserved runtime evaluation pending.** Intake, extraction, static checks, plan review, diagnosis and JSON/Markdown reports are implemented. A static-only CLI demo and frozen authored evaluation are included. The experimental runner requires explicit opt-in and matching approval; broader platform compatibility and arbitrary hostile-code containment are not established.
+**Experimental preview — reference Docker acceptance and frozen corpus evaluation completed.** Intake, extraction, static checks, plan review, diagnosis and JSON/Markdown reports are implemented. Static inspection and a read-only replay of genuine approved runs are included. The experimental runner requires explicit opt-in and matching approval; broader platform compatibility and arbitrary hostile-code containment are not established.
 
-[GitHub repository](https://github.com/singhamrinder1409-ctrl/reproducibility-doctor) · [CI runs](https://github.com/singhamrinder1409-ctrl/reproducibility-doctor/actions)
+[GitHub repository](https://github.com/singhamrinder1409-ctrl/reproducibility-doctor) · [CI runs](https://github.com/singhamrinder1409-ctrl/reproducibility-doctor/actions) · [Preview downloads](https://github.com/singhamrinder1409-ctrl/reproducibility-doctor/releases)
 
-Start with the [sample report](examples/static-report.md), [captured CLI walkthrough](examples/demo/index.html) (open locally), [demo transcript](examples/demo/transcript.txt), and [architecture/threat model](docs/01-scope-and-architecture.md).
+Start with the [missing-file diagnosis](examples/runtime-dev-02.md), [evaluation results](evaluation/results-runtime-v1.md), [static walkthrough](examples/demo/transcript.txt), [genuine-evidence replay](examples/live-demo/transcript.txt), and [architecture/threat model](docs/01-scope-and-architecture.md). The demo folders also include local HTML walkthroughs and asciinema-compatible replays.
 
 ## Install locally
 
@@ -17,7 +17,7 @@ git clone https://github.com/singhamrinder1409-ctrl/reproducibility-doctor.git
 cd reproducibility-doctor
 python3 -m venv .venv
 . .venv/bin/activate
-python -m pip install -r requirements-dev.txt -e .
+python -m pip install .
 reprodoctor --help
 ```
 
@@ -189,17 +189,35 @@ python scripts/demo.py --output /new/path/doctor-demo
 
 Open the generated `index.html`, read `transcript.txt`, or replay `demo.cast` with an asciinema-compatible player. The demo captures actual CLI output, normalizes temporary paths and paces it for presentation. It finds a missing requirements file and builds/previews a blocked draft; no fixture command or container runs.
 
-## Evaluation and current completion
+## Replay genuine evidence without executing projects
+
+```sh
+python scripts/generate_live_demo.py --output /new/path/doctor-live-replay
+```
+
+This captures actual read-only `diagnose` CLI output from published genuine records. It never starts Docker, approves a plan, installs target packages or reruns fixture code. HTML, transcript and paced `.cast` replay distinguish observations, possible causes and explicit unknowns. It is a report replay, not a new live screen recording.
+
+If an approval helper was interrupted or you copied the wrong hash, resume a supported prepared fixture review with:
+
+```sh
+python scripts/resume_approvals.py --review /path/to/prepared-review
+```
+
+Saved receipts are validated and skipped; each missing plan still requires a real interactive confirmation. The current hash is printed beside the prompt. Paste only its 64 characters, without labels, quotes or backticks. No receipt is overwritten, no confirmation is supplied automatically, and no target command runs in this helper.
+
+## Evaluation and completion
 
 Twelve authored fixture repositories are frozen separately into eight development and four held-out cases. The [first static evaluation](evaluation/results-static.json) records per-rule/status assertion denominators, false positives/negatives, unknowns and timings. One held-out assertion has a documented label mapping error; the original result is retained. This small public split is not a blinded or representative GitHub benchmark. That frozen static run attempted **0** executions. A [separate approved development series](evaluation/results-live-development.json) now records 10/10 completions with confirmed cleanup on one fixture/runtime; this is not broad reliability or held-out setup accuracy.
+
+The [frozen runtime evaluation](evaluation/results-runtime-v1.md) covered all 12 cases: **7 executed and 5 explicit planning abstentions**, with removal confirmed for all 7 executed containers. The expected missing-file, failed-test, unavailable-offline-artifact and timeout outcomes were observed. Both clean examples had zero definitive static findings. The held-out failure kept its cause unknown. This is a small public, non-blinded corpus; held-out diagnosis precision/recall are undefined because those category assertions have no held-out positives. It is not a general accuracy benchmark. The original static label error remains disclosed.
 
 | Part | Status |
 | --- | --- |
 | 1–5: scope through plan review | Implemented and tested |
 | 6: isolated execution | Reference suite passed on Docker Desktop Linux ARM64; other execution configurations unverified |
 | 7–8: diagnosis and reports | Implemented and tested on authored records |
-| 9: evaluation | Static and development runtime results recorded; reserved corpus runtime evaluation pending |
-| 10: release | Public development preview published; CI/demo/license/package included; see CI runs for remote status |
+| 9: evaluation | Frozen static/runtime corpus and separate development measurements published with limits |
+| 10: release | Experimental preview source, CI, demos, MIT license, reports and package assets; see downloads and CI |
 
 The CLI uses Python's standard library, markdown-it-py for source-aware Markdown and packaging for Python/dependency constraints. Git supplies immutable source objects; Docker is the optional execution boundary. No paid API, hosted backend, database or AI dependency is required. Poetry/uv/Conda, online dependency fetching, Windows hosts, other languages and a GUI are future work.
 
@@ -222,7 +240,7 @@ ruff format --check .
 
 Tests generate authored Git repositories in temporary directories. They check intake isolation, extraction provenance, static evidence, plan/approval binding, policy tampering, review/state, offline artifacts, cancellation, dry-run side effects and the simulated execution lifecycle. Dry-run tests prohibit subprocess/socket calls and compare file contents/permissions. Trusted host-process fixtures exercise bounded pipe I/O; target repository code never runs on the host. Default tests access no network or containers and do not execute README commands. Interactive approval tests simulate input for authored fixtures; they do not approve real project execution.
 
-See [scope and architecture](docs/01-scope-and-architecture.md), [intake](docs/02-repository-intake.md), [extraction](docs/03-readme-extraction.md), [static checks](docs/04-static-checks.md), [plan review](docs/05-execution-plan-review.md), [execution prototype and pending gates](docs/06-isolated-execution.md), [diagnosis](docs/07-failure-diagnosis.md), [combined reports](docs/08-reports-and-cli.md), [evaluation results and limits](evaluation/README.md), and [release checklist](docs/10-release-checklist.md). The user authorized finishing offline work before returning to the pending live gates.
+See [scope and architecture](docs/01-scope-and-architecture.md), [intake](docs/02-repository-intake.md), [extraction](docs/03-readme-extraction.md), [static checks](docs/04-static-checks.md), [plan review](docs/05-execution-plan-review.md), [execution prototype and pending gates](docs/06-isolated-execution.md), [diagnosis](docs/07-failure-diagnosis.md), [combined reports](docs/08-reports-and-cli.md), [evaluation results and limits](evaluation/README.md), and [release checklist](docs/10-release-checklist.md). Reference execution acceptance is limited to the documented Docker Desktop ARM64 configuration; the frozen corpus evaluation and release checks are separate auditable records.
 
 ## License and contributing
 

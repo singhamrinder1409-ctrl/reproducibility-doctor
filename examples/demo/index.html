@@ -1,12 +1,19 @@
 <!doctype html><html lang="en"><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1"><title>Reproducibility Doctor demo</title>
-<style>body{font:17px/1.6 system-ui;background:#101722;color:#e2eaf5;max-width:1000px;margin:50px auto;padding:24px}
-h1{font-size:40px;line-height:1.15}small{color:#91d9c3}details{border:1px solid #39475b;border-radius:12px;margin:18px 0;padding:16px}
-summary{cursor:pointer;font-weight:650}pre{white-space:pre-wrap;overflow-wrap:anywhere;font:13px/1.6 ui-monospace,monospace;color:#c6dcf4}
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Reproducibility Doctor
+demo</title>
+<style>body{font:17px/1.6
+system-ui;background:#101722;color:#e2eaf5;max-width:1000px;margin:50px auto;padding:24px}
+h1{font-size:40px;line-height:1.15}small{color:#91d9c3}details{border:1px solid
+#39475b;border-radius:12px;margin:18px 0;padding:16px}
+summary{cursor:pointer;font-weight:650}pre{white-space:pre-wrap;overflow-wrap:anywhere;font:13px/1.6
+ui-monospace,monospace;color:#c6dcf4}
 a{color:#91d9c3}</style><small>LOCAL • DETERMINISTIC • REVIEW BEFORE EXECUTION</small>
-<h1>Reproducibility Doctor</h1><p>A README references a file that does not exist. Doctor pins the source,
-finds the instruction and reports the evidence.</p><p>This walkthrough contains captured static CLI output.
-Temporary paths are normalized to $DEMO. No project commands or containers ran; live Docker validation remains pending.</p><details><summary>Pin source without checkout</summary><pre>$ reprodoctor intake $DEMO/fixture --output $DEMO/snapshot
+<h1>Reproducibility Doctor</h1><p>A README references a file that does not exist. Doctor pins
+the source,
+finds the instruction and reports the evidence.</p><p>This walkthrough contains captured static
+CLI output.
+Temporary paths are normalized to $DEMO. This walkthrough ran no project commands or containers.
+Separate live reference validation is documented in the repository.</p><details><summary>Pin source without checkout</summary><pre>$ reprodoctor intake $DEMO/fixture --output $DEMO/snapshot
 
 {&quot;commit&quot;: &quot;3a166f3ceeb46860af4b2e49484ced23f60f7781&quot;, &quot;content_digest&quot;: &quot;a1a228ec3b160d7bdd391f67cc31e77836aa83ea2c30c87007e28a1c990fbaf4&quot;, &quot;files&quot;: 2, &quot;output&quot;: &quot;$DEMO/snapshot&quot;}
 </pre></details>
@@ -178,13 +185,13 @@ Doctor version: 0.1.0.dev0
 </pre></details>
 <details><summary>Build a blocked draft; no image selected</summary><pre>$ reprodoctor plan $DEMO/snapshot --output $DEMO/plan.json
 
-{&quot;output&quot;: &quot;$DEMO/plan.json&quot;, &quot;plan_digest&quot;: &quot;2918ee3051ba25f9632cd4f28a0340c8191a895d7ffb9fe26d6bed53e309217a&quot;, &quot;state&quot;: &quot;blocked&quot;}
+{&quot;output&quot;: &quot;$DEMO/plan.json&quot;, &quot;plan_digest&quot;: &quot;9412ea7b18d295a3aed5d6752ec2842cd23e80091e4385ae8fbdc6e0df5f4302&quot;, &quot;state&quot;: &quot;blocked&quot;}
 </pre></details>
 <details><summary>Preview only; never execute</summary><pre>$ reprodoctor run $DEMO/plan.json --snapshot $DEMO/snapshot --dry-run
 
 {
   &quot;kind&quot;: &quot;execution_dry_run&quot;,
-  &quot;plan_digest&quot;: &quot;2918ee3051ba25f9632cd4f28a0340c8191a895d7ffb9fe26d6bed53e309217a&quot;,
+  &quot;plan_digest&quot;: &quot;9412ea7b18d295a3aed5d6752ec2842cd23e80091e4385ae8fbdc6e0df5f4302&quot;,
   &quot;plan_state&quot;: &quot;blocked&quot;,
   &quot;approval_matches&quot;: false,
   &quot;execution_status&quot;: &quot;not_run&quot;,
@@ -194,12 +201,12 @@ Doctor version: 0.1.0.dev0
   &quot;plan&quot;: {
     &quot;schema_version&quot;: 1,
     &quot;kind&quot;: &quot;execution_plan&quot;,
-    &quot;plan_digest&quot;: &quot;2918ee3051ba25f9632cd4f28a0340c8191a895d7ffb9fe26d6bed53e309217a&quot;,
+    &quot;plan_digest&quot;: &quot;9412ea7b18d295a3aed5d6752ec2842cd23e80091e4385ae8fbdc6e0df5f4302&quot;,
     &quot;payload&quot;: {
       &quot;planner&quot;: {
         &quot;tool_version&quot;: &quot;0.1.0.dev0&quot;,
         &quot;contract_version&quot;: 1,
-        &quot;code_digest&quot;: &quot;09cee873bb14ec47c62b0ab6d0e67d60fec40a671458fa20c97c78c19caa4898&quot;,
+        &quot;code_digest&quot;: &quot;490b871939972a1f75b8e37f4721246d7c1c24168d3eb1de3ed9b85c9f173452&quot;,
         &quot;markdown_it_version&quot;: &quot;4.2.0&quot;,
         &quot;mdurl_version&quot;: &quot;0.1.2&quot;
       },

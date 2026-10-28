@@ -27,6 +27,8 @@ jobs:
       - run: python -m pytest -q
       - name: Static-only authored demo
         run: python scripts/demo.py --output "${{ runner.temp }}/doctor-demo"
+      - name: Read-only replay of genuine evidence
+        run: python scripts/generate_live_demo.py --output "${{ runner.temp }}/doctor-evidence-replay"
       - name: Build wheel
         run: python -m pip wheel --no-deps . --wheel-dir "${{ runner.temp }}/doctor-wheels"
       - name: Fresh installed-wheel smoke test
@@ -37,4 +39,4 @@ jobs:
           cd "${{ runner.temp }}"
           "${{ runner.temp }}/doctor-install/bin/reprodoctor" --help
 # No target repository commands, Docker execution, approval receipts or publishing secrets.
-# Remote CI status remains unverified until this repository is published and a run completes.
+# The default suite/replays do not start Docker or run target fixtures.

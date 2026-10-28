@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "freeze_digest": "55a3161320dfce50efe8c0836b287ab975969e4c1d43263dd90e90e4813b1b45",
+  "records": [
+    {
+      "id": "dev-01",
+      "record_sha256": "32d3d41476896ffe84337c86d34a63cf3ac9cc23d987e65b73db9f7256439fc8",
+      "record_bytes": 14729
+    },
+    {
+      "id": "dev-02",
+      "record_sha256": "f29bb6e5f01ccde86b78b90f346064df6c8c3633331c84d12c9abb36de94510a",
+      "record_bytes": 15748
+    },
+    {
+      "id": "dev-05",
+      "record_sha256": "dd6a6a4123a2ace3305d0fd60235299b20f113d7cf623f9372b1e95845fe0395",
+      "record_bytes": 15250
+    },
+    {
+      "id": "dev-07",
+      "record_sha256": "0dbe8a765607d4d9a3dfcd0422cc2d5f8d3742490cbfc00909e01b4bc0313f41",
+      "record_bytes": 1138225
+    },
+    {
+      "id": "dev-08",
+      "record_sha256": "260385162c800ee33eb036395fc40b6e774864359a5078f8e9f2943648d029b3",
+      "record_bytes": 15930
+    },
+    {
+      "id": "hold-01",
+      "record_sha256": "70c16f563cde0df030d34490efc1be9daca70fb9f9b78f355eeb528c4b5b414f",
+      "record_bytes": 19598
+    },
+    {
+      "id": "hold-04",
+      "record_sha256": "77980dbf500e9f02ca6840ea941fb582b02143a5e4742e095324714379e6d4a7",
+      "record_bytes": 14766
+    }
+  ],
+  "note": "Full dev-07 flood record remains local. This ledger hashes original execution files, not shortened replacements."
+}

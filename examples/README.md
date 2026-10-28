@@ -45,3 +45,15 @@ The reports are genuine, retain their original `experimental` and `live_validati
 ## Lifecycle and artifact records
 
 The `live-step-timeout`, `live-run-timeout`, `live-path-boundary`, `live-offline-wheel` and `live-cancelled` JSON/Markdown pairs preserve genuine user-approved runs. Their expected nonzero/timeout/cancelled outcomes are validation successes, not unexpected repository defects. The lifecycle evaluation records SIGTERM and SIGKILL recovery separately; no fake execution report is created for the killed host process. Approval receipts, host credentials and private paths are excluded. See [reference acceptance and limitations](../docs/06-isolated-execution.md).
+
+## Reserved-corpus examples and evidence replay
+
+`runtime-dev-01`, `runtime-dev-02`, `runtime-dev-05`, `runtime-dev-08`, `runtime-hold-01` and `runtime-hold-04` JSON/Markdown pairs are genuine approved corpus runs. Expected failures are observations, not automatic repair or claims that all setups succeeded. Original flood-record hashes are published without its multi-MiB text. The original fixture JSON/source definitions remain unchanged.
+
+`live-demo/` contains a read-only HTML/transcript/asciinema-compatible replay of actual `diagnose` output from those records. It starts no Docker container, creates no approval, installs no target package and reruns no target code. Paths/entry-point spelling are normalized and replay timing is paced; it is not a new live screen recording. Regenerate into a new directory:
+
+```sh
+python scripts/generate_live_demo.py --output /new/path/doctor-evidence-replay
+```
+
+The simpler `demo/` still demonstrates intake/extract/check/blocked-plan/dry-run without Docker. Both demos use only this project's authored records and escaped text.

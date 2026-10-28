@@ -1,0 +1,307 @@
+Read-only replay of actual CLI diagnosis output from genuine manually approved runs.
+No target command, approval, image pull or Docker call is made by this generator.
+Entry point shown as reprodoctor; captured via python -I -m reprodoctor.
+Project paths are normalized. Replay timing is paced, not a screen recording.
+Frozen corpus: 7 executions, 5 abstentions. Tiny public sample; no general accuracy claim.
+
+$ reprodoctor diagnose examples/runtime-dev-01.json --format json
+{
+  "schema_version": 1,
+  "kind": "diagnosis_report",
+  "tool_version": "0.1.0.dev0",
+  "repository": {
+    "commit": "0f4b3461e1127174b1efd595b34d8a1ec926d5c2",
+    "content_digest": "3c27a5478f5948e849dc5fad2638c1bfa28088ac9a9153abf80650ef98cf611a"
+  },
+  "plan_digest": "d13f485b66f52137ddf8ea8692cd2679460dc80e22a34275127b9f5effe02135",
+  "execution_status": "completed",
+  "experimental": true,
+  "live_validation": "pending",
+  "findings": [],
+  "limitations": [
+    "This interprets an editable local execution record; it does not authenticate the record or rerun commands.",
+    "Logs are untrusted and may be forged, incomplete or truncated. Pattern matches are suggestions only.",
+    "No match means unknown cause. Successful commands are not proof of reproducibility or application correctness.",
+    "Docker CLI and program exit codes can be ambiguous; no signal or exact root cause is inferred."
+  ]
+}
+
+
+$ reprodoctor diagnose examples/runtime-dev-02.json --format json
+{
+  "schema_version": 1,
+  "kind": "diagnosis_report",
+  "tool_version": "0.1.0.dev0",
+  "repository": {
+    "commit": "3a166f3ceeb46860af4b2e49484ced23f60f7781",
+    "content_digest": "a1a228ec3b160d7bdd391f67cc31e77836aa83ea2c30c87007e28a1c990fbaf4"
+  },
+  "plan_digest": "0ab1276a0813037ba28356e604e16000b800957345c5f6b5ce1d8afa7a3561e1",
+  "execution_status": "failed",
+  "experimental": true,
+  "live_validation": "pending",
+  "findings": [
+    {
+      "id": "diagnosis-0001",
+      "category": "command_failed",
+      "kind": "observation",
+      "observed_fact": "Step instruction-0001 has recorded status failed and exit code 1.",
+      "suggested_action": "Review the effective argv, bounded logs and source instruction. A CLI exit status alone does not identify a root cause.",
+      "evidence": {
+        "step_id": "instruction-0001",
+        "json_pointer": "/steps/0",
+        "source": {
+          "id": "instruction-0001",
+          "order": 1,
+          "block_id": "block-0001",
+          "path": "README.md",
+          "start_line": 3,
+          "end_line": 3,
+          "raw_text": "python -m pip install -r absent.txt\n",
+          "candidate_text": "python -m pip install -r absent.txt",
+          "phase": "installation",
+          "command_phase": "installation",
+          "heading_phase": "installation",
+          "heading_context": [
+            {
+              "level": 1,
+              "text": "Install",
+              "line": 1
+            }
+          ],
+          "classification": "command_candidate",
+          "ambiguity_reasons": [],
+          "requires_review": true
+        },
+        "exit_code": 1,
+        "exit_code_source": "docker_exec_cli",
+        "signal": null
+      }
+    },
+    {
+      "id": "diagnosis-0002",
+      "category": "missing_file",
+      "kind": "suggestion",
+      "observed_fact": "The recorded stderr contains text matching missing_file; this is a possible cause, not verified truth.",
+      "suggested_action": "Check the referenced path against the pinned source and earlier generated files.",
+      "evidence": {
+        "step_id": "instruction-0001",
+        "json_pointer": "/steps/0/stderr/text",
+        "character_span": [
+          51,
+          76
+        ],
+        "excerpt": "ERROR: Could not open requirements file: [Errno 2] No such file or directory: 'absent.txt'\n",
+        "retained_text_sha256": "05d29d598addf7b943a6564c8b0ca5d72600d657fa0da609d45a6f91f8e2c529",
+        "truncated": false
+      }
+    }
+  ],
+  "limitations": [
+    "This interprets an editable local execution record; it does not authenticate the record or rerun commands.",
+    "Logs are untrusted and may be forged, incomplete or truncated. Pattern matches are suggestions only.",
+    "No match means unknown cause. Successful commands are not proof of reproducibility or application correctness.",
+    "Docker CLI and program exit codes can be ambiguous; no signal or exact root cause is inferred."
+  ]
+}
+
+
+$ reprodoctor diagnose examples/runtime-dev-05.json --format json
+{
+  "schema_version": 1,
+  "kind": "diagnosis_report",
+  "tool_version": "0.1.0.dev0",
+  "repository": {
+    "commit": "4a9914862b12295e864e5fea4b113dc410b61560",
+    "content_digest": "0ccec6f136a10ae8cd2bd8e9c6bfb48e859a2b946140c9072f699791994a2a34"
+  },
+  "plan_digest": "e242fc5f58c9ad1550dd77aaaa865576d5c88e173a837a298bd724f5ceef7903",
+  "execution_status": "failed",
+  "experimental": true,
+  "live_validation": "pending",
+  "findings": [
+    {
+      "id": "diagnosis-0001",
+      "category": "unsuccessful_tests",
+      "kind": "observation",
+      "observed_fact": "Step instruction-0001 has recorded status failed and exit code 1.",
+      "suggested_action": "Review the effective argv, bounded logs and source instruction. A CLI exit status alone does not identify a root cause.",
+      "evidence": {
+        "step_id": "instruction-0001",
+        "json_pointer": "/steps/0",
+        "source": {
+          "id": "instruction-0001",
+          "order": 1,
+          "block_id": "block-0001",
+          "path": "README.md",
+          "start_line": 3,
+          "end_line": 3,
+          "raw_text": "python -m unittest\n",
+          "candidate_text": "python -m unittest",
+          "phase": "test",
+          "command_phase": "test",
+          "heading_phase": "test",
+          "heading_context": [
+            {
+              "level": 1,
+              "text": "Tests",
+              "line": 1
+            }
+          ],
+          "classification": "command_candidate",
+          "ambiguity_reasons": [],
+          "requires_review": true
+        },
+        "exit_code": 1,
+        "exit_code_source": "docker_exec_cli",
+        "signal": null
+      }
+    }
+  ],
+  "limitations": [
+    "This interprets an editable local execution record; it does not authenticate the record or rerun commands.",
+    "Logs are untrusted and may be forged, incomplete or truncated. Pattern matches are suggestions only.",
+    "No match means unknown cause. Successful commands are not proof of reproducibility or application correctness.",
+    "Docker CLI and program exit codes can be ambiguous; no signal or exact root cause is inferred."
+  ]
+}
+
+
+$ reprodoctor diagnose examples/runtime-dev-08.json --format json
+{
+  "schema_version": 1,
+  "kind": "diagnosis_report",
+  "tool_version": "0.1.0.dev0",
+  "repository": {
+    "commit": "e8f588ea1e67ee96c3f0a227cfdc32259f8b63fc",
+    "content_digest": "10558ec6be1c45db98fb8f63fcd9ea913a20a4896c9176661c4575d68bd8e91a"
+  },
+  "plan_digest": "74fca931560646a873a8b78dc620e5bc081ba8eb7e8426325bd99a2af980a3fc",
+  "execution_status": "failed",
+  "experimental": true,
+  "live_validation": "pending",
+  "findings": [
+    {
+      "id": "diagnosis-0001",
+      "category": "command_failed",
+      "kind": "observation",
+      "observed_fact": "Step instruction-0001 has recorded status failed and exit code 1.",
+      "suggested_action": "Review the effective argv, bounded logs and source instruction. A CLI exit status alone does not identify a root cause.",
+      "evidence": {
+        "step_id": "instruction-0001",
+        "json_pointer": "/steps/0",
+        "source": {
+          "id": "instruction-0001",
+          "order": 1,
+          "block_id": "block-0001",
+          "path": "README.md",
+          "start_line": 3,
+          "end_line": 3,
+          "raw_text": "python -m pip install -r requirements.txt\n",
+          "candidate_text": "python -m pip install -r requirements.txt",
+          "phase": "installation",
+          "command_phase": "installation",
+          "heading_phase": "installation",
+          "heading_context": [
+            {
+              "level": 1,
+              "text": "Install",
+              "line": 1
+            }
+          ],
+          "classification": "command_candidate",
+          "ambiguity_reasons": [],
+          "requires_review": true
+        },
+        "exit_code": 1,
+        "exit_code_source": "docker_exec_cli",
+        "signal": null
+      }
+    },
+    {
+      "id": "diagnosis-0002",
+      "category": "dependency_artifact_unavailable",
+      "kind": "suggestion",
+      "observed_fact": "The recorded stderr contains text matching dependency_artifact_unavailable; this is a possible cause, not verified truth.",
+      "suggested_action": "Check approved offline wheels, Python/platform tags and version constraints. This does not establish remote package availability.",
+      "evidence": {
+        "step_id": "instruction-0001",
+        "json_pointer": "/steps/0/stderr/text",
+        "character_span": [
+          7,
+          46
+        ],
+        "excerpt": "ERROR: Could not find a version that satisfies the requirement doctor-fixture-distribution-not-supplied==0.0.0 (from versions: none)\nERROR: No matching distribution found for doctor-fixture-distribution-not-supplied==0.0.0\n",
+        "retained_text_sha256": "5c9640aa9342e2d37bc1da658cbebd245718a572de476760ed7c231165819446",
+        "truncated": false
+      }
+    }
+  ],
+  "limitations": [
+    "This interprets an editable local execution record; it does not authenticate the record or rerun commands.",
+    "Logs are untrusted and may be forged, incomplete or truncated. Pattern matches are suggestions only.",
+    "No match means unknown cause. Successful commands are not proof of reproducibility or application correctness.",
+    "Docker CLI and program exit codes can be ambiguous; no signal or exact root cause is inferred."
+  ]
+}
+
+
+$ reprodoctor diagnose examples/runtime-hold-04.json --format json
+{
+  "schema_version": 1,
+  "kind": "diagnosis_report",
+  "tool_version": "0.1.0.dev0",
+  "repository": {
+    "commit": "dc658c03212f5cb4ea0251cc602a9f73f88392ee",
+    "content_digest": "498902dd536aa3eeea1d5524bdf7e80e236ba682c18c69588b057d3618f66d40"
+  },
+  "plan_digest": "4cd77fe8f18404261a0b3604469322c0fdb8cd570d5556ec3b320e812f73c0de",
+  "execution_status": "failed",
+  "experimental": true,
+  "live_validation": "pending",
+  "findings": [
+    {
+      "id": "diagnosis-0001",
+      "category": "command_failed",
+      "kind": "observation",
+      "observed_fact": "Step instruction-0001 has recorded status failed and exit code 137.",
+      "suggested_action": "Review the effective argv, bounded logs and source instruction. A CLI exit status alone does not identify a root cause.",
+      "evidence": {
+        "step_id": "instruction-0001",
+        "json_pointer": "/steps/0",
+        "source": {
+          "id": "instruction-0001",
+          "order": 1,
+          "block_id": "block-0001",
+          "path": "README.md",
+          "start_line": 3,
+          "end_line": 3,
+          "raw_text": "python probe.py\n",
+          "candidate_text": "python probe.py",
+          "phase": "launch",
+          "command_phase": "launch",
+          "heading_phase": "launch",
+          "heading_context": [
+            {
+              "level": 1,
+              "text": "Run",
+              "line": 1
+            }
+          ],
+          "classification": "command_candidate",
+          "ambiguity_reasons": [],
+          "requires_review": true
+        },
+        "exit_code": 137,
+        "exit_code_source": "docker_exec_cli",
+        "signal": null
+      }
+    }
+  ],
+  "limitations": [
+    "This interprets an editable local execution record; it does not authenticate the record or rerun commands.",
+    "Logs are untrusted and may be forged, incomplete or truncated. Pattern matches are suggestions only.",
+    "No match means unknown cause. Successful commands are not proof of reproducibility or application correctness.",
+    "Docker CLI and program exit codes can be ambiguous; no signal or exact root cause is inferred."
+  ]
+}

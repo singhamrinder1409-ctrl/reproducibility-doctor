@@ -172,13 +172,13 @@ Doctor version: 0.1.0.dev0
 
 
 $ reprodoctor plan $DEMO/snapshot --output $DEMO/plan.json
-{"output": "$DEMO/plan.json", "plan_digest": "2918ee3051ba25f9632cd4f28a0340c8191a895d7ffb9fe26d6bed53e309217a", "state": "blocked"}
+{"output": "$DEMO/plan.json", "plan_digest": "9412ea7b18d295a3aed5d6752ec2842cd23e80091e4385ae8fbdc6e0df5f4302", "state": "blocked"}
 
 
 $ reprodoctor run $DEMO/plan.json --snapshot $DEMO/snapshot --dry-run
 {
   "kind": "execution_dry_run",
-  "plan_digest": "2918ee3051ba25f9632cd4f28a0340c8191a895d7ffb9fe26d6bed53e309217a",
+  "plan_digest": "9412ea7b18d295a3aed5d6752ec2842cd23e80091e4385ae8fbdc6e0df5f4302",
   "plan_state": "blocked",
   "approval_matches": false,
   "execution_status": "not_run",
@@ -188,12 +188,12 @@ $ reprodoctor run $DEMO/plan.json --snapshot $DEMO/snapshot --dry-run
   "plan": {
     "schema_version": 1,
     "kind": "execution_plan",
-    "plan_digest": "2918ee3051ba25f9632cd4f28a0340c8191a895d7ffb9fe26d6bed53e309217a",
+    "plan_digest": "9412ea7b18d295a3aed5d6752ec2842cd23e80091e4385ae8fbdc6e0df5f4302",
     "payload": {
       "planner": {
         "tool_version": "0.1.0.dev0",
         "contract_version": 1,
-        "code_digest": "09cee873bb14ec47c62b0ab6d0e67d60fec40a671458fa20c97c78c19caa4898",
+        "code_digest": "490b871939972a1f75b8e37f4721246d7c1c24168d3eb1de3ed9b85c9f173452",
         "markdown_it_version": "4.2.0",
         "mdurl_version": "0.1.2"
       },

@@ -1,0 +1,318 @@
+<!doctype html><html lang="en"><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Reproducibility Doctor — evidence demo</title><style>
+body{background:#101722;color:#e2eaf5;font:16px/1.6 system-ui;
+max-width:1050px;margin:40px auto;padding:20px}
+h1{font-size:42px;line-height:1.1}small,a{color:#91d9c3}section,table{margin:24px 0;width:100%}
+section,.finding{border:1px solid #39475b;border-radius:12px;padding:18px}.finding{margin:12px 0}
+td,th{text-align:left;border-bottom:1px solid #39475b;padding:8px;font-size:14px}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;font:12px/1.5 ui-monospace,monospace}
+summary{cursor:pointer}
+</style><small>LOCAL CLI · PINNED EVIDENCE · REVIEW BEFORE EXECUTION</small>
+<h1>Reproducibility Doctor</h1>
+<p>What worked, what failed, and what the evidence actually supports.</p>
+<p><strong>7 controlled executions · 5 explicit abstentions · 7 confirmed cleanups.</strong>
+Expected failed/timed-out states are validation outcomes, not successful project setups.</p>
+<p>This replay reads genuine approved records. It runs no target code. The small authored corpus is
+public and not blinded; it is not a general GitHub accuracy benchmark. Containers do not make
+arbitrary code completely safe. Execution was validated on one Docker Desktop Linux ARM64 setup.</p>
+<table><thead><tr><th>Case</th><th>Split</th><th>Observed</th>
+<th>Cleanup</th><th>Seconds</th></tr></thead><tbody><tr><td>dev-01</td><td>development</td><td>completed</td><td>removed</td><td>2.291353</td></tr><tr><td>dev-02</td><td>development</td><td>failed</td><td>removed</td><td>1.469633</td></tr><tr><td>dev-03</td><td>development</td><td>abstain</td><td>not executed</td><td>—</td></tr><tr><td>dev-04</td><td>development</td><td>abstain</td><td>not executed</td><td>—</td></tr><tr><td>dev-05</td><td>development</td><td>failed</td><td>removed</td><td>0.764366</td></tr><tr><td>dev-06</td><td>development</td><td>abstain</td><td>not executed</td><td>—</td></tr><tr><td>dev-07</td><td>development</td><td>timed_out</td><td>removed</td><td>120.58857</td></tr><tr><td>dev-08</td><td>development</td><td>failed</td><td>removed</td><td>1.314749</td></tr><tr><td>hold-01</td><td>held_out</td><td>completed</td><td>removed</td><td>0.757788</td></tr><tr><td>hold-02</td><td>held_out</td><td>abstain</td><td>not executed</td><td>—</td></tr><tr><td>hold-03</td><td>held_out</td><td>abstain</td><td>not executed</td><td>—</td></tr><tr><td>hold-04</td><td>held_out</td><td>failed</td><td>removed</td><td>1.107365</td></tr></tbody></table><section><h2>dev-01 · completed</h2><p>No failure findings in this record. This does not certify reproducibility.</p><details><summary>Captured CLI JSON</summary><pre>$ reprodoctor diagnose examples/runtime-dev-01.json --format json
+
+{
+  &quot;schema_version&quot;: 1,
+  &quot;kind&quot;: &quot;diagnosis_report&quot;,
+  &quot;tool_version&quot;: &quot;0.1.0.dev0&quot;,
+  &quot;repository&quot;: {
+    &quot;commit&quot;: &quot;0f4b3461e1127174b1efd595b34d8a1ec926d5c2&quot;,
+    &quot;content_digest&quot;: &quot;3c27a5478f5948e849dc5fad2638c1bfa28088ac9a9153abf80650ef98cf611a&quot;
+  },
+  &quot;plan_digest&quot;: &quot;d13f485b66f52137ddf8ea8692cd2679460dc80e22a34275127b9f5effe02135&quot;,
+  &quot;execution_status&quot;: &quot;completed&quot;,
+  &quot;experimental&quot;: true,
+  &quot;live_validation&quot;: &quot;pending&quot;,
+  &quot;findings&quot;: [],
+  &quot;limitations&quot;: [
+    &quot;This interprets an editable local execution record; it does not authenticate the record or rerun commands.&quot;,
+    &quot;Logs are untrusted and may be forged, incomplete or truncated. Pattern matches are suggestions only.&quot;,
+    &quot;No match means unknown cause. Successful commands are not proof of reproducibility or application correctness.&quot;,
+    &quot;Docker CLI and program exit codes can be ambiguous; no signal or exact root cause is inferred.&quot;
+  ]
+}
+</pre></details></section><section><h2>dev-02 · failed</h2><div class="finding"><strong>observation: command_failed</strong><p>Step instruction-0001 has recorded status failed and exit code 1.</p><p>Next action: Review the effective argv, bounded logs and source instruction. A CLI exit status alone does not identify a root cause.</p></div><div class="finding"><strong>suggestion: missing_file</strong><p>The recorded stderr contains text matching missing_file; this is a possible cause, not verified truth.</p><p>Next action: Check the referenced path against the pinned source and earlier generated files.</p></div><details><summary>Captured CLI JSON</summary><pre>$ reprodoctor diagnose examples/runtime-dev-02.json --format json
+
+{
+  &quot;schema_version&quot;: 1,
+  &quot;kind&quot;: &quot;diagnosis_report&quot;,
+  &quot;tool_version&quot;: &quot;0.1.0.dev0&quot;,
+  &quot;repository&quot;: {
+    &quot;commit&quot;: &quot;3a166f3ceeb46860af4b2e49484ced23f60f7781&quot;,
+    &quot;content_digest&quot;: &quot;a1a228ec3b160d7bdd391f67cc31e77836aa83ea2c30c87007e28a1c990fbaf4&quot;
+  },
+  &quot;plan_digest&quot;: &quot;0ab1276a0813037ba28356e604e16000b800957345c5f6b5ce1d8afa7a3561e1&quot;,
+  &quot;execution_status&quot;: &quot;failed&quot;,
+  &quot;experimental&quot;: true,
+  &quot;live_validation&quot;: &quot;pending&quot;,
+  &quot;findings&quot;: [
+    {
+      &quot;id&quot;: &quot;diagnosis-0001&quot;,
+      &quot;category&quot;: &quot;command_failed&quot;,
+      &quot;kind&quot;: &quot;observation&quot;,
+      &quot;observed_fact&quot;: &quot;Step instruction-0001 has recorded status failed and exit code 1.&quot;,
+      &quot;suggested_action&quot;: &quot;Review the effective argv, bounded logs and source instruction. A CLI exit status alone does not identify a root cause.&quot;,
+      &quot;evidence&quot;: {
+        &quot;step_id&quot;: &quot;instruction-0001&quot;,
+        &quot;json_pointer&quot;: &quot;/steps/0&quot;,
+        &quot;source&quot;: {
+          &quot;id&quot;: &quot;instruction-0001&quot;,
+          &quot;order&quot;: 1,
+          &quot;block_id&quot;: &quot;block-0001&quot;,
+          &quot;path&quot;: &quot;README.md&quot;,
+          &quot;start_line&quot;: 3,
+          &quot;end_line&quot;: 3,
+          &quot;raw_text&quot;: &quot;python -m pip install -r absent.txt\n&quot;,
+          &quot;candidate_text&quot;: &quot;python -m pip install -r absent.txt&quot;,
+          &quot;phase&quot;: &quot;installation&quot;,
+          &quot;command_phase&quot;: &quot;installation&quot;,
+          &quot;heading_phase&quot;: &quot;installation&quot;,
+          &quot;heading_context&quot;: [
+            {
+              &quot;level&quot;: 1,
+              &quot;text&quot;: &quot;Install&quot;,
+              &quot;line&quot;: 1
+            }
+          ],
+          &quot;classification&quot;: &quot;command_candidate&quot;,
+          &quot;ambiguity_reasons&quot;: [],
+          &quot;requires_review&quot;: true
+        },
+        &quot;exit_code&quot;: 1,
+        &quot;exit_code_source&quot;: &quot;docker_exec_cli&quot;,
+        &quot;signal&quot;: null
+      }
+    },
+    {
+      &quot;id&quot;: &quot;diagnosis-0002&quot;,
+      &quot;category&quot;: &quot;missing_file&quot;,
+      &quot;kind&quot;: &quot;suggestion&quot;,
+      &quot;observed_fact&quot;: &quot;The recorded stderr contains text matching missing_file; this is a possible cause, not verified truth.&quot;,
+      &quot;suggested_action&quot;: &quot;Check the referenced path against the pinned source and earlier generated files.&quot;,
+      &quot;evidence&quot;: {
+        &quot;step_id&quot;: &quot;instruction-0001&quot;,
+        &quot;json_pointer&quot;: &quot;/steps/0/stderr/text&quot;,
+        &quot;character_span&quot;: [
+          51,
+          76
+        ],
+        &quot;excerpt&quot;: &quot;ERROR: Could not open requirements file: [Errno 2] No such file or directory: &#x27;absent.txt&#x27;\n&quot;,
+        &quot;retained_text_sha256&quot;: &quot;05d29d598addf7b943a6564c8b0ca5d72600d657fa0da609d45a6f91f8e2c529&quot;,
+        &quot;truncated&quot;: false
+      }
+    }
+  ],
+  &quot;limitations&quot;: [
+    &quot;This interprets an editable local execution record; it does not authenticate the record or rerun commands.&quot;,
+    &quot;Logs are untrusted and may be forged, incomplete or truncated. Pattern matches are suggestions only.&quot;,
+    &quot;No match means unknown cause. Successful commands are not proof of reproducibility or application correctness.&quot;,
+    &quot;Docker CLI and program exit codes can be ambiguous; no signal or exact root cause is inferred.&quot;
+  ]
+}
+</pre></details></section><section><h2>dev-05 · failed</h2><div class="finding"><strong>observation: unsuccessful_tests</strong><p>Step instruction-0001 has recorded status failed and exit code 1.</p><p>Next action: Review the effective argv, bounded logs and source instruction. A CLI exit status alone does not identify a root cause.</p></div><details><summary>Captured CLI JSON</summary><pre>$ reprodoctor diagnose examples/runtime-dev-05.json --format json
+
+{
+  &quot;schema_version&quot;: 1,
+  &quot;kind&quot;: &quot;diagnosis_report&quot;,
+  &quot;tool_version&quot;: &quot;0.1.0.dev0&quot;,
+  &quot;repository&quot;: {
+    &quot;commit&quot;: &quot;4a9914862b12295e864e5fea4b113dc410b61560&quot;,
+    &quot;content_digest&quot;: &quot;0ccec6f136a10ae8cd2bd8e9c6bfb48e859a2b946140c9072f699791994a2a34&quot;
+  },
+  &quot;plan_digest&quot;: &quot;e242fc5f58c9ad1550dd77aaaa865576d5c88e173a837a298bd724f5ceef7903&quot;,
+  &quot;execution_status&quot;: &quot;failed&quot;,
+  &quot;experimental&quot;: true,
+  &quot;live_validation&quot;: &quot;pending&quot;,
+  &quot;findings&quot;: [
+    {
+      &quot;id&quot;: &quot;diagnosis-0001&quot;,
+      &quot;category&quot;: &quot;unsuccessful_tests&quot;,
+      &quot;kind&quot;: &quot;observation&quot;,
+      &quot;observed_fact&quot;: &quot;Step instruction-0001 has recorded status failed and exit code 1.&quot;,
+      &quot;suggested_action&quot;: &quot;Review the effective argv, bounded logs and source instruction. A CLI exit status alone does not identify a root cause.&quot;,
+      &quot;evidence&quot;: {
+        &quot;step_id&quot;: &quot;instruction-0001&quot;,
+        &quot;json_pointer&quot;: &quot;/steps/0&quot;,
+        &quot;source&quot;: {
+          &quot;id&quot;: &quot;instruction-0001&quot;,
+          &quot;order&quot;: 1,
+          &quot;block_id&quot;: &quot;block-0001&quot;,
+          &quot;path&quot;: &quot;README.md&quot;,
+          &quot;start_line&quot;: 3,
+          &quot;end_line&quot;: 3,
+          &quot;raw_text&quot;: &quot;python -m unittest\n&quot;,
+          &quot;candidate_text&quot;: &quot;python -m unittest&quot;,
+          &quot;phase&quot;: &quot;test&quot;,
+          &quot;command_phase&quot;: &quot;test&quot;,
+          &quot;heading_phase&quot;: &quot;test&quot;,
+          &quot;heading_context&quot;: [
+            {
+              &quot;level&quot;: 1,
+              &quot;text&quot;: &quot;Tests&quot;,
+              &quot;line&quot;: 1
+            }
+          ],
+          &quot;classification&quot;: &quot;command_candidate&quot;,
+          &quot;ambiguity_reasons&quot;: [],
+          &quot;requires_review&quot;: true
+        },
+        &quot;exit_code&quot;: 1,
+        &quot;exit_code_source&quot;: &quot;docker_exec_cli&quot;,
+        &quot;signal&quot;: null
+      }
+    }
+  ],
+  &quot;limitations&quot;: [
+    &quot;This interprets an editable local execution record; it does not authenticate the record or rerun commands.&quot;,
+    &quot;Logs are untrusted and may be forged, incomplete or truncated. Pattern matches are suggestions only.&quot;,
+    &quot;No match means unknown cause. Successful commands are not proof of reproducibility or application correctness.&quot;,
+    &quot;Docker CLI and program exit codes can be ambiguous; no signal or exact root cause is inferred.&quot;
+  ]
+}
+</pre></details></section><section><h2>dev-08 · failed</h2><div class="finding"><strong>observation: command_failed</strong><p>Step instruction-0001 has recorded status failed and exit code 1.</p><p>Next action: Review the effective argv, bounded logs and source instruction. A CLI exit status alone does not identify a root cause.</p></div><div class="finding"><strong>suggestion: dependency_artifact_unavailable</strong><p>The recorded stderr contains text matching dependency_artifact_unavailable; this is a possible cause, not verified truth.</p><p>Next action: Check approved offline wheels, Python/platform tags and version constraints. This does not establish remote package availability.</p></div><details><summary>Captured CLI JSON</summary><pre>$ reprodoctor diagnose examples/runtime-dev-08.json --format json
+
+{
+  &quot;schema_version&quot;: 1,
+  &quot;kind&quot;: &quot;diagnosis_report&quot;,
+  &quot;tool_version&quot;: &quot;0.1.0.dev0&quot;,
+  &quot;repository&quot;: {
+    &quot;commit&quot;: &quot;e8f588ea1e67ee96c3f0a227cfdc32259f8b63fc&quot;,
+    &quot;content_digest&quot;: &quot;10558ec6be1c45db98fb8f63fcd9ea913a20a4896c9176661c4575d68bd8e91a&quot;
+  },
+  &quot;plan_digest&quot;: &quot;74fca931560646a873a8b78dc620e5bc081ba8eb7e8426325bd99a2af980a3fc&quot;,
+  &quot;execution_status&quot;: &quot;failed&quot;,
+  &quot;experimental&quot;: true,
+  &quot;live_validation&quot;: &quot;pending&quot;,
+  &quot;findings&quot;: [
+    {
+      &quot;id&quot;: &quot;diagnosis-0001&quot;,
+      &quot;category&quot;: &quot;command_failed&quot;,
+      &quot;kind&quot;: &quot;observation&quot;,
+      &quot;observed_fact&quot;: &quot;Step instruction-0001 has recorded status failed and exit code 1.&quot;,
+      &quot;suggested_action&quot;: &quot;Review the effective argv, bounded logs and source instruction. A CLI exit status alone does not identify a root cause.&quot;,
+      &quot;evidence&quot;: {
+        &quot;step_id&quot;: &quot;instruction-0001&quot;,
+        &quot;json_pointer&quot;: &quot;/steps/0&quot;,
+        &quot;source&quot;: {
+          &quot;id&quot;: &quot;instruction-0001&quot;,
+          &quot;order&quot;: 1,
+          &quot;block_id&quot;: &quot;block-0001&quot;,
+          &quot;path&quot;: &quot;README.md&quot;,
+          &quot;start_line&quot;: 3,
+          &quot;end_line&quot;: 3,
+          &quot;raw_text&quot;: &quot;python -m pip install -r requirements.txt\n&quot;,
+          &quot;candidate_text&quot;: &quot;python -m pip install -r requirements.txt&quot;,
+          &quot;phase&quot;: &quot;installation&quot;,
+          &quot;command_phase&quot;: &quot;installation&quot;,
+          &quot;heading_phase&quot;: &quot;installation&quot;,
+          &quot;heading_context&quot;: [
+            {
+              &quot;level&quot;: 1,
+              &quot;text&quot;: &quot;Install&quot;,
+              &quot;line&quot;: 1
+            }
+          ],
+          &quot;classification&quot;: &quot;command_candidate&quot;,
+          &quot;ambiguity_reasons&quot;: [],
+          &quot;requires_review&quot;: true
+        },
+        &quot;exit_code&quot;: 1,
+        &quot;exit_code_source&quot;: &quot;docker_exec_cli&quot;,
+        &quot;signal&quot;: null
+      }
+    },
+    {
+      &quot;id&quot;: &quot;diagnosis-0002&quot;,
+      &quot;category&quot;: &quot;dependency_artifact_unavailable&quot;,
+      &quot;kind&quot;: &quot;suggestion&quot;,
+      &quot;observed_fact&quot;: &quot;The recorded stderr contains text matching dependency_artifact_unavailable; this is a possible cause, not verified truth.&quot;,
+      &quot;suggested_action&quot;: &quot;Check approved offline wheels, Python/platform tags and version constraints. This does not establish remote package availability.&quot;,
+      &quot;evidence&quot;: {
+        &quot;step_id&quot;: &quot;instruction-0001&quot;,
+        &quot;json_pointer&quot;: &quot;/steps/0/stderr/text&quot;,
+        &quot;character_span&quot;: [
+          7,
+          46
+        ],
+        &quot;excerpt&quot;: &quot;ERROR: Could not find a version that satisfies the requirement doctor-fixture-distribution-not-supplied==0.0.0 (from versions: none)\nERROR: No matching distribution found for doctor-fixture-distribution-not-supplied==0.0.0\n&quot;,
+        &quot;retained_text_sha256&quot;: &quot;5c9640aa9342e2d37bc1da658cbebd245718a572de476760ed7c231165819446&quot;,
+        &quot;truncated&quot;: false
+      }
+    }
+  ],
+  &quot;limitations&quot;: [
+    &quot;This interprets an editable local execution record; it does not authenticate the record or rerun commands.&quot;,
+    &quot;Logs are untrusted and may be forged, incomplete or truncated. Pattern matches are suggestions only.&quot;,
+    &quot;No match means unknown cause. Successful commands are not proof of reproducibility or application correctness.&quot;,
+    &quot;Docker CLI and program exit codes can be ambiguous; no signal or exact root cause is inferred.&quot;
+  ]
+}
+</pre></details></section><section><h2>hold-04 · failed</h2><div class="finding"><strong>observation: command_failed</strong><p>Step instruction-0001 has recorded status failed and exit code 137.</p><p>Next action: Review the effective argv, bounded logs and source instruction. A CLI exit status alone does not identify a root cause.</p></div><details><summary>Captured CLI JSON</summary><pre>$ reprodoctor diagnose examples/runtime-hold-04.json --format json
+
+{
+  &quot;schema_version&quot;: 1,
+  &quot;kind&quot;: &quot;diagnosis_report&quot;,
+  &quot;tool_version&quot;: &quot;0.1.0.dev0&quot;,
+  &quot;repository&quot;: {
+    &quot;commit&quot;: &quot;dc658c03212f5cb4ea0251cc602a9f73f88392ee&quot;,
+    &quot;content_digest&quot;: &quot;498902dd536aa3eeea1d5524bdf7e80e236ba682c18c69588b057d3618f66d40&quot;
+  },
+  &quot;plan_digest&quot;: &quot;4cd77fe8f18404261a0b3604469322c0fdb8cd570d5556ec3b320e812f73c0de&quot;,
+  &quot;execution_status&quot;: &quot;failed&quot;,
+  &quot;experimental&quot;: true,
+  &quot;live_validation&quot;: &quot;pending&quot;,
+  &quot;findings&quot;: [
+    {
+      &quot;id&quot;: &quot;diagnosis-0001&quot;,
+      &quot;category&quot;: &quot;command_failed&quot;,
+      &quot;kind&quot;: &quot;observation&quot;,
+      &quot;observed_fact&quot;: &quot;Step instruction-0001 has recorded status failed and exit code 137.&quot;,
+      &quot;suggested_action&quot;: &quot;Review the effective argv, bounded logs and source instruction. A CLI exit status alone does not identify a root cause.&quot;,
+      &quot;evidence&quot;: {
+        &quot;step_id&quot;: &quot;instruction-0001&quot;,
+        &quot;json_pointer&quot;: &quot;/steps/0&quot;,
+        &quot;source&quot;: {
+          &quot;id&quot;: &quot;instruction-0001&quot;,
+          &quot;order&quot;: 1,
+          &quot;block_id&quot;: &quot;block-0001&quot;,
+          &quot;path&quot;: &quot;README.md&quot;,
+          &quot;start_line&quot;: 3,
+          &quot;end_line&quot;: 3,
+          &quot;raw_text&quot;: &quot;python probe.py\n&quot;,
+          &quot;candidate_text&quot;: &quot;python probe.py&quot;,
+          &quot;phase&quot;: &quot;launch&quot;,
+          &quot;command_phase&quot;: &quot;launch&quot;,
+          &quot;heading_phase&quot;: &quot;launch&quot;,
+          &quot;heading_context&quot;: [
+            {
+              &quot;level&quot;: 1,
+              &quot;text&quot;: &quot;Run&quot;,
+              &quot;line&quot;: 1
+            }
+          ],
+          &quot;classification&quot;: &quot;command_candidate&quot;,
+          &quot;ambiguity_reasons&quot;: [],
+          &quot;requires_review&quot;: true
+        },
+        &quot;exit_code&quot;: 137,
+        &quot;exit_code_source&quot;: &quot;docker_exec_cli&quot;,
+        &quot;signal&quot;: null
+      }
+    }
+  ],
+  &quot;limitations&quot;: [
+    &quot;This interprets an editable local execution record; it does not authenticate the record or rerun commands.&quot;,
+    &quot;Logs are untrusted and may be forged, incomplete or truncated. Pattern matches are suggestions only.&quot;,
+    &quot;No match means unknown cause. Successful commands are not proof of reproducibility or application correctness.&quot;,
+    &quot;Docker CLI and program exit codes can be ambiguous; no signal or exact root cause is inferred.&quot;
+  ]
+}
+</pre></details></section><p><a href="transcript.txt">Captured transcript</a> · <a href="demo.cast">Paced replay</a></p></html>

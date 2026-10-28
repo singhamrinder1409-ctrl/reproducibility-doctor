@@ -106,8 +106,8 @@ a{color:#91d9c3}</style><small>LOCAL • DETERMINISTIC • REVIEW BEFORE EXECUTI
 the source,
 finds the instruction and reports the evidence.</p><p>This walkthrough contains captured static
 CLI output.
-Temporary paths are normalized to $DEMO. No project commands or containers ran; live Docker
-validation remains pending.</p>"""
+Temporary paths are normalized to $DEMO. This walkthrough ran no project commands or containers.
+Separate live reference validation is documented in the repository.</p>"""
         + panels
         + '<p><a href="transcript.txt">Full transcript</a> · '
         '<a href="demo.cast">Asciinema recording</a></p></html>'
