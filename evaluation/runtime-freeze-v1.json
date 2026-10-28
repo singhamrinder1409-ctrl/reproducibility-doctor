@@ -1,0 +1,41 @@
+{
+  "engine": {
+    "tool_version": "0.1.0.dev0",
+    "contract_version": 1,
+    "code_digest": "490b871939972a1f75b8e37f4721246d7c1c24168d3eb1de3ed9b85c9f173452",
+    "markdown_it_version": "4.2.0",
+    "mdurl_version": "0.1.2"
+  },
+  "packaging_version": "26.3",
+  "files": {
+    "src/reprodoctor/__init__.py": "3f0312cf8e554805eae157b8d70943e9a49ac49d3f9fa9337db84e79f301309e",
+    "src/reprodoctor/__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+    "src/reprodoctor/checks.py": "14161207ce88e3c1718684cd8d61d19525a471880205f9cdea4416017df953f1",
+    "src/reprodoctor/cli.py": "d48634c24cba2fe2866aee00e5ed861586476d0cc0c7d3d3e7bcc8a9f7865d2b",
+    "src/reprodoctor/container_scripts.py": "258da4122cd28c281c189472588673828078029f8e2c06b6852fa207622a0d0a",
+    "src/reprodoctor/diagnosis.py": "0fe9be261ced9ba31085711089b76ea0ab9d60c03d3ec42b512a2a07f452a523",
+    "src/reprodoctor/execution.py": "c4495b295e465af86f162a4fb3c0ad0c72349a7b5f48d3de8885dc03542c407f",
+    "src/reprodoctor/extraction.py": "224de91355a99cb5cc6bb1707225e823e373c806c5fd13b1ea18606e07cff7b6",
+    "src/reprodoctor/intake.py": "17d1f31388035edfdd2f18fa39c1380e5c4135536010cf9956f2b9e33aac714b",
+    "src/reprodoctor/planning.py": "36146de123fc65f95a4478ab86d24fd83d630e91fd640401e3f98fd04454822a",
+    "src/reprodoctor/processes.py": "d94fd8cd4326994214486c2d5f70cffbe0b22c3ad60f2da5e14c348baceb2966",
+    "src/reprodoctor/reporting.py": "4549cfbfa1075a1a158a406147805d76603c6527834bc569a4b370459d32e6a0",
+    "src/reprodoctor/snapshot.py": "57699fe1ebdd9dad366f9f699cf0d4f131f05c6a5b21d1bfb683ae83341ba956",
+    "src/reprodoctor/static_report.py": "a6f7536fe7a3d12898183995b87bf2c6e099ec4da33a3e207cb261366e906e7f",
+    "evaluation/fixtures/dev-01.json": "5ddb742e3401f5f3a7ddd0d54138820cc4ff0d20a3d6c5c95cc8a3d8a5ee43f8",
+    "evaluation/fixtures/dev-02.json": "6312a4f24c8e7adfaf793dea2099eb7fcd358ef5b9ddf52faa3a0335615fb3f5",
+    "evaluation/fixtures/dev-03.json": "84b0a918702a26d92523ac6c3cd2f1cf54eb0ee6769743a5ddcea2d86b4f7739",
+    "evaluation/fixtures/dev-04.json": "6eb8c8aa7df8da9f956001a4ec40fcbc138d69ba21d42553b4514981c027061e",
+    "evaluation/fixtures/dev-05.json": "4b017fb75bbabff81ba66fa91c2c47c94b0e4080ea2137a4341446d50e256097",
+    "evaluation/fixtures/dev-06.json": "57d869cb8b0caa65c294d4c57d668c7c2b6936f5460361c653740044de447110",
+    "evaluation/fixtures/dev-07.json": "b74371168e178e36764da68b3878a8d04baf151628b00f6f34bc0eb7084560a0",
+    "evaluation/fixtures/dev-08.json": "6d25e615947ab8aca6146ffe63b3bcadfccf45609628245b060c7b0172d21f46",
+    "evaluation/fixtures/hold-01.json": "93bbc1d35d1dc9a1ad0e3fd2e6e87ce047c9a0be861ed790b26f03f4a9676e7e",
+    "evaluation/fixtures/hold-02.json": "07d3f58bb866f6d028ce7ca1675fbfc71bade4827db4c3722b2e22170aa14835",
+    "evaluation/fixtures/hold-03.json": "cf09c642b78e2f0d162d91438b80e03a84541b1f9b25c175d1eebbf658d836ee",
+    "evaluation/fixtures/hold-04.json": "8e1f6326549bae2c98e6adcb6e1b24827e5f191942a92211f536aa5a089b4730",
+    "evaluation/runtime-protocol-v1.json": "dcb626e5676957dcfb1b1ac5ba214ba0e437dfa02a2813d4765354245416dd9f",
+    "scripts/evaluate.py": "d396d094cea36af5503fd681bf666d9c1b723bdab1b092821e4e3337a0f23632",
+    "scripts/evaluate_runtime.py": "d3386845b43e4f1babced9346d8988cbe0711b80f84c6c5840f77591949b5537"
+  }
+}

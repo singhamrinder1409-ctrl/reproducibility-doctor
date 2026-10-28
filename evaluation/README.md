@@ -41,3 +41,25 @@ This is a small development repeatability check, not held-out setup accuracy or 
 ## Lifecycle/artifact reference acceptance
 
 `results-live-lifecycle.json` records actual step/run deadlines, cancellation, SIGKILL recovery, preservation of a separate owned sentinel container/image, path-boundary refusal, offline wheel success and four controlled input-mutation rejections. The entire Part 6 reference checklist is now satisfied for the recorded Docker Desktop ARM64 setup. Original per-run pending/experimental fields are not rewritten into a certification claim. Reserved runtime-corpus evaluation is still separate and has not run.
+
+## Reserved runtime evaluation protocol v1 — frozen before execution
+
+`runtime-protocol-v1.json` adds execution/category-presence expectations for the unchanged existing 12 authored fixtures. `runtime-freeze-v1.json` binds all package sources, original fixture JSON, protocol, harness and parser/packaging versions before any reserved runtime execution. It does not overwrite the original static reservation, first static results or their documented label mapping error. The public held-out split is not blinded; no broad generalization claim follows.
+
+The current subset yields **seven executable plans and five explicit planning abstentions**. Missing files, unavailable offline artifacts, failed tests and a two-minute output-loop timeout are expected observations, not harness errors. Unsupported copy/multiline/placeholder/state-only workflows are not silently repaired or executed. The memory-abuse held-out case has an unknown-cause/interruption-coverage abstention even if its expected nonzero status is observed; the separate development resource/signal experiments do not become held-out evidence.
+
+Preparation requires the exact previously authored wheelhouse content digest recorded in the protocol. It copies validated bytes, pins source, writes static reports and new unapproved plans, and produces an approval-only helper. A development unit test permits only Git infrastructure calls, verifies all 12/7/5 counts, and checks frozen-label tampering is rejected before backend access. No real approvals are generated in tests.
+
+```sh
+python scripts/evaluate_runtime.py --prepare --review /new/path/review --image DIGEST_REFERENCE --platform linux/arm64 --wheelhouse /path/to/authored-wheelhouse
+```
+
+Inspect `REVIEW.md`, every original source/command, the offline artifact hash, and full plans. Create each eligible receipt interactively. Only then run:
+
+```sh
+python scripts/evaluate_runtime.py --run-approved --review /path/to/review --docker-socket /explicit/local/docker.sock
+```
+
+The harness verifies the freeze, exact corpus membership/labels/source, plan bindings and **all seven receipts before any Docker call**. Results are new, private files; existing results cannot be overwritten. It records each outcome/check, explicit abstention, cleanup, per-rule category-presence precision/recall/false-positive counts and denominators, unknowns, unreached cases and runtime p50/p95. Infrastructure/cancellation or unconfirmed cleanup halts later cases. Log patterns remain suggestions, not proven causes or remote-availability claims. Any mismatches must be retained and discussed; tuning requires fresh evaluation/versioning, not changing this result into a pass.
+
+At protocol preparation, all reserved runtime outcomes remain **not run**. Part 6 reference acceptance and prior development measurements are separate.

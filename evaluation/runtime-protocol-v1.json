@@ -1,0 +1,87 @@
+{
+  "schema_version": 1,
+  "target_python": "3.12.16",
+  "scope": "First runtime evaluation of the existing reserved authored corpus. Original static labels/results remain unchanged. This public split is not blinded.",
+  "cases": {
+    "dev-01": {
+      "expected_status": "completed",
+      "diagnosis_category": null,
+      "wheelhouse": false,
+      "clean_static": true
+    },
+    "dev-02": {
+      "expected_status": "failed",
+      "diagnosis_category": "missing_file",
+      "wheelhouse": true
+    },
+    "dev-03": {
+      "expected_status": "abstain",
+      "reason": "Selected Python is excluded; no executable instruction is documented.",
+      "wheelhouse": false
+    },
+    "dev-04": {
+      "expected_status": "abstain",
+      "reason": "Only environment state is documented; there is no executable process or established configuration requiredness.",
+      "wheelhouse": false
+    },
+    "dev-05": {
+      "expected_status": "failed",
+      "diagnosis_category": "unsuccessful_tests",
+      "wheelhouse": false
+    },
+    "dev-06": {
+      "expected_status": "abstain",
+      "reason": "Alternative/placeholder installation instructions require manual selection; none is silently chosen.",
+      "wheelhouse": false
+    },
+    "dev-07": {
+      "expected_status": "timed_out",
+      "diagnosis_category": "timed_out",
+      "wheelhouse": false,
+      "require_truncation": true
+    },
+    "dev-08": {
+      "expected_status": "failed",
+      "diagnosis_category": "dependency_artifact_unavailable",
+      "wheelhouse": true
+    },
+    "hold-01": {
+      "expected_status": "completed",
+      "diagnosis_category": null,
+      "wheelhouse": false,
+      "clean_static": true
+    },
+    "hold-02": {
+      "expected_status": "abstain",
+      "reason": "Documented cp is outside the executor subset; no replacement is silently inserted.",
+      "wheelhouse": false
+    },
+    "hold-03": {
+      "expected_status": "abstain",
+      "reason": "Contradictory Python declarations and multiline installation require review; the prior static label mapping error is retained separately.",
+      "wheelhouse": true
+    },
+    "hold-04": {
+      "expected_status": "failed",
+      "diagnosis_category": null,
+      "wheelhouse": false,
+      "require_escaped_controls": true,
+      "cause_unknown": true,
+      "coverage_limit": "This single command cannot establish the exact resource-failure cause from its logs or a controlled interruption phase; those components are abstentions. Development signal/resource tests are reported separately."
+    }
+  },
+  "diagnosis_rules": [
+    "missing_file",
+    "dependency_artifact_unavailable",
+    "unsuccessful_tests",
+    "timed_out"
+  ],
+  "limitations": [
+    "The original eight-development/four-held-out fixture definitions are unchanged and public, not blinded.",
+    "Unsupported workflows remain explicit abstentions rather than silently repaired instructions.",
+    "Rule metrics count per-fixture category-presence assertions on executed cases, not universal causal accuracy.",
+    "Log signatures remain suggestions; no remote-package availability or exact signal/root cause is inferred.",
+    "Runtime results must be frozen and retained even if they reveal failures; do not tune on their outcomes."
+  ],
+  "required_wheelhouse_content_digest": "c142fee46a482a01747f9afb8ccbe0674f8c6ea8ddd819876ab18778f2a4328f"
+}
